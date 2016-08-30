@@ -70,9 +70,12 @@ node =
   rec (\_ ->
     singleNode `or`
     (startTag `andThen` \(tagName, attrs) ->
-      (\children _ -> Node tagName attrs children)
-      `map` many node
-      `andMap` endTag tagName
+      if String.toLower tagName == "br" || String.toLower tagName == "hr" || String.toLower tagName == "img" || String.toLower tagName == "meta" then
+        succeed (Node tagName attrs [])
+      else
+        (\children _ -> Node tagName attrs children)
+        `map` many node
+        `andMap` endTag tagName
     ) `or`
     textNode
   )
