@@ -1,0 +1,14 @@
+{
+    "version": "1.0.0",
+    "summary": "Parse HTML in Elm!",
+    "repository": "https://github.com/jinjor/elm-html-parser.git",
+    "license": "BSD3",
+    "source-directories": [
+        "src"
+    ],
+    "exposed-modules": [],
+    "dependencies": {
+        "elm-lang/core": "4.0.5 <= v < 5.0.0"
+    },
+    "elm-version": "0.17.0 <= v < 0.18.0"
+}
