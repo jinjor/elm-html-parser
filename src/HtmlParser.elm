@@ -3,11 +3,12 @@ module HtmlParser exposing (..)
 import HtmlParser.AST exposing (..)
 import Combine exposing (..)
 import String
+import Set exposing (Set)
 
 
 parse : String -> Result (List String) AST
 parse s =
-  fst (Combine.parse node (String.trim s))
+  fst (Combine.parse (node "") (String.trim s))
 
 
 spaces : Parser String
@@ -65,17 +66,65 @@ attribute =
   attributeNameValuePair `or` map (flip (,) NoValue) attributeName
 
 
-node : Parser AST
-node =
+startTagOnly : Set String
+startTagOnly =
+  Set.fromList
+    [ "br", "img", "hr", "meta", "input", "embed", "area", "base", "col"
+    , "keygen", "link", "param", "source", "command", "link", "track", "wbr"
+    ]
+
+
+-- see https://html.spec.whatwg.org/multipage/syntax.html#optional-tags
+optionalEndTag : Set String
+optionalEndTag =
+  Set.fromList
+    [ "li", "dt", "dd", "p", "rt", "rp", "optgroup", "thead", "tr", "td", "th" ]
+
+
+ngSetForP : Set String
+ngSetForP =
+  Set.fromList
+    [ "address", "article", "aside", "blockquote", "details", "div", "dl"
+    , "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3"
+    , "h4", "h5", "h6", "header", "hgroup", "hr", "main", "menu", "nav", "ol"
+    , "p", "pre", "section", "table", "ul"
+    ]
+
+
+-- this logic is used to help optional end tag
+isInvalidNest : String -> String -> Bool
+isInvalidNest parentTagName tagName =
+  (parentTagName == "li" && tagName == "li") ||
+  (parentTagName == "dt" && (tagName == "dt" || tagName == "dd")) ||
+  (parentTagName == "dd" && (tagName == "dt" || tagName == "dd")) ||
+  (parentTagName == "p" && Set.member tagName ngSetForP) ||
+  (parentTagName == "rt" && (tagName == "rt" || tagName == "rp")) ||
+  (parentTagName == "rp" && (tagName == "rt" || tagName == "rp")) ||
+  (parentTagName == "optgroup" && tagName == "optgroup") ||
+  (parentTagName == "thead" && (tagName == "tbody" || tagName == "tfoot")) ||
+  (parentTagName == "tr" && tagName == "tr") ||
+  (parentTagName == "td" && (tagName == "td" || tagName == "th")) ||
+  (parentTagName == "th" && (tagName == "td" || tagName == "th"))
+
+
+node : String -> Parser AST
+node parentTagName =
   rec (\_ ->
     singleNode `or`
     (startTag `andThen` \(tagName, attrs) ->
-      if String.toLower tagName == "br" || String.toLower tagName == "hr" || String.toLower tagName == "img" || String.toLower tagName == "meta" then
+      if isInvalidNest parentTagName tagName then
+        fail []
+      else if Set.member tagName startTagOnly then
         succeed (Node tagName attrs [])
       else
         (\children _ -> Node tagName attrs children)
-        `map` many node
-        `andMap` endTag tagName
+        `map` many (node tagName)
+        `andMap`
+          ( if Set.member tagName optionalEndTag then
+              optional ()
+            else
+              identity
+          ) (endTag tagName)
     ) `or`
     textNode
   )
@@ -94,7 +143,7 @@ singleNode =
 startTag : Parser (String, List (String, AttributeValue))
 startTag =
   rec (\_ ->
-    (\_ tagName _ attrs _ _ -> (tagName, attrs))
+    (\_ tagName _ attrs _ _ -> (String.toLower tagName, attrs))
     `map` string "<"
     `andMap` tagName
     `andMap` spaces
@@ -106,18 +155,16 @@ startTag =
 
 endTag : String -> Parser ()
 endTag tagName =
-  rec (\_ ->
-    (\_ _ _ -> ())
-    `map` string "</"
-    `andMap` string tagName
-    `andMap` string ">"
-  )
+  (\_ _ _ -> ())
+  `map` string "</"
+  `andMap` (string tagName `or` string (String.toUpper tagName))
+  `andMap` string ">"
 
 
 singleTag : Parser (String, List (String, AttributeValue))
 singleTag =
   rec (\_ ->
-    (\_ tagName _ attrs _ _ -> (tagName, attrs))
+    (\_ tagName _ attrs _ _ -> (String.toLower tagName, attrs))
     `map` string "<"
     `andMap` tagName
     `andMap` spaces
