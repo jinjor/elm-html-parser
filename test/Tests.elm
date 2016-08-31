@@ -6,16 +6,28 @@ import HtmlParser.AST exposing (..)
 import HtmlParser as HtmlParser exposing (..)
 import ElmTest exposing (..)
 
-isOk : Result a b -> Bool
-isOk r =
+
+contains : List String -> Result a b -> Assertion
+contains tagList r =
   case r of
-    Ok _ -> True
-    _ -> False
+    Ok ast ->
+      if List.all (\tagName -> String.contains tagName (toString ast)) tagList then
+        ElmTest.pass
+      else
+        ElmTest.fail ("Expected all of tags" ++ toString tagList ++ " are contained, but got " ++ toString ast)
+
+    e ->
+      ElmTest.fail (toString e)
 
 
 testParse : String -> AST -> Assertion
 testParse s ast =
   assertEqual (Ok ast) (HtmlParser.parse s)
+
+
+testParseComplex : List String -> String -> Assertion
+testParseComplex tagList s =
+  contains tagList (HtmlParser.parse s)
 
 
 textNodeTests : Test
@@ -58,6 +70,25 @@ nodeTests =
     ]
 
 
+attributeTests : Test
+attributeTests =
+  suite "Attribute"
+    [ test "basic" (testParse """<a href="example.com"></a>""" (Node "a" [("href", StringValue "example.com")] []))
+    , test "basic" (testParse """<a href="example.com"/>""" (Node "a" [("href", StringValue "example.com")] []))
+    , test "basic" (testParse """<input max=100 min = 10.5>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))
+    , test "basic" (testParse """<input max=100 min = 10.5/>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))
+    , test "basic" (testParse """<input disabled>""" (Node "input" [("disabled", NoValue)] []))
+    , test "basic" (testParse """<input disabled/>""" (Node "input" [("disabled", NoValue)] []))
+    ]
+
+
+intergrationTests : Test
+intergrationTests =
+  suite "Integration"
+    [ test "basic" (testParseComplex ["table"] fullOmission)
+    ]
+
+
 fullOmission : String
 fullOmission = """
   <table>
@@ -71,20 +102,8 @@ fullOmission = """
     <tr> <td>Electric locomotive operating sounds  <td>✔                <td>✔
     <tr> <td>Engineer's cab lighting               <td>                 <td>✔
     <tr> <td>Station Announcements - Swiss         <td>                 <td>✔
-  </table
+  </table>
   """
-
-
-attributeTests : Test
-attributeTests =
-  suite "Attribute"
-    [ test "basic" (testParse """<a href="example.com"></a>""" (Node "a" [("href", StringValue "example.com")] []))
-    , test "basic" (testParse """<a href="example.com"/>""" (Node "a" [("href", StringValue "example.com")] []))
-    , test "basic" (testParse """<input max=100 min = 10.5>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))
-    , test "basic" (testParse """<input max=100 min = 10.5/>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))
-    , test "basic" (testParse """<input disabled>""" (Node "input" [("disabled", NoValue)] []))
-    , test "basic" (testParse """<input disabled/>""" (Node "input" [("disabled", NoValue)] []))
-    ]
 
 
 tests : Test
@@ -93,6 +112,7 @@ tests =
     [ textNodeTests
     , nodeTests
     , attributeTests
+    -- , intergrationTests
     ]
 
 
