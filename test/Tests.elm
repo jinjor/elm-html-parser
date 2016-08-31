@@ -7,14 +7,16 @@ import HtmlParser as HtmlParser exposing (..)
 import ElmTest exposing (..)
 
 
-contains : List String -> Result a b -> Assertion
-contains tagList r =
+contains : List String -> List String -> Result a b -> Assertion
+contains tagList ngTagList r =
   case r of
     Ok ast ->
-      if List.all (\tagName -> String.contains tagName (toString ast)) tagList then
-        ElmTest.pass
-      else
+      if not <| List.all (\tagName -> String.contains tagName (toString ast)) tagList then
         ElmTest.fail ("Expected all of tags" ++ toString tagList ++ " are contained, but got " ++ toString ast)
+      else if List.any (\tagName -> String.contains tagName (toString ast)) ngTagList then
+        ElmTest.fail ("Expected any of tags" ++ toString ngTagList ++ " are not contained, but got " ++ toString ast)
+      else
+        ElmTest.pass
 
     e ->
       ElmTest.fail (toString e)
@@ -25,9 +27,9 @@ testParse s ast =
   assertEqual (Ok ast) (HtmlParser.parse s)
 
 
-testParseComplex : List String -> String -> Assertion
-testParseComplex tagList s =
-  contains tagList (HtmlParser.parse s)
+testParseComplex : List String -> List String -> String -> Assertion
+testParseComplex tagList ngTagList s =
+  contains tagList ngTagList (HtmlParser.parse s)
 
 
 textNodeTests : Test
@@ -76,6 +78,17 @@ nodeTests =
     ]
 
 
+commentTests : Test
+commentTests =
+  suite "Comment"
+    [ test "basic" (testParse """<!---->""" (Comment ""))
+    , test "basic" (testParse """<!--foo\t\r\n -->""" (Comment "foo\t\r\n "))
+    , test "basic" (testParse """<!--<div></div>-->""" (Comment "<div></div>"))
+    , test "basic" (testParse """<div><!--</div>--></div>""" (Node "div" [] [ Comment "</div>" ]))
+    , test "basic" (testParse """<!--<!---->""" (Comment "<!--"))
+    ]
+
+
 attributeTests : Test
 attributeTests =
   suite "Attribute"
@@ -93,7 +106,7 @@ attributeTests =
 intergrationTests : Test
 intergrationTests =
   suite "Integration"
-    [ test "basic" (testParseComplex ["table"] fullOmission)
+    [ test "table" (testParseComplex ["table", "caption", "colgroup", "col", "thead", "tbody", "tr", "th", "td"] [] fullOmission)
     ]
 
 
@@ -119,6 +132,7 @@ tests =
   suite "HtmlParser"
     [ textNodeTests
     , nodeTests
+    , commentTests
     , attributeTests
     , intergrationTests
     ]

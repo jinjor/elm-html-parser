@@ -2,13 +2,23 @@ module HtmlParser exposing (..)
 
 import HtmlParser.AST exposing (..)
 import Combine exposing (..)
+import Combine.Char
 import String
 import Set exposing (Set)
 
 
 parse : String -> Result (List String) AST
 parse s =
-  fst (Combine.parse (node "") (String.trim s))
+  fst (Combine.parse nodeAndEnd (String.trim s))
+
+
+nodeAndEnd : Parser AST
+nodeAndEnd =
+  (\_ node _ _ -> node)
+  `map` spaces
+  `andMap` node ""
+  `andMap` spaces
+  `andMap` end
 
 
 spaces : Parser String
@@ -119,7 +129,9 @@ node parentTagName =
   rec (\_ ->
     singleNode `or`
     (startTag `andThen` \(tagName, attrs) ->
-      if isInvalidNest parentTagName tagName then
+      if tagName == "script" || tagName == "style" then
+        fail [ tagName ++ " is not supported" ]
+      else if isInvalidNest parentTagName tagName then
         fail []
       else if Set.member tagName startTagOnly then
         succeed (Node tagName attrs [])
@@ -133,6 +145,7 @@ node parentTagName =
               identity
           ) (endTag tagName)
     ) `or`
+    commentNode `or`
     textNode
   )
 
@@ -168,6 +181,12 @@ endTag tagName =
   `andMap` string ">"
 
 
+untilEndTag : String -> Parser ()
+untilEndTag tagName =
+  map (always ()) <|
+  manyTill Combine.Char.anyChar (endTag tagName)
+
+
 singleTag : Parser (String, List (String, AttributeValue))
 singleTag =
   rec (\_ ->
@@ -181,6 +200,17 @@ singleTag =
   )
 
 
+(*>) : Parser x -> Parser res -> Parser res
+(*>) lp rp =
+  (flip always) `map` lp `andMap` rp
+
+
+commentNode : Parser AST
+commentNode =
+  map Comment comment
+
+
 comment : Parser String
 comment =
-  between (string "<!--") (string "-->") (regex """(\\\\"|[^"])*""")
+  map String.fromList <|
+  string "<!--" *> manyTill Combine.Char.anyChar (string "-->")

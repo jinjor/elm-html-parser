@@ -10,3 +10,4 @@ type AttributeValue
 type AST
   = Text String
   | Node String (List (String, AttributeValue)) (List AST)
+  | Comment String
