@@ -24,12 +24,12 @@ contains tagList ngTagList r =
 
 testParse : String -> AST -> Assertion
 testParse s ast =
-  assertEqual (Ok ast) (HtmlParser.parse s)
+  assertEqual (Ok ast) (HtmlParser.parseNode s)
 
 
 testParseComplex : List String -> List String -> String -> Assertion
 testParseComplex tagList ngTagList s =
-  contains tagList ngTagList (HtmlParser.parse s)
+  contains tagList ngTagList (HtmlParser.parseNode s)
 
 
 textNodeTests : Test

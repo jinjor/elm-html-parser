@@ -7,9 +7,19 @@ import String
 import Set exposing (Set)
 
 
-parse : String -> Result (List String) AST
-parse s =
+parseNode : String -> Result (List String) AST
+parseNode s =
   fst (Combine.parse nodeAndEnd (String.trim s))
+
+
+all : Parser (List AST)
+all =
+  (\_ _ nodes _ _ -> nodes)
+  `map` doctype
+  `andMap` spaces
+  `andMap` many (node "")
+  `andMap` spaces
+  `andMap` end
 
 
 nodeAndEnd : Parser AST
@@ -128,7 +138,21 @@ node : String -> Parser AST
 node parentTagName =
   rec (\_ ->
     singleNode `or`
-    (startTag `andThen` \(tagName, attrs) ->
+    normalNode parentTagName `or`
+    commentNode `or`
+    textNode
+  )
+
+
+doctype : Parser ()
+doctype =
+  map (always ()) (regex "<!DOCTYPE [^>]*>")
+
+
+normalNode : String -> Parser AST
+normalNode parentTagName =
+  rec (\_ ->
+    startTag `andThen` \(tagName, attrs) ->
       if tagName == "script" || tagName == "style" then
         fail [ tagName ++ " is not supported" ]
       else if isInvalidNest parentTagName tagName then
@@ -144,9 +168,6 @@ node parentTagName =
             else
               identity
           ) (endTag tagName)
-    ) `or`
-    commentNode `or`
-    textNode
   )
 
 
