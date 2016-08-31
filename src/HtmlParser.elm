@@ -48,12 +48,12 @@ tagName =
 
 attributeName : Parser String
 attributeName =
-  regex "[a-zA-Z][a-zA-Z\\-]*"
+  regex "[a-zA-Z][a-zA-Z:\\-]*"
 
 
 attributeValueNumber : Parser AttributeValue
 attributeValueNumber =
-  map NumberValue (regex "[1-9][0-9.]*")
+  map NumberValue (regex "[0-9][0-9.]*")
 
 
 attributeValueString : Parser AttributeValue
@@ -64,7 +64,7 @@ attributeValueString =
 
 attributeValueBareString : Parser AttributeValue
 attributeValueBareString =
-  map StringValue (regex "[a-zA-Z]+")
+  map StringValue (regex "[a-zA-Z0-9\\-]+")
 
 
 attributeValue : Parser AttributeValue
