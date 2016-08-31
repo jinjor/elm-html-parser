@@ -80,6 +80,8 @@ attributeTests : Test
 attributeTests =
   suite "Attribute"
     [ test "basic" (testParse """<a href="example.com"></a>""" (Node "a" [("href", StringValue "example.com")] []))
+    , test "basic" (testParse """<a href='example.com'></a>""" (Node "a" [("href", StringValue "example.com")] []))
+    , test "basic" (testParse """<a href=bare></a>""" (Node "a" [("href", StringValue "bare")] []))
     , test "basic" (testParse """<a href="example.com"/>""" (Node "a" [("href", StringValue "example.com")] []))
     , test "basic" (testParse """<input max=100 min = 10.5>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))
     , test "basic" (testParse """<input max=100 min = 10.5/>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))

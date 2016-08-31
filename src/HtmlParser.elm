@@ -38,7 +38,8 @@ attributeValueNumber =
 
 attributeValueString : Parser AttributeValue
 attributeValueString =
-  map StringValue (between (string "\"") (string "\"") (regex """(\\\\"|[^"])*"""))
+  map StringValue (between (string "\"") (string "\"") (regex """(\\\\"|[^"])*""")) `or`
+  map StringValue (between (string "'") (string "'") (regex """(\\\\'|[^'])*"""))
 
 
 attributeValueBareString : Parser AttributeValue
