@@ -78,7 +78,8 @@ startTagOnly =
 optionalEndTag : Set String
 optionalEndTag =
   Set.fromList
-    [ "li", "dt", "dd", "p", "rt", "rp", "optgroup", "thead", "tr", "td", "th" ]
+    [ "li", "dt", "dd", "p", "rt", "rp", "optgroup", "option", "colgroup"
+    , "caption", "thead", "tbody", "tfoot", "tr", "td", "th" ]
 
 
 ngSetForP : Set String
@@ -93,18 +94,23 @@ ngSetForP =
 
 -- this logic is used to help optional end tag
 isInvalidNest : String -> String -> Bool
-isInvalidNest parentTagName tagName =
-  (parentTagName == "li" && tagName == "li") ||
-  (parentTagName == "dt" && (tagName == "dt" || tagName == "dd")) ||
-  (parentTagName == "dd" && (tagName == "dt" || tagName == "dd")) ||
-  (parentTagName == "p" && Set.member tagName ngSetForP) ||
-  (parentTagName == "rt" && (tagName == "rt" || tagName == "rp")) ||
-  (parentTagName == "rp" && (tagName == "rt" || tagName == "rp")) ||
-  (parentTagName == "optgroup" && tagName == "optgroup") ||
-  (parentTagName == "thead" && (tagName == "tbody" || tagName == "tfoot")) ||
-  (parentTagName == "tr" && tagName == "tr") ||
-  (parentTagName == "td" && (tagName == "td" || tagName == "th")) ||
-  (parentTagName == "th" && (tagName == "td" || tagName == "th"))
+isInvalidNest tagName childTagName =
+  (tagName == "li" && childTagName == "li") ||
+  (tagName == "dt" && (childTagName == "dt" || childTagName == "dd")) ||
+  (tagName == "dd" && (childTagName == "dt" || childTagName == "dd")) ||
+  (tagName == "p" && Set.member childTagName ngSetForP) ||
+  (tagName == "rt" && (childTagName == "rt" || childTagName == "rp")) ||
+  (tagName == "rp" && (childTagName == "rt" || childTagName == "rp")) ||
+  (tagName == "optgroup" && childTagName == "optgroup") ||
+  (tagName == "option" && (childTagName == "option" || childTagName == "optgroup")) ||
+  (tagName == "colgroup" && childTagName /= "col") ||
+  (tagName == "caption") ||
+  (tagName == "thead" && (childTagName == "tbody" || childTagName == "tfoot")) ||
+  (tagName == "tbody" && (childTagName == "tbody" || childTagName == "tfoot" || childTagName == "table")) ||
+  (tagName == "tfoot" && childTagName == "table") ||
+  (tagName == "tr" && childTagName == "tr") ||
+  (tagName == "td" && (childTagName == "td" || childTagName == "th" || childTagName == "tr" || childTagName == "tbody" || childTagName == "tfoot")) ||
+  (tagName == "th" && (childTagName == "td" || childTagName == "th" || childTagName == "tr" || childTagName == "tbody" || childTagName == "tfoot"))
 
 
 node : String -> Parser AST

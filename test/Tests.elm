@@ -65,8 +65,14 @@ nodeTests =
     , test "optional-end-tag" (testParse "<ul><li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
     , test "optional-end-tag" (testParse "<ul><li></li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
     , test "optional-end-tag" (testParse "<ul><li><li></li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
+    , test "optional-end-tag" (testParse "<ul><li><ul></ul></ul>" (Node "ul" [] [ Node "li" [] [ Node "ul" [] [] ] ]))
     , test "optional-end-tag" (testParse "<ul> <li> <li> </ul>" (Node "ul" [] [ Text " ", Node "li" [] [ Text " " ], Node "li" [] [ Text " " ] ]))
-    , test "optional-end-tag" (testParse "<tr><td></tr>" (Node "tr" [] [ Node "td" [] [] ]))
+    , test "optional-end-tag" (testParse "<ol><li></ol>" (Node "ol" [] [ Node "li" [] [] ]))
+    , test "optional-end-tag" (testParse "<tbody><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ] ]))
+    , test "optional-end-tag" (testParse "<tbody><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
+    , test "optional-end-tag" (testParse "<tbody><tr><td><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ], Node "tr" [] [ Node "td" [] [] ] ]))
+    , test "optional-end-tag" (testParse "<tbody><tr><th><td><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ], Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
+    , test "optional-end-tag" (testParse "<table><tr><td><tr><td></table>" (Node "table" [] [ Node "tr" [] [ Node "td" [] [] ], Node "tr" [] [ Node "td" [] [] ] ]))
     ]
 
 
@@ -112,7 +118,7 @@ tests =
     [ textNodeTests
     , nodeTests
     , attributeTests
-    -- , intergrationTests
+    , intergrationTests
     ]
 
 
