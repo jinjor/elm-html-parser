@@ -17,6 +17,7 @@ import Combine.Char
 import Set exposing (Set)
 import String
 import Escape
+import Dict
 
 
 {-| The AST of node
@@ -189,11 +190,6 @@ node parentTagName =
   )
 
 
-commentOrTextNode : Parser HtmlNode
-commentOrTextNode =
-  commentNode `or` textNode
-
-
 doctypeNode : Parser HtmlNode
 doctypeNode =
   map (\_ -> Node "!DOCTYPE" [] []) (regex "<!DOCTYPE [^>]*>")
@@ -205,7 +201,7 @@ normalNode parentTagName =
     startTag `andThen` \(tagName, attrs) ->
       if tagName == "script" || tagName == "style" then
         (\children _ -> Node tagName attrs children)
-        `map` many commentOrTextNode
+        `map` many (commentNode `or` textNode)
         `andMap` endTag tagName
       else if isInvalidNest parentTagName tagName then
         fail []
@@ -225,7 +221,31 @@ normalNode parentTagName =
 
 textNode : Parser HtmlNode
 textNode =
-  map Text (regex "[^<]*") -- TODO
+  map Text textNodeString
+
+
+textNodeString : Parser String
+textNodeString =
+  (\list -> String.join "" list)
+  `map` many (textNodeStringEscape `or` textNodeStringNonEscape)
+
+
+textNodeStringEscape : Parser String
+textNodeStringEscape =
+  (\code ->
+    case Dict.get code Escape.dict of
+      Just s ->
+        s
+
+      Nothing ->
+        code
+  )
+  `map` (regex "&[#0-9a-zA-Z]*;")
+
+
+textNodeStringNonEscape : Parser String
+textNodeStringNonEscape =
+  regex "[^<]*"
 
 
 singleNode : Parser HtmlNode

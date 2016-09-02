@@ -37,6 +37,16 @@ textNodeTests =
     [ test "basic" (testParse "1" (Text "1"))
     , test "basic" (testParse "a" (Text "a"))
     , test "basic" (testParse "1a" (Text "1a"))
+    , test "decode" (testParse "&amp;" (Text "&"))
+    , test "decode" (testParse "&lt;" (Text "<"))
+    , test "decode" (testParse "&gt;" (Text ">"))
+    , test "decode" (testParse "&nbsp;" (Text " "))
+    , test "decode" (testParse "&#33;" (Text "!"))
+    , test "decode" (testParse "&nbsp;" (Text " "))
+    , test "decode" (testParse "&nbsp;&nbsp;" (Text "  "))
+    -- , test "decode" (testParse "a&nbsp;b" (Text "a b"))
+    -- , test "decode" (testParse "a&nbsp;&nbsp;b" (Text "a  b"))
+    , test "decode" (testParse "&#20;" (Text "&#20;"))
     ]
 
 
@@ -69,7 +79,7 @@ nodeTests =
 
 optionalEndTagTests : Test
 optionalEndTagTests =
-  suite "optionalEndTag"
+  suite "OptionalEndTag"
     [ test "ul" (testParse "<ul><li></li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
     , test "ul" (testParse "<ul><li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
     , test "ul" (testParse "<ul><li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
@@ -100,6 +110,7 @@ scriptTests =
   suite "Script"
     [ test "script" (testParse """<script></script>""" (Node "script" [] []))
     , test "script" (testParse """<script src="script.js">foo</script>""" (Node "script" [("src", StringValue "script.js")] [ Text "foo" ]))
+    -- , test "script" (testParse """<script>var a = 0 < 1; b = 1 > 0;</script>""" (Node "script" [] [ Text "var a = 0 < 1; b = 1 > 0;" ]))
     , test "script" (testParse """<script><!----></script>""" (Node "script" [] [ Comment "" ]))
     , test "script" (testParse """<script>a<!--</script><script>-->b</script>""" (Node "script" [] [ Text "a", Comment "</script><script>", Text "b" ]))
     , test "style" (testParse """<style>a<!--</style><style>-->b</style>""" (Node "style" [] [ Text "a", Comment "</style><style>", Text "b" ]))
