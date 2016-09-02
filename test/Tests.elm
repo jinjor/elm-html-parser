@@ -2,7 +2,6 @@ module Tests exposing (..)
 
 import String
 import Combine as RawParser exposing (..)
-import Internal.AST exposing (..)
 import HtmlParser as HtmlParser exposing (..)
 import ElmTest exposing (..)
 
@@ -22,7 +21,7 @@ contains tagList ngTagList r =
       ElmTest.fail (toString e)
 
 
-testParse : String -> AST -> Assertion
+testParse : String -> HtmlNode -> Assertion
 testParse s ast =
   assertEqual (Ok ast) (HtmlParser.parseOne s)
 
