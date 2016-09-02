@@ -56,6 +56,8 @@ nodeTests =
     , test "basic" (testParse "<a><a></a><a></a></a>" (Node "a" [] [ Node "a" [] [], Node "a" [] [] ]))
     , test "basic" (testParse "<a><a><a></a></a></a>" (Node "a" [] [ Node "a" [] [ Node "a" [] [] ] ]))
     , test "basic" (testParse "<a><a></a><b></b></a>" (Node "a" [] [ Node "a" [] [], Node "b" [] [] ]))
+    , test "basic" (testParse "<h1></h1>" (Node "h1" [] []))
+    , test "basic" (testParse "<custom-element></custom-element>" (Node "custom-element" [] []))
     , test "start-only-tag" (testParse "<br>" (Node "br" [] []))
     , test "start-only-tag" (testParse "<BR>" (Node "br" [] []))
     , test "start-only-tag" (testParse "<a> <br> </a>" (Node "a" [] [ Text " ", Node "br" [] [], Text " " ]))

@@ -86,7 +86,7 @@ spaced p =
 
 tagName : Parser String
 tagName =
-  regex "[a-zA-Z][a-zA-Z\\-]*"
+  regex "[a-zA-Z][a-zA-Z0-9\\-]*"
 
 
 attributeName : Parser String

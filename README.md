@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jinjor/elm-html-parser.svg)](https://travis-ci.org/jinjor/elm-html-parser)
 
-Parse HTML in Elm!
+Parse HTML in Elm! ([DEMO](https://jinjor.github.io/elm-html-parser/))
 
 ```elm
 parse "text" == [ Text "text" ]
