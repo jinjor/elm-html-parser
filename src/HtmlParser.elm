@@ -16,6 +16,7 @@ import Combine exposing (..)
 import Combine.Char
 import Set exposing (Set)
 import String
+import Escape
 
 
 {-| The AST of node
