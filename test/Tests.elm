@@ -2,7 +2,7 @@ module Tests exposing (..)
 
 import String
 import Combine as RawParser exposing (..)
-import HtmlParser.AST exposing (..)
+import Internal.AST exposing (..)
 import HtmlParser as HtmlParser exposing (..)
 import ElmTest exposing (..)
 
@@ -24,12 +24,12 @@ contains tagList ngTagList r =
 
 testParse : String -> AST -> Assertion
 testParse s ast =
-  assertEqual (Ok ast) (HtmlParser.parseNode s)
+  assertEqual (Ok ast) (HtmlParser.parseOne s)
 
 
 testParseComplex : List String -> List String -> String -> Assertion
 testParseComplex tagList ngTagList s =
-  contains tagList ngTagList (HtmlParser.parseNode s)
+  contains tagList ngTagList (HtmlParser.parseOne s)
 
 
 textNodeTests : Test
@@ -62,19 +62,45 @@ nodeTests =
     , test "start-only-tag" (testParse "<a><br><br></a>" (Node "a" [] [ Node "br" [] [], Node "br" [] [] ]))
     , test "start-only-tag" (testParse "<a><br><img><hr><meta></a>" (Node "a" [] [ Node "br" [] [], Node "img" [] [], Node "hr" [] [], Node "meta" [] [] ]))
     , test "start-only-tag" (testParse "<a>foo<br>bar</a>" (Node "a" [] [ Text "foo", Node "br" [] [], Text "bar" ]))
-    , test "optional-end-tag" (testParse "<ul><li></li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
-    , test "optional-end-tag" (testParse "<ul><li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
-    , test "optional-end-tag" (testParse "<ul><li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
-    , test "optional-end-tag" (testParse "<ul><li></li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
-    , test "optional-end-tag" (testParse "<ul><li><li></li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
-    , test "optional-end-tag" (testParse "<ul><li><ul></ul></ul>" (Node "ul" [] [ Node "li" [] [ Node "ul" [] [] ] ]))
-    , test "optional-end-tag" (testParse "<ul> <li> <li> </ul>" (Node "ul" [] [ Text " ", Node "li" [] [ Text " " ], Node "li" [] [ Text " " ] ]))
-    , test "optional-end-tag" (testParse "<ol><li></ol>" (Node "ol" [] [ Node "li" [] [] ]))
-    , test "optional-end-tag" (testParse "<tbody><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ] ]))
-    , test "optional-end-tag" (testParse "<tbody><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
-    , test "optional-end-tag" (testParse "<tbody><tr><td><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ], Node "tr" [] [ Node "td" [] [] ] ]))
-    , test "optional-end-tag" (testParse "<tbody><tr><th><td><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ], Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
-    , test "optional-end-tag" (testParse "<table><tr><td><tr><td></table>" (Node "table" [] [ Node "tr" [] [ Node "td" [] [] ], Node "tr" [] [ Node "td" [] [] ] ]))
+    ]
+
+
+optionalEndTagTests : Test
+optionalEndTagTests =
+  suite "optionalEndTag"
+    [ test "ul" (testParse "<ul><li></li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
+    , test "ul" (testParse "<ul><li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
+    , test "ul" (testParse "<ul><li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
+    , test "ul" (testParse "<ul><li></li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
+    , test "ul" (testParse "<ul><li><li></li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
+    , test "ul" (testParse "<ul><li><ul></ul></ul>" (Node "ul" [] [ Node "li" [] [ Node "ul" [] [] ] ]))
+    , test "ul" (testParse "<ul> <li> <li> </ul>" (Node "ul" [] [ Text " ", Node "li" [] [ Text " " ], Node "li" [] [ Text " " ] ]))
+    , test "ol" (testParse "<ol><li></ol>" (Node "ol" [] [ Node "li" [] [] ]))
+    , test "tr" (testParse "<tr><td></tr>" (Node "tr" [] [ Node "td" [] [] ]))
+    , test "tr" (testParse "<tr><td><td></tr>" (Node "tr" [] [ Node "td" [] [], Node "td" [] [] ]))
+    , test "tr" (testParse "<tr><th></tr>" (Node "tr" [] [ Node "th" [] [] ]))
+    , test "tr" (testParse "<tr><th><th></tr>" (Node "tr" [] [ Node "th" [] [], Node "th" [] [] ]))
+    , test "tr" (testParse "<tr><th><td></tr>" (Node "tr" [] [ Node "th" [] [], Node "td" [] [] ]))
+    , test "tr" (testParse "<tr><td><th></tr>" (Node "tr" [] [ Node "td" [] [], Node "th" [] [] ]))
+    , test "tbody" (testParse "<tbody><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ] ]))
+    , test "tbody" (testParse "<tbody><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
+    , test "tbody" (testParse "<tbody><tr><td><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ], Node "tr" [] [ Node "td" [] [] ] ]))
+    , test "tbody" (testParse "<tbody><tr><th><td><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ], Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
+    , test "table" (testParse "<table><caption></table>" (Node "table" [] [ Node "caption" [] [] ]))
+    , test "table" (testParse "<table><caption><col></table>" (Node "table" [] [ Node "caption" [] [], Node "col" [] [] ]))
+    , test "table" (testParse "<table><caption><colgroup><col></table>" (Node "table" [] [ Node "caption" [] [], Node "colgroup" [] [ Node "col" [] [] ] ]))
+    , test "table" (testParse "<table><colgroup><col></table>" (Node "table" [] [ Node "colgroup" [] [ Node "col" [] [] ] ]))
+    ]
+
+
+scriptTests : Test
+scriptTests =
+  suite "Script"
+    [ test "script" (testParse """<script></script>""" (Node "script" [] []))
+    , test "script" (testParse """<script src="script.js">foo</script>""" (Node "script" [("src", StringValue "script.js")] [ Text "foo" ]))
+    , test "script" (testParse """<script><!----></script>""" (Node "script" [] [ Comment "" ]))
+    , test "script" (testParse """<script>a<!--</script><script>-->b</script>""" (Node "script" [] [ Text "a", Comment "</script><script>", Text "b" ]))
+    , test "style" (testParse """<style>a<!--</style><style>-->b</style>""" (Node "style" [] [ Text "a", Comment "</style><style>", Text "b" ]))
     ]
 
 
@@ -132,6 +158,8 @@ tests =
   suite "HtmlParser"
     [ textNodeTests
     , nodeTests
+    , optionalEndTagTests
+    , scriptTests
     , commentTests
     , attributeTests
     , intergrationTests

@@ -1,4 +1,4 @@
-module HtmlParser.AST exposing (..)
+module Internal.AST exposing (..)
 
 
 type AttributeValue
