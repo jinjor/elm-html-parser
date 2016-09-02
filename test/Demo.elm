@@ -6,10 +6,11 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import HtmlParser exposing (..)
 
-
 port init : (String -> msg) -> Sub msg
 
 port input : (String -> msg) -> Sub msg
+
+port parse : ({} -> msg) -> Sub msg
 
 
 main : Program Never
@@ -18,7 +19,12 @@ main =
     { init = initialModel ! []
     , update = \msg model -> (update msg model) ! []
     , view = view
-    , subscriptions = \_ -> Sub.batch [init Init, input Input]
+    , subscriptions = \_ ->
+        Sub.batch
+          [ init Init
+          , input Input
+          , parse (always Show)
+          ]
     }
 
 
@@ -71,9 +77,13 @@ view : Model Msg -> Html Msg
 view model =
   div []
     [ h1 [ style [] ] [ text "HtmlParser DEMO" ]
+    , p []
+      [ text "Press Ctrl+S to show result ("
+      , a [ href "https://github.com/jinjor/elm-html-parser" ] [ text "Source" ]
+      , text ")"
+      ]
     , div [ style [("display", "flex")] ]
-      [ div [ id "editor", style [("height", "500px"), ("flex-grow", "1"), ("border", "solid 1px #aaa")] ] [ text """<h1 style="color:#3a6">Hello!</h1>"""]
-      , div [ style [], onClick Show ] [ button [ style [("width", "50px"), ("height", "50px")] ] [ text "parse"] ]
+      [ div [ id "editor", style [("height", "500px"), ("width", "50%"), ("border", "solid 1px #aaa")] ] [ text """<h1 style="color:#3a6">Hello!</h1>"""]
       , div [ style [("min-height", "500px"), ("flex-grow", "1"), ("border", "solid 1px #aaa")] ] model.dest
       ]
     ]

@@ -15,10 +15,29 @@
   var app = Elm.Demo.fullscreen();
   setTimeout(function() {
     var editor = ace.edit('editor');
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/html");
     editor.on("change", function(e) {
       app.ports.input.send(editor.getValue());
     });
     app.ports.init.send(editor.getValue());
+    var commandKey = false;
+    window.addEventListener('keydown', function(e) {
+      if(e.keyCode == 91 || e.keyCode == 93 || e.keyCode == 224 || e.keyCode == 17) {
+        commandKey = true;
+      }
+    }, true);
+    window.addEventListener('keyup', function(e) {
+      if(e.keyCode == 91 || e.keyCode == 93 || e.keyCode == 224 || e.keyCode == 17) {
+        commandKey = false;
+      }
+    }, true);
+    window.addEventListener('keydown', function(e) {
+      if((e.ctrlKey || commandKey) && e.keyCode == 83) {
+        e.preventDefault();
+        app.ports.parse.send({});
+      }
+    }, true);
   });
   </script>
 </body>

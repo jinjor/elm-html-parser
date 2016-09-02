@@ -9399,6 +9399,89 @@ var _user$project$Demo$toVirtualDom = function (node) {
 			return _elm_lang$html$Html$text('');
 	}
 };
+var _user$project$Demo$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$h1,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[]))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('HtmlParser DEMO')
+					])),
+				A2(
+				_elm_lang$html$Html$p,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Press Ctrl+S to show result ('),
+						A2(
+						_elm_lang$html$Html$a,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$href('https://github.com/jinjor/elm-html-parser')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Source')
+							])),
+						_elm_lang$html$Html$text(')')
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'display', _1: 'flex'}
+							]))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$id('editor'),
+								_elm_lang$html$Html_Attributes$style(
+								_elm_lang$core$Native_List.fromArray(
+									[
+										{ctor: '_Tuple2', _0: 'height', _1: '500px'},
+										{ctor: '_Tuple2', _0: 'width', _1: '50%'},
+										{ctor: '_Tuple2', _0: 'border', _1: 'solid 1px #aaa'}
+									]))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('<h1 style=\"color:#3a6\">Hello!</h1>')
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$style(
+								_elm_lang$core$Native_List.fromArray(
+									[
+										{ctor: '_Tuple2', _0: 'min-height', _1: '500px'},
+										{ctor: '_Tuple2', _0: 'flex-grow', _1: '1'},
+										{ctor: '_Tuple2', _0: 'border', _1: 'solid 1px #aaa'}
+									]))
+							]),
+						model.dest)
+					]))
+			]));
+};
 var _user$project$Demo$show = function (model) {
 	return _elm_lang$core$Native_Utils.update(
 		model,
@@ -9443,102 +9526,15 @@ var _user$project$Demo$initialModel = {
 };
 var _user$project$Demo$init = _elm_lang$core$Native_Platform.incomingPort('init', _elm_lang$core$Json_Decode$string);
 var _user$project$Demo$input = _elm_lang$core$Native_Platform.incomingPort('input', _elm_lang$core$Json_Decode$string);
+var _user$project$Demo$parse = _elm_lang$core$Native_Platform.incomingPort(
+	'parse',
+	_elm_lang$core$Json_Decode$succeed(
+		{}));
 var _user$project$Demo$Model = F2(
 	function (a, b) {
 		return {src: a, dest: b};
 	});
 var _user$project$Demo$Show = {ctor: 'Show'};
-var _user$project$Demo$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$h1,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(
-						_elm_lang$core$Native_List.fromArray(
-							[]))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('HtmlParser DEMO')
-					])),
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(
-						_elm_lang$core$Native_List.fromArray(
-							[
-								{ctor: '_Tuple2', _0: 'display', _1: 'flex'}
-							]))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$div,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('editor'),
-								_elm_lang$html$Html_Attributes$style(
-								_elm_lang$core$Native_List.fromArray(
-									[
-										{ctor: '_Tuple2', _0: 'height', _1: '500px'},
-										{ctor: '_Tuple2', _0: 'flex-grow', _1: '1'},
-										{ctor: '_Tuple2', _0: 'border', _1: 'solid 1px #aaa'}
-									]))
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('<h1 style=\"color:#3a6\">Hello!</h1>')
-							])),
-						A2(
-						_elm_lang$html$Html$div,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$style(
-								_elm_lang$core$Native_List.fromArray(
-									[])),
-								_elm_lang$html$Html_Events$onClick(_user$project$Demo$Show)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								A2(
-								_elm_lang$html$Html$button,
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$html$Html_Attributes$style(
-										_elm_lang$core$Native_List.fromArray(
-											[
-												{ctor: '_Tuple2', _0: 'width', _1: '50px'},
-												{ctor: '_Tuple2', _0: 'height', _1: '50px'}
-											]))
-									]),
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$html$Html$text('parse')
-									]))
-							])),
-						A2(
-						_elm_lang$html$Html$div,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$style(
-								_elm_lang$core$Native_List.fromArray(
-									[
-										{ctor: '_Tuple2', _0: 'min-height', _1: '500px'},
-										{ctor: '_Tuple2', _0: 'flex-grow', _1: '1'},
-										{ctor: '_Tuple2', _0: 'border', _1: 'solid 1px #aaa'}
-									]))
-							]),
-						model.dest)
-					]))
-			]));
-};
 var _user$project$Demo$Input = function (a) {
 	return {ctor: 'Input', _0: a};
 };
@@ -9567,7 +9563,9 @@ var _user$project$Demo$main = {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_user$project$Demo$init(_user$project$Demo$Init),
-							_user$project$Demo$input(_user$project$Demo$Input)
+							_user$project$Demo$input(_user$project$Demo$Input),
+							_user$project$Demo$parse(
+							_elm_lang$core$Basics$always(_user$project$Demo$Show))
 						]));
 			}
 		})
