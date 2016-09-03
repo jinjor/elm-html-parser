@@ -14,6 +14,17 @@ var codeToSymbol = rows.map(row => {
     return null;
   }
 });
+var code16ToSymbol = rows.map(row => {
+  var r = row.split('\t');
+  var code = r[1] ? r[1].trim() : null;
+  if(code) {
+    code = '&#x' + (+code.split('&#')[1].split(';')[0]).toString(16).toUpperCase() + ';';
+    var symbol = r[0].length > 1 ? ' ' : r[0] == '"' ? '\\"' : r[0] == '\\' ? '\\\\' : r[0];
+    return `("${code}", "${symbol}")`;
+  } else {
+    return null;
+  }
+});
 var nameToSymbol = rows.map(row => {
   var r = row.split('\t');
   var name = r[2] ? r[2].trim() : null;
@@ -24,7 +35,7 @@ var nameToSymbol = rows.map(row => {
     return null;
   }
 });
-var pairs = codeToSymbol.concat(nameToSymbol).filter(x => {
+var pairs = codeToSymbol.concat(code16ToSymbol).concat(nameToSymbol).filter(x => {
   return !!x;
 }).join('\n    , ');
 

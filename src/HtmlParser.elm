@@ -232,12 +232,9 @@ attributeString quote =
 entityString : Parser String
 entityString =
   (\code ->
-    case Dict.get code Escape.dict of
-      Just s ->
-        s
-
-      Nothing ->
-        code
+    Maybe.withDefault
+      code
+      (Dict.get code Escape.dict)
   )
   `map` (regex "&[#0-9a-zA-Z]*;")
 
@@ -260,12 +257,10 @@ singleNode =
 startTag : Parser (String, List (String, String))
 startTag =
   rec (\_ ->
-    (\_ tagName _ attrs _ _ -> (String.toLower tagName, attrs))
+    (\_ tagName attrs _ -> (String.toLower tagName, attrs))
     `map` string "<"
     `andMap` tagName
-    `andMap` spaces
-    `andMap` sepBy spaces attribute
-    `andMap` spaces
+    `andMap` between spaces spaces (sepBy spaces attribute)
     `andMap` string ">"
   )
 
