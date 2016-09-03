@@ -200,9 +200,8 @@ normalNode parentTagName =
   rec (\_ ->
     startTag `andThen` \(tagName, attrs) ->
       if tagName == "script" || tagName == "style" then
-        (\children _ -> Node tagName attrs children)
-        `map` many (commentNode `or` textNode)
-        `andMap` endTag tagName
+        (\children -> Node tagName attrs children)
+        `map` untilScriptEnd tagName
       else if isInvalidNest parentTagName tagName then
         fail []
       else if Set.member tagName startTagOnly then
@@ -245,7 +244,7 @@ textNodeStringEscape =
 
 textNodeStringNonEscape : Parser String
 textNodeStringNonEscape =
-  regex "[^<]*"
+  regex "[^<^&]*"
 
 
 singleNode : Parser HtmlNode
@@ -300,10 +299,38 @@ singleTag =
 
 commentNode : Parser HtmlNode
 commentNode =
-  map Comment comment
+  string "<!--" *> untilCommentEnd
 
 
-comment : Parser String
-comment =
+untilCommentEnd : Parser HtmlNode
+untilCommentEnd =
+  map Comment <|
   map String.fromList <|
-  string "<!--" *> manyTill Combine.Char.anyChar (string "-->")
+  manyTill Combine.Char.anyChar (string "-->")
+
+
+untilScriptEnd : String -> Parser (List HtmlNode)
+untilScriptEnd tagName =
+  rec (\_ ->
+    (\(s, rest) -> if s == "" then rest else Text s :: rest)
+    `map` untilScriptEndHelp tagName
+  )
+
+
+untilScriptEndHelp : String -> Parser (String, List HtmlNode)
+untilScriptEndHelp tagName =
+  rec (\_ ->
+    (regex "[^<]*") `andThen` \s ->
+      ( (\_ comment rest -> (s, comment :: rest))
+        `map` string "<!--"
+        `andMap` untilCommentEnd
+        `andMap` untilScriptEnd tagName
+      ) `or`
+      ( (\_ -> (s, []))
+        `map` endTag tagName
+      ) `or`
+      ( (\lt (next, rest) -> (s ++ lt ++ next, rest))
+        `map` string "<"
+        `andMap` untilScriptEndHelp tagName
+      )
+  )
