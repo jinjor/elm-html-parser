@@ -113,17 +113,16 @@ attributeValue =
 
 attributeNameValuePair : Parser (String, String)
 attributeNameValuePair =
-  (\name _ _ _ value -> (name, value))
+  (\name _ value -> (String.toLower name, value))
   `map` attributeName
-  `andMap` spaces
-  `andMap` string "="
-  `andMap` spaces
+  `andMap` between spaces spaces (string "=")
   `andMap` attributeValue
 
 
 attribute : Parser (String, String)
 attribute =
-  attributeNameValuePair `or` map (flip (,) "") attributeName
+  attributeNameValuePair `or`
+  map (String.toLower >> flip (,) "") attributeName
 
 
 startTagOnly : Set String
