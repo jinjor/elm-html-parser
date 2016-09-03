@@ -1,11 +1,11 @@
 module HtmlParser exposing
-  ( Node(..)
+  ( Node(..), Attributes
   , parse, parseOne
   )
 
 {-|
 # AST
-@docs Node
+@docs Node, Attributes
 
 # Parse
 @docs parse, parseOne
@@ -24,8 +24,14 @@ import Dict
 -}
 type Node
   = Text String
-  | Element String (List (String, String)) (List Node)
+  | Element String Attributes (List Node)
   | Comment String
+
+
+{-| Attributes of a node
+-}
+type alias Attributes =
+  List (String, String)
 
 
 {-| Parses HTML. The input string is trimmed before parsing.

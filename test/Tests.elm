@@ -3,7 +3,7 @@ module Tests exposing (..)
 import String
 import Combine as RawParser exposing (..)
 import HtmlParser as HtmlParser exposing (..)
-import HtmlParser.Search as Search
+import HtmlParser.Search exposing (..)
 import ElmTest exposing (..)
 
 
@@ -147,9 +147,9 @@ attributeTests =
 intergrationTests : Test
 intergrationTests =
   suite "Integration"
-    [ test "table" (testParseComplex (\nodes -> (List.length <| Search.getElementsByTagName "td" nodes) == 15) fullOmission)
-    , test "table" (testParseComplex (\nodes -> (List.length <| Search.getElementsByTagName "td" nodes) == 18) clipboardFromExcel2013)
-    , test "table" (testParseComplex (\nodes -> (List.length <| Search.getElementsByTagName "td" nodes) == 18) clipboardFromOpenOfficeCalc)
+    [ test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 15) fullOmission)
+    , test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 18) clipboardFromExcel2013)
+    , test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 18) clipboardFromOpenOfficeCalc)
     ]
 
 
@@ -256,9 +256,9 @@ clipboardFromOpenOfficeCalc = """
   """
 
 
-tests : Test
-tests =
-  suite "HtmlParser"
+parserTests : Test
+parserTests =
+  suite "Parser"
     [ textNodeTests
     , nodeTests
     , optionalEndTagTests
@@ -266,6 +266,45 @@ tests =
     , commentTests
     , attributeTests
     , intergrationTests
+    ]
+
+
+testSearch : List String -> (List Node -> List Node) -> String -> Assertion
+testSearch idList f s =
+  case HtmlParser.parse s of
+    Ok nodes ->
+      assertEqual idList (filterMapElements (\_ attrs _ -> getId attrs) (f nodes))
+
+    Err e ->
+      ElmTest.fail (toString e)
+
+
+getElementsById : String -> List Node -> List Node
+getElementsById id nodes =
+  case getElementById id nodes of
+    Just x -> [x]
+    Nothing -> []
+
+
+searchTests : Test
+searchTests =
+  suite "Search"
+    [ test "tag" (testSearch [] (getElementsByTagName "input") "<img id=1>")
+    , test "tag" (testSearch ["1"] (getElementsByTagName "img") "<img id=1>")
+    , test "tag" (testSearch ["1", "2"] (getElementsByTagName "img") "<img id=1><img id=2>")
+    , test "class" (testSearch [] (getElementsByClassName "c") "<img class=0 id=1>")
+    , test "class" (testSearch ["1"] (getElementsByClassName "c") "<img class=c id=1>")
+    , test "class" (testSearch ["1", "2"] (getElementsByClassName "c") "<img class=c id=1><img class=c id=2>")
+    , test "id" (testSearch ["1"] (getElementsById "1") "<img id=1>")
+    , test "id" (testSearch [] (getElementsById "1") "<img id=0>")
+    ]
+
+
+tests : Test
+tests =
+  suite "HtmlParser"
+    [ parserTests
+    , searchTests
     ]
 
 
