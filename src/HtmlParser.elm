@@ -103,8 +103,8 @@ attributeValueNumber =
 
 attributeValueString : Parser AttributeValue
 attributeValueString =
-  map StringValue (between (string "\"") (string "\"") (regex """(\\\\"|[^"])*""")) `or`
-  map StringValue (between (string "'") (string "'") (regex """(\\\\'|[^'])*"""))
+  map StringValue (between (string "\"") (string "\"") (attributeString "\"")) `or`
+  map StringValue (between (string "'") (string "'") (attributeString "'"))
 
 
 attributeValueBareString : Parser AttributeValue
@@ -226,11 +226,17 @@ textNode =
 textNodeString : Parser String
 textNodeString =
   (\list -> String.join "" list)
-  `map` many (textNodeStringEscape `or` textNodeStringNonEscape)
+  `map` many (entityString `or` textNodeNonEntityString)
 
 
-textNodeStringEscape : Parser String
-textNodeStringEscape =
+attributeString : String -> Parser String
+attributeString quote =
+  (\list -> String.join "" list)
+  `map` many (entityString `or` attributeValueEntityString quote)
+
+
+entityString : Parser String
+entityString =
   (\code ->
     case Dict.get code Escape.dict of
       Just s ->
@@ -242,9 +248,14 @@ textNodeStringEscape =
   `map` (regex "&[#0-9a-zA-Z]*;")
 
 
-textNodeStringNonEscape : Parser String
-textNodeStringNonEscape =
+textNodeNonEntityString : Parser String
+textNodeNonEntityString =
   regex "[^<^&]*"
+
+
+attributeValueEntityString : String -> Parser String
+attributeValueEntityString quote =
+  regex ("[^<^&^" ++ quote ++ "]*")
 
 
 singleNode : Parser HtmlNode

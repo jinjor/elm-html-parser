@@ -47,6 +47,7 @@ textNodeTests =
     , test "decode" (testParse "a&nbsp;b" (Text "a b"))
     , test "decode" (testParse "a&nbsp;&nbsp;b" (Text "a  b"))
     , test "decode" (testParse "&#20;" (Text "&#20;"))
+    , test "decode" (testParse """<img alt="&lt;">""" (Node "img" [("alt", StringValue "<")] []))
     ]
 
 

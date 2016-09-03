@@ -9560,8 +9560,15 @@ var _user$project$HtmlParser$untilEndTag = function (tagName) {
 			_Bogdanp$elm_combine$Combine_Char$anyChar,
 			_user$project$HtmlParser$endTag(tagName)));
 };
-var _user$project$HtmlParser$textNodeStringNonEscape = _Bogdanp$elm_combine$Combine$regex('[^<^&]*');
-var _user$project$HtmlParser$textNodeStringEscape = A2(
+var _user$project$HtmlParser$attributeValueEntityString = function (quote) {
+	return _Bogdanp$elm_combine$Combine$regex(
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'[^<^&^',
+			A2(_elm_lang$core$Basics_ops['++'], quote, ']*')));
+};
+var _user$project$HtmlParser$textNodeNonEntityString = _Bogdanp$elm_combine$Combine$regex('[^<^&]*');
+var _user$project$HtmlParser$entityString = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	function (code) {
 		var _p3 = A2(_elm_lang$core$Dict$get, code, _user$project$Escape$dict);
@@ -9572,13 +9579,25 @@ var _user$project$HtmlParser$textNodeStringEscape = A2(
 		}
 	},
 	_Bogdanp$elm_combine$Combine$regex('&[#0-9a-zA-Z]*;'));
+var _user$project$HtmlParser$attributeString = function (quote) {
+	return A2(
+		_Bogdanp$elm_combine$Combine$map,
+		function (list) {
+			return A2(_elm_lang$core$String$join, '', list);
+		},
+		_Bogdanp$elm_combine$Combine$many(
+			A2(
+				_Bogdanp$elm_combine$Combine$or,
+				_user$project$HtmlParser$entityString,
+				_user$project$HtmlParser$attributeValueEntityString(quote))));
+};
 var _user$project$HtmlParser$textNodeString = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	function (list) {
 		return A2(_elm_lang$core$String$join, '', list);
 	},
 	_Bogdanp$elm_combine$Combine$many(
-		A2(_Bogdanp$elm_combine$Combine$or, _user$project$HtmlParser$textNodeStringEscape, _user$project$HtmlParser$textNodeStringNonEscape)));
+		A2(_Bogdanp$elm_combine$Combine$or, _user$project$HtmlParser$entityString, _user$project$HtmlParser$textNodeNonEntityString)));
 var _user$project$HtmlParser$ngSetForP = _elm_lang$core$Set$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		['address', 'article', 'aside', 'blockquote', 'details', 'div', 'dl', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul']));
@@ -9732,7 +9751,7 @@ var _user$project$HtmlParser$attributeValueString = A2(
 			_Bogdanp$elm_combine$Combine$between,
 			_Bogdanp$elm_combine$Combine$string('\"'),
 			_Bogdanp$elm_combine$Combine$string('\"'),
-			_Bogdanp$elm_combine$Combine$regex('(\\\\\"|[^\"])*'))),
+			_user$project$HtmlParser$attributeString('\"'))),
 	A2(
 		_Bogdanp$elm_combine$Combine$map,
 		_user$project$HtmlParser$StringValue,
@@ -9740,7 +9759,7 @@ var _user$project$HtmlParser$attributeValueString = A2(
 			_Bogdanp$elm_combine$Combine$between,
 			_Bogdanp$elm_combine$Combine$string('\''),
 			_Bogdanp$elm_combine$Combine$string('\''),
-			_Bogdanp$elm_combine$Combine$regex('(\\\\\'|[^\'])*'))));
+			_user$project$HtmlParser$attributeString('\''))));
 var _user$project$HtmlParser$attributeValueBareString = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	_user$project$HtmlParser$StringValue,
