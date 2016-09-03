@@ -1,11 +1,11 @@
 module HtmlParser exposing
-  ( HtmlNode(..)
+  ( Node(..)
   , parse, parseOne
   )
 
 {-|
 # AST
-@docs HtmlNode
+@docs Node
 
 # Parse
 @docs parse, parseOne
@@ -22,9 +22,9 @@ import Dict
 
 {-| The AST of node
 -}
-type HtmlNode
+type Node
   = Text String
-  | Node String (List (String, String)) (List HtmlNode)
+  | Element String (List (String, String)) (List Node)
   | Comment String
 
 
@@ -34,14 +34,14 @@ type HtmlNode
 parse "text" == [ Text "text" ]
 
 parse "<h1>Hello<br>World</h1> "
-  == [ Node "h1" [] [ Text "Hello", Node "br" [] [], Text "World" ] ]
+  == [ Element "h1" [] [ Text "Hello", Element "br" [] [], Text "World" ] ]
 
 parse "<a href="http://example.com">Example</a>"
-  == [ Node "a" [("href", StringValue "http://example.com")] [ Text "Example" ] ]
+  == [ Element "a" [("href", StringValue "http://example.com")] [ Text "Example" ] ]
 ```
 
 -}
-parse : String -> Result (List String) (List HtmlNode)
+parse : String -> Result (List String) (List Node)
 parse s =
   fst (Combine.parse nodesAndEnd (String.trim s))
 
@@ -50,11 +50,11 @@ parse s =
 ```elm
 parseOne "text" == Text "text"
 
-parseOne "<h1>Hello</h1><p>bla bla</p>" == Node "h1" [] [ Text "Hello" ]
+parseOne "<h1>Hello</h1><p>bla bla</p>" == Element "h1" [] [ Text "Hello" ]
 ```
 
 -}
-parseOne : String -> Result (List String) HtmlNode
+parseOne : String -> Result (List String) Node
 parseOne s =
   fst (Combine.parse (node "") (String.trim s))
 
@@ -62,7 +62,7 @@ parseOne s =
 -- PARSER
 
 
-nodesAndEnd : Parser (List HtmlNode)
+nodesAndEnd : Parser (List Node)
 nodesAndEnd =
   (\nodes _ -> nodes)
   `map` many (node "")
@@ -172,7 +172,7 @@ isInvalidNest tagName childTagName =
   (tagName == "th" && (childTagName == "td" || childTagName == "th" || childTagName == "tr" || childTagName == "tbody" || childTagName == "tfoot"))
 
 
-node : String -> Parser HtmlNode
+node : String -> Parser Node
 node parentTagName =
   rec (\_ ->
     doctypeNode `or`
@@ -183,24 +183,24 @@ node parentTagName =
   )
 
 
-doctypeNode : Parser HtmlNode
+doctypeNode : Parser Node
 doctypeNode =
-  map (\_ -> Node "!DOCTYPE" [] []) (regex "<!DOCTYPE [^>]*>")
+  map (\_ -> Element "!DOCTYPE" [] []) (regex "<!DOCTYPE [^>]*>")
 
 
-normalNode : String -> Parser HtmlNode
+normalNode : String -> Parser Node
 normalNode parentTagName =
   rec (\_ ->
     startTag `andThen` \(tagName, attrs) ->
       if tagName == "script" || tagName == "style" then
-        (\children -> Node tagName attrs children)
+        (\children -> Element tagName attrs children)
         `map` untilScriptEnd tagName
       else if isInvalidNest parentTagName tagName then
         fail []
       else if Set.member tagName startTagOnly then
-        succeed (Node tagName attrs [])
+        succeed (Element tagName attrs [])
       else
-        (\children _ -> Node tagName attrs children)
+        (\children _ -> Element tagName attrs children)
         `map` many (node tagName)
         `andMap`
           ( if Set.member tagName optionalEndTag then
@@ -211,7 +211,7 @@ normalNode parentTagName =
   )
 
 
-textNode : Parser HtmlNode
+textNode : Parser Node
 textNode =
   map Text textNodeString
 
@@ -248,9 +248,9 @@ attributeValueEntityString quote =
   regex ("[^<^&^" ++ quote ++ "]*")
 
 
-singleNode : Parser HtmlNode
+singleNode : Parser Node
 singleNode =
-  map (\(tagName, attrs) -> Node tagName attrs []) singleTag
+  map (\(tagName, attrs) -> Element tagName attrs []) singleTag
 
 
 startTag : Parser (String, List (String, String))
@@ -294,19 +294,19 @@ singleTag =
   (flip always) `map` lp `andMap` rp
 
 
-commentNode : Parser HtmlNode
+commentNode : Parser Node
 commentNode =
   string "<!--" *> untilCommentEnd
 
 
-untilCommentEnd : Parser HtmlNode
+untilCommentEnd : Parser Node
 untilCommentEnd =
   map Comment <|
   map String.fromList <|
   manyTill Combine.Char.anyChar (string "-->")
 
 
-untilScriptEnd : String -> Parser (List HtmlNode)
+untilScriptEnd : String -> Parser (List Node)
 untilScriptEnd tagName =
   rec (\_ ->
     (\(s, rest) -> if s == "" then rest else Text s :: rest)
@@ -314,7 +314,7 @@ untilScriptEnd tagName =
   )
 
 
-untilScriptEndHelp : String -> Parser (String, List HtmlNode)
+untilScriptEndHelp : String -> Parser (String, List Node)
 untilScriptEndHelp tagName =
   rec (\_ ->
     (regex "[^<]*") `andThen` \s ->

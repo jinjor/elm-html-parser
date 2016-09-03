@@ -10102,15 +10102,15 @@ var _user$project$HtmlParser$commentNode = A2(
 	_user$project$HtmlParser_ops['*>'],
 	_Bogdanp$elm_combine$Combine$string('<!--'),
 	_user$project$HtmlParser$untilCommentEnd);
-var _user$project$HtmlParser$Node = F3(
+var _user$project$HtmlParser$Element = F3(
 	function (a, b, c) {
-		return {ctor: 'Node', _0: a, _1: b, _2: c};
+		return {ctor: 'Element', _0: a, _1: b, _2: c};
 	});
 var _user$project$HtmlParser$doctypeNode = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	function (_p11) {
 		return A3(
-			_user$project$HtmlParser$Node,
+			_user$project$HtmlParser$Element,
 			'!DOCTYPE',
 			_elm_lang$core$Native_List.fromArray(
 				[]),
@@ -10123,7 +10123,7 @@ var _user$project$HtmlParser$singleNode = A2(
 	function (_p12) {
 		var _p13 = _p12;
 		return A3(
-			_user$project$HtmlParser$Node,
+			_user$project$HtmlParser$Element,
 			_p13._0,
 			_p13._1,
 			_elm_lang$core$Native_List.fromArray(
@@ -10224,13 +10224,13 @@ var _user$project$HtmlParser$normalNode = function (parentTagName) {
 					return (_elm_lang$core$Native_Utils.eq(_p29, 'script') || _elm_lang$core$Native_Utils.eq(_p29, 'style')) ? A2(
 						_Bogdanp$elm_combine$Combine$map,
 						function (children) {
-							return A3(_user$project$HtmlParser$Node, _p29, _p28, children);
+							return A3(_user$project$HtmlParser$Element, _p29, _p28, children);
 						},
 						_user$project$HtmlParser$untilScriptEnd(_p29)) : (A2(_user$project$HtmlParser$isInvalidNest, parentTagName, _p29) ? _Bogdanp$elm_combine$Combine$fail(
 						_elm_lang$core$Native_List.fromArray(
 							[])) : (A2(_elm_lang$core$Set$member, _p29, _user$project$HtmlParser$startTagOnly) ? _Bogdanp$elm_combine$Combine$succeed(
 						A3(
-							_user$project$HtmlParser$Node,
+							_user$project$HtmlParser$Element,
 							_p29,
 							_p28,
 							_elm_lang$core$Native_List.fromArray(
@@ -10240,7 +10240,7 @@ var _user$project$HtmlParser$normalNode = function (parentTagName) {
 							_Bogdanp$elm_combine$Combine$map,
 							F2(
 								function (children, _p27) {
-									return A3(_user$project$HtmlParser$Node, _p29, _p28, children);
+									return A3(_user$project$HtmlParser$Element, _p29, _p28, children);
 								}),
 							_Bogdanp$elm_combine$Combine$many(
 								_user$project$HtmlParser$node(_p29))),
@@ -10298,7 +10298,7 @@ var _user$project$Demo$toAttribute = function (_p0) {
 var _user$project$Demo$toVirtualDom = function (node) {
 	var _p2 = node;
 	switch (_p2.ctor) {
-		case 'Node':
+		case 'Element':
 			return A3(
 				_elm_lang$html$Html$node,
 				_p2._0,

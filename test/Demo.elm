@@ -89,10 +89,10 @@ view model =
     ]
 
 
-toVirtualDom : HtmlNode -> Html msg
+toVirtualDom : Node -> Html msg
 toVirtualDom node =
   case node of
-    Node name attrs children ->
+    Element name attrs children ->
       Html.node name (List.map toAttribute attrs) (List.map toVirtualDom children)
 
     Text s ->

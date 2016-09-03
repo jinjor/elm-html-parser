@@ -3,32 +3,23 @@ module Tests exposing (..)
 import String
 import Combine as RawParser exposing (..)
 import HtmlParser as HtmlParser exposing (..)
+import HtmlParser.Search as Search
 import ElmTest exposing (..)
 
 
-contains : List String -> List String -> Result a b -> Assertion
-contains tagList ngTagList r =
-  case r of
-    Ok ast ->
-      if not <| List.all (\tagName -> String.contains tagName (toString ast)) tagList then
-        ElmTest.fail ("Expected all of tags" ++ toString tagList ++ " are contained, but got " ++ toString ast)
-      else if List.any (\tagName -> String.contains tagName (toString ast)) ngTagList then
-        ElmTest.fail ("Expected any of tags" ++ toString ngTagList ++ " are not contained, but got " ++ toString ast)
-      else
-        ElmTest.pass
-
-    e ->
-      ElmTest.fail (toString e)
-
-
-testParse : String -> HtmlNode -> Assertion
+testParse : String -> Node -> Assertion
 testParse s ast =
   assertEqual (Ok ast) (HtmlParser.parseOne s)
 
 
-testParseComplex : List String -> List String -> String -> Assertion
-testParseComplex tagList ngTagList s =
-  contains tagList ngTagList (HtmlParser.parseOne s)
+testParseComplex : (List Node -> Bool) -> String -> Assertion
+testParseComplex f s =
+  case HtmlParser.parse s of
+    Ok nodes ->
+      assert (f nodes)
+
+    Err e ->
+      ElmTest.fail (toString e)
 
 
 textNodeTests : Test
@@ -50,76 +41,76 @@ textNodeTests =
     , test "decode" (testParse "a&nbsp;b" (Text "a b"))
     , test "decode" (testParse "a&nbsp;&nbsp;b" (Text "a  b"))
     , test "decode" (testParse "&#20;" (Text "&#20;"))
-    , test "decode" (testParse """<img alt="&lt;">""" (Node "img" [("alt", "<")] []))
+    , test "decode" (testParse """<img alt="&lt;">""" (Element "img" [("alt", "<")] []))
     ]
 
 
 nodeTests : Test
 nodeTests =
   suite "Node"
-    [ test "basic" (testParse "<a></a>" (Node "a" [] []))
-    , test "basic" (testParse " <a></a> " (Node "a" [] []))
-    , test "basic" (testParse "<A></A>" (Node "a" [] []))
-    , test "basic" (testParse "<a>a</a>" (Node "a" [] [ Text "a" ]))
-    , test "basic" (testParse "<a> a </a>" (Node "a" [] [ Text " a " ]))
-    , test "basic" (testParse "<a />" (Node "a" [] []))
-    , test "basic" (testParse "<br />" (Node "br" [] []))
-    , test "basic" (testParse "<a><a></a></a>" (Node "a" [] [ Node "a" [] [] ]))
-    , test "basic" (testParse "<a> <a> </a> </a>" (Node "a" [] [ Text " ", Node "a" [] [ Text " " ], Text " " ]))
-    , test "basic" (testParse "<a><a/></a>" (Node "a" [] [ Node "a" [] [] ]))
-    , test "basic" (testParse "<a> <br /> </a>" (Node "a" [] [ Text " ", Node "br" [] [], Text " " ]))
-    , test "basic" (testParse "<a><a></a><a></a></a>" (Node "a" [] [ Node "a" [] [], Node "a" [] [] ]))
-    , test "basic" (testParse "<a><a><a></a></a></a>" (Node "a" [] [ Node "a" [] [ Node "a" [] [] ] ]))
-    , test "basic" (testParse "<a><a></a><b></b></a>" (Node "a" [] [ Node "a" [] [], Node "b" [] [] ]))
-    , test "basic" (testParse "<h1></h1>" (Node "h1" [] []))
-    , test "basic" (testParse "<custom-element></custom-element>" (Node "custom-element" [] []))
-    , test "start-only-tag" (testParse "<br>" (Node "br" [] []))
-    , test "start-only-tag" (testParse "<BR>" (Node "br" [] []))
-    , test "start-only-tag" (testParse "<a> <br> </a>" (Node "a" [] [ Text " ", Node "br" [] [], Text " " ]))
-    , test "start-only-tag" (testParse "<a><br><br></a>" (Node "a" [] [ Node "br" [] [], Node "br" [] [] ]))
-    , test "start-only-tag" (testParse "<a><br><img><hr><meta></a>" (Node "a" [] [ Node "br" [] [], Node "img" [] [], Node "hr" [] [], Node "meta" [] [] ]))
-    , test "start-only-tag" (testParse "<a>foo<br>bar</a>" (Node "a" [] [ Text "foo", Node "br" [] [], Text "bar" ]))
+    [ test "basic" (testParse "<a></a>" (Element "a" [] []))
+    , test "basic" (testParse " <a></a> " (Element "a" [] []))
+    , test "basic" (testParse "<A></A>" (Element "a" [] []))
+    , test "basic" (testParse "<a>a</a>" (Element "a" [] [ Text "a" ]))
+    , test "basic" (testParse "<a> a </a>" (Element "a" [] [ Text " a " ]))
+    , test "basic" (testParse "<a />" (Element "a" [] []))
+    , test "basic" (testParse "<br />" (Element "br" [] []))
+    , test "basic" (testParse "<a><a></a></a>" (Element "a" [] [ Element "a" [] [] ]))
+    , test "basic" (testParse "<a> <a> </a> </a>" (Element "a" [] [ Text " ", Element "a" [] [ Text " " ], Text " " ]))
+    , test "basic" (testParse "<a><a/></a>" (Element "a" [] [ Element "a" [] [] ]))
+    , test "basic" (testParse "<a> <br /> </a>" (Element "a" [] [ Text " ", Element "br" [] [], Text " " ]))
+    , test "basic" (testParse "<a><a></a><a></a></a>" (Element "a" [] [ Element "a" [] [], Element "a" [] [] ]))
+    , test "basic" (testParse "<a><a><a></a></a></a>" (Element "a" [] [ Element "a" [] [ Element "a" [] [] ] ]))
+    , test "basic" (testParse "<a><a></a><b></b></a>" (Element "a" [] [ Element "a" [] [], Element "b" [] [] ]))
+    , test "basic" (testParse "<h1></h1>" (Element "h1" [] []))
+    , test "basic" (testParse "<custom-element></custom-element>" (Element "custom-element" [] []))
+    , test "start-only-tag" (testParse "<br>" (Element "br" [] []))
+    , test "start-only-tag" (testParse "<BR>" (Element "br" [] []))
+    , test "start-only-tag" (testParse "<a> <br> </a>" (Element "a" [] [ Text " ", Element "br" [] [], Text " " ]))
+    , test "start-only-tag" (testParse "<a><br><br></a>" (Element "a" [] [ Element "br" [] [], Element "br" [] [] ]))
+    , test "start-only-tag" (testParse "<a><br><img><hr><meta></a>" (Element "a" [] [ Element "br" [] [], Element "img" [] [], Element "hr" [] [], Element "meta" [] [] ]))
+    , test "start-only-tag" (testParse "<a>foo<br>bar</a>" (Element "a" [] [ Text "foo", Element "br" [] [], Text "bar" ]))
     ]
 
 
 optionalEndTagTests : Test
 optionalEndTagTests =
   suite "OptionalEndTag"
-    [ test "ul" (testParse "<ul><li></li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
-    , test "ul" (testParse "<ul><li></ul>" (Node "ul" [] [ Node "li" [] [] ]))
-    , test "ul" (testParse "<ul><li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
-    , test "ul" (testParse "<ul><li></li><li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
-    , test "ul" (testParse "<ul><li><li></li></ul>" (Node "ul" [] [ Node "li" [] [], Node "li" [] [] ]))
-    , test "ul" (testParse "<ul><li><ul></ul></ul>" (Node "ul" [] [ Node "li" [] [ Node "ul" [] [] ] ]))
-    , test "ul" (testParse "<ul> <li> <li> </ul>" (Node "ul" [] [ Text " ", Node "li" [] [ Text " " ], Node "li" [] [ Text " " ] ]))
-    , test "ol" (testParse "<ol><li></ol>" (Node "ol" [] [ Node "li" [] [] ]))
-    , test "tr" (testParse "<tr><td></tr>" (Node "tr" [] [ Node "td" [] [] ]))
-    , test "tr" (testParse "<tr><td><td></tr>" (Node "tr" [] [ Node "td" [] [], Node "td" [] [] ]))
-    , test "tr" (testParse "<tr><th></tr>" (Node "tr" [] [ Node "th" [] [] ]))
-    , test "tr" (testParse "<tr><th><th></tr>" (Node "tr" [] [ Node "th" [] [], Node "th" [] [] ]))
-    , test "tr" (testParse "<tr><th><td></tr>" (Node "tr" [] [ Node "th" [] [], Node "td" [] [] ]))
-    , test "tr" (testParse "<tr><td><th></tr>" (Node "tr" [] [ Node "td" [] [], Node "th" [] [] ]))
-    , test "tbody" (testParse "<tbody><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ] ]))
-    , test "tbody" (testParse "<tbody><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
-    , test "tbody" (testParse "<tbody><tr><td><tr><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "td" [] [] ], Node "tr" [] [ Node "td" [] [] ] ]))
-    , test "tbody" (testParse "<tbody><tr><th><td><tr><th><td></tbody>" (Node "tbody" [] [ Node "tr" [] [ Node "th" [] [], Node "td" [] [] ], Node "tr" [] [ Node "th" [] [], Node "td" [] [] ] ]))
-    , test "table" (testParse "<table><caption></table>" (Node "table" [] [ Node "caption" [] [] ]))
-    , test "table" (testParse "<table><caption><col></table>" (Node "table" [] [ Node "caption" [] [], Node "col" [] [] ]))
-    , test "table" (testParse "<table><caption><colgroup><col></table>" (Node "table" [] [ Node "caption" [] [], Node "colgroup" [] [ Node "col" [] [] ] ]))
-    , test "table" (testParse "<table><colgroup><col></table>" (Node "table" [] [ Node "colgroup" [] [ Node "col" [] [] ] ]))
+    [ test "ul" (testParse "<ul><li></li></ul>" (Element "ul" [] [ Element "li" [] [] ]))
+    , test "ul" (testParse "<ul><li></ul>" (Element "ul" [] [ Element "li" [] [] ]))
+    , test "ul" (testParse "<ul><li><li></ul>" (Element "ul" [] [ Element "li" [] [], Element "li" [] [] ]))
+    , test "ul" (testParse "<ul><li></li><li></ul>" (Element "ul" [] [ Element "li" [] [], Element "li" [] [] ]))
+    , test "ul" (testParse "<ul><li><li></li></ul>" (Element "ul" [] [ Element "li" [] [], Element "li" [] [] ]))
+    , test "ul" (testParse "<ul><li><ul></ul></ul>" (Element "ul" [] [ Element "li" [] [ Element "ul" [] [] ] ]))
+    , test "ul" (testParse "<ul> <li> <li> </ul>" (Element "ul" [] [ Text " ", Element "li" [] [ Text " " ], Element "li" [] [ Text " " ] ]))
+    , test "ol" (testParse "<ol><li></ol>" (Element "ol" [] [ Element "li" [] [] ]))
+    , test "tr" (testParse "<tr><td></tr>" (Element "tr" [] [ Element "td" [] [] ]))
+    , test "tr" (testParse "<tr><td><td></tr>" (Element "tr" [] [ Element "td" [] [], Element "td" [] [] ]))
+    , test "tr" (testParse "<tr><th></tr>" (Element "tr" [] [ Element "th" [] [] ]))
+    , test "tr" (testParse "<tr><th><th></tr>" (Element "tr" [] [ Element "th" [] [], Element "th" [] [] ]))
+    , test "tr" (testParse "<tr><th><td></tr>" (Element "tr" [] [ Element "th" [] [], Element "td" [] [] ]))
+    , test "tr" (testParse "<tr><td><th></tr>" (Element "tr" [] [ Element "td" [] [], Element "th" [] [] ]))
+    , test "tbody" (testParse "<tbody><tr><td></tbody>" (Element "tbody" [] [ Element "tr" [] [ Element "td" [] [] ] ]))
+    , test "tbody" (testParse "<tbody><tr><th><td></tbody>" (Element "tbody" [] [ Element "tr" [] [ Element "th" [] [], Element "td" [] [] ] ]))
+    , test "tbody" (testParse "<tbody><tr><td><tr><td></tbody>" (Element "tbody" [] [ Element "tr" [] [ Element "td" [] [] ], Element "tr" [] [ Element "td" [] [] ] ]))
+    , test "tbody" (testParse "<tbody><tr><th><td><tr><th><td></tbody>" (Element "tbody" [] [ Element "tr" [] [ Element "th" [] [], Element "td" [] [] ], Element "tr" [] [ Element "th" [] [], Element "td" [] [] ] ]))
+    , test "table" (testParse "<table><caption></table>" (Element "table" [] [ Element "caption" [] [] ]))
+    , test "table" (testParse "<table><caption><col></table>" (Element "table" [] [ Element "caption" [] [], Element "col" [] [] ]))
+    , test "table" (testParse "<table><caption><colgroup><col></table>" (Element "table" [] [ Element "caption" [] [], Element "colgroup" [] [ Element "col" [] [] ] ]))
+    , test "table" (testParse "<table><colgroup><col></table>" (Element "table" [] [ Element "colgroup" [] [ Element "col" [] [] ] ]))
     ]
 
 
 scriptTests : Test
 scriptTests =
   suite "Script"
-    [ test "script" (testParse """<script></script>""" (Node "script" [] []))
-    , test "script" (testParse """<SCRIPT></SCRIPT>""" (Node "script" [] []))
-    , test "script" (testParse """<script src="script.js">foo</script>""" (Node "script" [("src", "script.js")] [ Text "foo" ]))
-    , test "script" (testParse """<script>var a = 0 < 1; b = 1 > 0;</script>""" (Node "script" [] [ Text "var a = 0 < 1; b = 1 > 0;" ]))
-    , test "script" (testParse """<script><!----></script>""" (Node "script" [] [ Comment "" ]))
-    , test "script" (testParse """<script>a<!--</script><script>-->b</script>""" (Node "script" [] [ Text "a", Comment "</script><script>", Text "b" ]))
-    , test "style" (testParse """<style>a<!--</style><style>-->b</style>""" (Node "style" [] [ Text "a", Comment "</style><style>", Text "b" ]))
+    [ test "script" (testParse """<script></script>""" (Element "script" [] []))
+    , test "script" (testParse """<SCRIPT></SCRIPT>""" (Element "script" [] []))
+    , test "script" (testParse """<script src="script.js">foo</script>""" (Element "script" [("src", "script.js")] [ Text "foo" ]))
+    , test "script" (testParse """<script>var a = 0 < 1; b = 1 > 0;</script>""" (Element "script" [] [ Text "var a = 0 < 1; b = 1 > 0;" ]))
+    , test "script" (testParse """<script><!----></script>""" (Element "script" [] [ Comment "" ]))
+    , test "script" (testParse """<script>a<!--</script><script>-->b</script>""" (Element "script" [] [ Text "a", Comment "</script><script>", Text "b" ]))
+    , test "style" (testParse """<style>a<!--</style><style>-->b</style>""" (Element "style" [] [ Text "a", Comment "</style><style>", Text "b" ]))
     ]
 
 
@@ -129,7 +120,7 @@ commentTests =
     [ test "basic" (testParse """<!---->""" (Comment ""))
     , test "basic" (testParse """<!--foo\t\r\n -->""" (Comment "foo\t\r\n "))
     , test "basic" (testParse """<!--<div></div>-->""" (Comment "<div></div>"))
-    , test "basic" (testParse """<div><!--</div>--></div>""" (Node "div" [] [ Comment "</div>" ]))
+    , test "basic" (testParse """<div><!--</div>--></div>""" (Element "div" [] [ Comment "</div>" ]))
     , test "basic" (testParse """<!--<!---->""" (Comment "<!--"))
     ]
 
@@ -137,28 +128,28 @@ commentTests =
 attributeTests : Test
 attributeTests =
   suite "Attribute"
-    [ test "basic" (testParse """<a href="example.com"></a>""" (Node "a" [("href", "example.com")] []))
-    , test "basic" (testParse """<a href='example.com'></a>""" (Node "a" [("href", "example.com")] []))
-    , test "basic" (testParse """<a href=example.com></a>""" (Node "a" [("href", "example.com")] []))
-    , test "basic" (testParse """<a HREF=example.com></a>""" (Node "a" [("href", "example.com")] []))
-    , test "basic" (testParse """<a href=bare></a>""" (Node "a" [("href", "bare")] []))
-    , test "basic" (testParse """<a href="example.com"/>""" (Node "a" [("href", "example.com")] []))
-    , test "basic" (testParse """<input max=100 min = 10.5>""" (Node "input" [("max", "100"), ("min", "10.5")] []))
-    , test "basic" (testParse """<input max=100 min = 10.5 />""" (Node "input" [("max", "100"), ("min", "10.5")] []))
-    , test "basic" (testParse """<input disabled>""" (Node "input" [("disabled", "")] []))
-    , test "basic" (testParse """<input DISABLED>""" (Node "input" [("disabled", "")] []))
-    , test "basic" (testParse """<input disabled />""" (Node "input" [("disabled", "")] []))
-    , test "basic" (testParse """<meta http-equiv=Content-Type>""" (Node "meta" [("http-equiv", "Content-Type")] []))
-    , test "basic" (testParse """<html xmlns:v="urn:schemas-microsoft-com:vml"></html>""" (Node "html" [("xmlns:v", "urn:schemas-microsoft-com:vml")] []))
+    [ test "basic" (testParse """<a href="example.com"></a>""" (Element "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<a href='example.com'></a>""" (Element "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<a href=example.com></a>""" (Element "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<a HREF=example.com></a>""" (Element "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<a href=bare></a>""" (Element "a" [("href", "bare")] []))
+    , test "basic" (testParse """<a href="example.com"/>""" (Element "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<input max=100 min = 10.5>""" (Element "input" [("max", "100"), ("min", "10.5")] []))
+    , test "basic" (testParse """<input max=100 min = 10.5 />""" (Element "input" [("max", "100"), ("min", "10.5")] []))
+    , test "basic" (testParse """<input disabled>""" (Element "input" [("disabled", "")] []))
+    , test "basic" (testParse """<input DISABLED>""" (Element "input" [("disabled", "")] []))
+    , test "basic" (testParse """<input disabled />""" (Element "input" [("disabled", "")] []))
+    , test "basic" (testParse """<meta http-equiv=Content-Type>""" (Element "meta" [("http-equiv", "Content-Type")] []))
+    , test "basic" (testParse """<html xmlns:v="urn:schemas-microsoft-com:vml"></html>""" (Element "html" [("xmlns:v", "urn:schemas-microsoft-com:vml")] []))
     ]
 
 
 intergrationTests : Test
 intergrationTests =
   suite "Integration"
-    [ test "table" (testParseComplex ["table", "caption", "colgroup", "col", "thead", "tbody", "tr", "th", "td"] [] fullOmission)
-    , test "table" (testParseComplex ["body", "table", "col", "tr", "td"] [] clipboardFromExcel2013)
-    , test "table" (testParseComplex ["body", "table", "col", "tr", "td"] [] clipboardFromOpenOfficeCalc)
+    [ test "table" (testParseComplex (\nodes -> (List.length <| Search.getElementsByTagName "td" nodes) == 15) fullOmission)
+    , test "table" (testParseComplex (\nodes -> (List.length <| Search.getElementsByTagName "td" nodes) == 18) clipboardFromExcel2013)
+    , test "table" (testParseComplex (\nodes -> (List.length <| Search.getElementsByTagName "td" nodes) == 18) clipboardFromOpenOfficeCalc)
     ]
 
 

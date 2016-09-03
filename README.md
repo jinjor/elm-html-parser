@@ -8,10 +8,10 @@ Parse HTML in Elm! ([DEMO](https://jinjor.github.io/elm-html-parser/))
 parse "text" == [ Text "text" ]
 
 parse "<h1>Hello<br>World</h1> "
-  == [ Node "h1" [] [ Text "Hello", Node "br" [] [], Text "World" ] ]
+  == [ Element "h1" [] [ Text "Hello", Element "br" [] [], Text "World" ] ]
 
 parse "<a href="http://example.com">Example</a>"
-  == [ Node "a" [("href", StringValue "http://example.com")] [ Text "Example" ] ]
+  == [ Element "a" [("href", StringValue "http://example.com")] [ Text "Example" ] ]
 ```
 
 ## LICENSE
