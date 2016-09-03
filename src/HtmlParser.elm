@@ -1,11 +1,11 @@
 module HtmlParser exposing
-  ( HtmlNode(..), AttributeValue(..)
+  ( HtmlNode(..)
   , parse, parseOne
   )
 
 {-|
 # AST
-@docs HtmlNode, AttributeValue
+@docs HtmlNode
 
 # Parse
 @docs parse, parseOne
@@ -24,16 +24,9 @@ import Dict
 -}
 type HtmlNode
   = Text String
-  | Node String (List (String, AttributeValue)) (List HtmlNode)
+  | Node String (List (String, String)) (List HtmlNode)
   | Comment String
 
-
-{-| The AST of attribute value
--}
-type AttributeValue
-  = StringValue String
-  | NumberValue String
-  | NoValue
 
 {-| Parses HTML. The input string is trimmed before parsing.
 
@@ -81,6 +74,11 @@ spaces =
   regex "[ \t\r\n]*"
 
 
+spaces1 : Parser String
+spaces1 =
+  regex "[ \t\r\n]+"
+
+
 spaced : Parser a -> Parser a
 spaced p =
   between spaces spaces p
@@ -96,28 +94,24 @@ attributeName =
   regex "[a-zA-Z][a-zA-Z:\\-]*"
 
 
-attributeValueNumber : Parser AttributeValue
-attributeValueNumber =
-  map NumberValue (regex "[0-9][0-9.]*")
+attributeQuotedValue : Parser String
+attributeQuotedValue =
+  between (string "\"") (string "\"") (attributeString "\"") `or`
+  between (string "'") (string "'") (attributeString "'")
 
 
-attributeValueString : Parser AttributeValue
-attributeValueString =
-  map StringValue (between (string "\"") (string "\"") (attributeString "\"")) `or`
-  map StringValue (between (string "'") (string "'") (attributeString "'"))
+-- HTML5
+attributeBareValue : Parser String
+attributeBareValue =
+  regex """[^ ^`^"^'^<^>^=]+"""
 
 
-attributeValueBareString : Parser AttributeValue
-attributeValueBareString =
-  map StringValue (regex "[a-zA-Z0-9\\-]+")
-
-
-attributeValue : Parser AttributeValue
+attributeValue : Parser String
 attributeValue =
-  attributeValueNumber `or` attributeValueString `or` attributeValueBareString
+  attributeQuotedValue `or` attributeBareValue
 
 
-attributeNameValuePair : Parser (String, AttributeValue)
+attributeNameValuePair : Parser (String, String)
 attributeNameValuePair =
   (\name _ _ _ value -> (name, value))
   `map` attributeName
@@ -127,9 +121,9 @@ attributeNameValuePair =
   `andMap` attributeValue
 
 
-attribute : Parser (String, AttributeValue)
+attribute : Parser (String, String)
 attribute =
-  attributeNameValuePair `or` map (flip (,) NoValue) attributeName
+  attributeNameValuePair `or` map (flip (,) "") attributeName
 
 
 startTagOnly : Set String
@@ -263,7 +257,7 @@ singleNode =
   map (\(tagName, attrs) -> Node tagName attrs []) singleTag
 
 
-startTag : Parser (String, List (String, AttributeValue))
+startTag : Parser (String, List (String, String))
 startTag =
   rec (\_ ->
     (\_ tagName _ attrs _ _ -> (String.toLower tagName, attrs))
@@ -290,15 +284,13 @@ untilEndTag tagName =
   manyTill Combine.Char.anyChar (endTag tagName)
 
 
-singleTag : Parser (String, List (String, AttributeValue))
+singleTag : Parser (String, List (String, String))
 singleTag =
   rec (\_ ->
-    (\_ tagName _ attrs _ _ -> (String.toLower tagName, attrs))
+    (\_ tagName attrs _ -> (String.toLower tagName, attrs))
     `map` string "<"
     `andMap` tagName
-    `andMap` spaces
-    `andMap` sepBy spaces attribute
-    `andMap` spaces
+    `andMap` between spaces spaces (sepBy spaces attribute)
     `andMap` string "/>"
   )
 

@@ -47,7 +47,7 @@ textNodeTests =
     , test "decode" (testParse "a&nbsp;b" (Text "a b"))
     , test "decode" (testParse "a&nbsp;&nbsp;b" (Text "a  b"))
     , test "decode" (testParse "&#20;" (Text "&#20;"))
-    , test "decode" (testParse """<img alt="&lt;">""" (Node "img" [("alt", StringValue "<")] []))
+    , test "decode" (testParse """<img alt="&lt;">""" (Node "img" [("alt", "<")] []))
     ]
 
 
@@ -59,11 +59,12 @@ nodeTests =
     , test "basic" (testParse "<A></A>" (Node "a" [] []))
     , test "basic" (testParse "<a>a</a>" (Node "a" [] [ Text "a" ]))
     , test "basic" (testParse "<a> a </a>" (Node "a" [] [ Text " a " ]))
-    , test "basic" (testParse "<a/>" (Node "a" [] []))
+    , test "basic" (testParse "<a />" (Node "a" [] []))
+    , test "basic" (testParse "<br />" (Node "br" [] []))
     , test "basic" (testParse "<a><a></a></a>" (Node "a" [] [ Node "a" [] [] ]))
     , test "basic" (testParse "<a> <a> </a> </a>" (Node "a" [] [ Text " ", Node "a" [] [ Text " " ], Text " " ]))
     , test "basic" (testParse "<a><a/></a>" (Node "a" [] [ Node "a" [] [] ]))
-    , test "basic" (testParse "<a> <a/> </a>" (Node "a" [] [ Text " ", Node "a" [] [], Text " " ]))
+    , test "basic" (testParse "<a> <br /> </a>" (Node "a" [] [ Text " ", Node "br" [] [], Text " " ]))
     , test "basic" (testParse "<a><a></a><a></a></a>" (Node "a" [] [ Node "a" [] [], Node "a" [] [] ]))
     , test "basic" (testParse "<a><a><a></a></a></a>" (Node "a" [] [ Node "a" [] [ Node "a" [] [] ] ]))
     , test "basic" (testParse "<a><a></a><b></b></a>" (Node "a" [] [ Node "a" [] [], Node "b" [] [] ]))
@@ -111,7 +112,7 @@ scriptTests =
   suite "Script"
     [ test "script" (testParse """<script></script>""" (Node "script" [] []))
     , test "script" (testParse """<SCRIPT></SCRIPT>""" (Node "script" [] []))
-    , test "script" (testParse """<script src="script.js">foo</script>""" (Node "script" [("src", StringValue "script.js")] [ Text "foo" ]))
+    , test "script" (testParse """<script src="script.js">foo</script>""" (Node "script" [("src", "script.js")] [ Text "foo" ]))
     , test "script" (testParse """<script>var a = 0 < 1; b = 1 > 0;</script>""" (Node "script" [] [ Text "var a = 0 < 1; b = 1 > 0;" ]))
     , test "script" (testParse """<script><!----></script>""" (Node "script" [] [ Comment "" ]))
     , test "script" (testParse """<script>a<!--</script><script>-->b</script>""" (Node "script" [] [ Text "a", Comment "</script><script>", Text "b" ]))
@@ -133,16 +134,16 @@ commentTests =
 attributeTests : Test
 attributeTests =
   suite "Attribute"
-    [ test "basic" (testParse """<a href="example.com"></a>""" (Node "a" [("href", StringValue "example.com")] []))
-    , test "basic" (testParse """<a href='example.com'></a>""" (Node "a" [("href", StringValue "example.com")] []))
-    , test "basic" (testParse """<a href=bare></a>""" (Node "a" [("href", StringValue "bare")] []))
-    , test "basic" (testParse """<a href="example.com"/>""" (Node "a" [("href", StringValue "example.com")] []))
-    , test "basic" (testParse """<input max=100 min = 10.5>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))
-    , test "basic" (testParse """<input max=100 min = 10.5/>""" (Node "input" [("max", NumberValue "100"), ("min", NumberValue "10.5")] []))
-    , test "basic" (testParse """<input disabled>""" (Node "input" [("disabled", NoValue)] []))
-    , test "basic" (testParse """<input disabled/>""" (Node "input" [("disabled", NoValue)] []))
-    , test "basic" (testParse """<meta http-equiv=Content-Type>""" (Node "meta" [("http-equiv", StringValue "Content-Type")] []))
-    , test "basic" (testParse """<html xmlns:v="urn:schemas-microsoft-com:vml"></html>""" (Node "html" [("xmlns:v", StringValue "urn:schemas-microsoft-com:vml")] []))
+    [ test "basic" (testParse """<a href="example.com"></a>""" (Node "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<a href='example.com'></a>""" (Node "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<a href=bare></a>""" (Node "a" [("href", "bare")] []))
+    , test "basic" (testParse """<a href="example.com"/>""" (Node "a" [("href", "example.com")] []))
+    , test "basic" (testParse """<input max=100 min = 10.5>""" (Node "input" [("max", "100"), ("min", "10.5")] []))
+    , test "basic" (testParse """<input max=100 min = 10.5 />""" (Node "input" [("max", "100"), ("min", "10.5")] []))
+    , test "basic" (testParse """<input disabled>""" (Node "input" [("disabled", "")] []))
+    , test "basic" (testParse """<input disabled />""" (Node "input" [("disabled", "")] []))
+    , test "basic" (testParse """<meta http-equiv=Content-Type>""" (Node "meta" [("http-equiv", "Content-Type")] []))
+    , test "basic" (testParse """<html xmlns:v="urn:schemas-microsoft-com:vml"></html>""" (Node "html" [("xmlns:v", "urn:schemas-microsoft-com:vml")] []))
     ]
 
 

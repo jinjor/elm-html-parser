@@ -102,14 +102,6 @@ toVirtualDom node =
       text ""
 
 
-toAttribute : (String, AttributeValue) -> Attribute msg
+toAttribute : (String, String) -> Attribute msg
 toAttribute (name, value) =
-  case value of
-    StringValue s ->
-      attribute name s
-
-    NumberValue s ->
-      attribute name s
-
-    NoValue ->
-      attribute name ""
+  attribute name value
