@@ -210,10 +210,12 @@ normalNode parentTagName =
         `map` many (node tagName)
         `andMap`
           ( if Set.member tagName optionalEndTag then
-              optional ()
+              optional () -- this is valid
             else
-              identity
+              optional () -- this is invalid
+              -- identity
           ) (endTag tagName)
+
   )
 
 
@@ -272,10 +274,13 @@ startTag =
 
 endTag : String -> Parser ()
 endTag tagName =
-  (\_ _ _ -> ())
-  `map` string "</"
-  `andMap` (string tagName `or` string (String.toUpper tagName))
-  `andMap` string ">"
+  (\_ -> ())
+  `map` between (string "</") (string ">") (string tagName `or` string (String.toUpper tagName))
+
+
+generalEndTag : Parser String
+generalEndTag =
+  between (string "</") (string ">") tagName
 
 
 untilEndTag : String -> Parser ()

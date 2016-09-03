@@ -153,6 +153,21 @@ intergrationTests =
     ]
 
 
+testInvalid : String -> String -> Assertion
+testInvalid included s =
+  assert <| String.contains included <| Debug.log "res" <| toString <| HtmlParser.parse s
+
+
+-- This tests is NOT from spec. You cannot expect this behavior as proper one.
+invalidTests : Test
+invalidTests =
+  suite "Invalid"
+    [ test "basic" (testInvalid "aaa" "<div>aaa")
+    -- , test "basic" (testInvalid "aaa" "<div>aaa</br>bbb")
+    -- , test "basic" (testInvalid "bbb" "<div>aaa</br>bbb")
+    ]
+
+
 fullOmission : String
 fullOmission = """
   <table>
@@ -266,6 +281,7 @@ parserTests =
     , commentTests
     , attributeTests
     , intergrationTests
+    , invalidTests
     ]
 
 
