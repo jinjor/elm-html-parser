@@ -1,9 +1,10 @@
 module Tests exposing (..)
 
 import String
+import Dict
 import Combine as RawParser exposing (..)
 import HtmlParser as HtmlParser exposing (..)
-import HtmlParser.Search exposing (..)
+import HtmlParser.Util exposing (..)
 import ElmTest exposing (..)
 
 
@@ -155,7 +156,7 @@ intergrationTests =
 
 testInvalid : String -> String -> Assertion
 testInvalid included s =
-  assert <| String.contains included <| Debug.log "res" <| toString <| HtmlParser.parse s
+  assert <| String.contains included <| toString <| HtmlParser.parse s
 
 
 -- This tests is NOT from spec. You cannot expect this behavior as proper one.
@@ -302,17 +303,57 @@ getElementsById id nodes =
     Nothing -> []
 
 
-searchTests : Test
-searchTests =
-  suite "Search"
+utilTests : Test
+utilTests =
+  suite "Util"
     [ test "tag" (testSearch [] (getElementsByTagName "input") "<img id=1>")
     , test "tag" (testSearch ["1"] (getElementsByTagName "img") "<img id=1>")
     , test "tag" (testSearch ["1", "2"] (getElementsByTagName "img") "<img id=1><img id=2>")
+    , test "tag" (testSearch ["0", "1", "2", "3", "4"] (getElementsByTagName "a")
+      "<a id=0> <a id=1> </a> <a id=2> a </a> </a> <a id=3> b <div id=9> </div> <a id=4> </a> c </a>"
+      )
     , test "class" (testSearch [] (getElementsByClassName "c") "<img class=0 id=1>")
     , test "class" (testSearch ["1"] (getElementsByClassName "c") "<img class=c id=1>")
     , test "class" (testSearch ["1", "2"] (getElementsByClassName "c") "<img class=c id=1><img class=c id=2>")
+    , test "class" (testSearch ["0", "1", "2", "3", "4"] (getElementsByClassName "c")
+      "<a class=c id=0><input class=c id=1><a class=c id=2></a></a><a class=c id=3><a id=9></a><input class=c id=4></a>"
+      )
     , test "id" (testSearch ["1"] (getElementsById "1") "<img id=1>")
     , test "id" (testSearch [] (getElementsById "1") "<img id=0>")
+    , test "createIndex" (testParseComplex (\nodes ->
+      case Dict.get "1" (createIndex nodes) of
+        Just _ -> False
+        Nothing -> True
+      ) "<img id=0><img id=2>")
+    , test "createIndex" (testParseComplex (\nodes ->
+      case Dict.get "1" (createIndex nodes) of
+        Just _ -> True
+        Nothing -> False
+      ) "<div> <img id=0> <img id=1> <img id=3> </div>")
+    , test "createTagIndex" (testParseComplex (\nodes ->
+      case Dict.get "img" (createTagIndex nodes) of
+        Just nodes ->
+          (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1"]
+        Nothing -> False
+      ) "<img id=0><img id=1>")
+    , test "createTagIndex" (testParseComplex (\nodes ->
+      case Dict.get "a" (createTagIndex nodes) of
+        Just nodes ->
+          (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1", "2", "3", "4"]
+        Nothing -> False
+      ) "<a id=0> <a id=1> </a> <a id=2> a </a> </a> <a id=3> b <div id=9> </div> <a id=4> </a> c </a>")
+    , test "createClassIndex" (testParseComplex (\nodes ->
+      case Dict.get "c" (createClassIndex nodes) of
+        Just nodes ->
+          (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1"]
+        Nothing -> False
+      ) "<input class=c id=0><img class=c id=1>")
+    , test "createClassIndex" (testParseComplex (\nodes ->
+      case Dict.get "c" (createClassIndex nodes) of
+        Just nodes ->
+          (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1", "2", "3", "4"]
+        Nothing -> False
+      ) "<a class=c id=0><input class=c id=1><a class=c id=2></a></a><a class=c id=3><a id=9></a><input class=c id=4></a>")
     ]
 
 
@@ -320,7 +361,7 @@ tests : Test
 tests =
   suite "HtmlParser"
     [ parserTests
-    , searchTests
+    , utilTests
     ]
 
 

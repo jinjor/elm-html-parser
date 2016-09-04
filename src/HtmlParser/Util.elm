@@ -1,8 +1,7 @@
-module HtmlParser.Search exposing
+module HtmlParser.Util exposing
   ( getElementById, getElementsByTagName, getElementsByClassName
   , createIndex, createTagIndex, createClassIndex
   , findElement, findElements
-  , traverse
   , filterMapElements
   , getId, getClassList
   )
@@ -27,73 +26,62 @@ getElementsByTagName tagName nodes =
 
 getElementsByClassName : String -> List Node -> List Node
 getElementsByClassName targetClassName nodes =
-  let
-    match _ attrs =
-      matchesToClass targetClassName attrs
-  in
-    findElements match nodes
+  findElements (\_ attrs -> matchesToClass targetClassName attrs) nodes
 
 
 getElementById : String -> List Node -> Maybe Node
 getElementById targetId nodes =
-  let
-    match _ attrs =
-      matchesToId targetId attrs
-  in
-    findElement match nodes
+  findElement (\_ attrs -> matchesToId targetId attrs) nodes
 
 
 createIndex : List Node -> Dict String Node
 createIndex nodes =
   let
-    f dict node =
+    f node dict =
       case node of
         Element tagName attrs children ->
           case getAttribute "id" attrs of
             Just id ->
-              (Dict.union (Dict.insert id node dict) (createIndex children), False)
+              Dict.union (Dict.insert id node dict) (createIndex children)
 
             Nothing ->
-              (dict, False)
+              Dict.union dict (createIndex children)
 
         _ ->
-          (dict, False)
+          dict
   in
-    traverse f Dict.empty nodes
+    List.foldl f Dict.empty nodes
 
 
 createTagIndex : List Node -> Dict String (List Node)
 createTagIndex nodes =
   let
-    f dict node =
+    f node dict =
       case node of
         Element tagName attrs children ->
-          ( mergeListDict (updateTagDict node tagName dict) (createTagIndex children)
-          , False
-          )
+          updateTagDict node tagName (mergeListDict (createTagIndex children) dict)
 
         _ ->
-          (dict, False)
+          dict
   in
-    traverse f Dict.empty nodes
+    List.foldr f Dict.empty nodes
 
 
 createClassIndex : List Node -> Dict String (List Node)
 createClassIndex nodes =
   let
-    f dict node =
+    f node dict =
       case node of
         Element tagName attrs children ->
-          ( mergeListDict
-              (List.foldl (updateClassDict node) dict (getClassList attrs))
-              (createClassIndex children)
-          , False
-          )
+          List.foldl
+            (updateClassDict node)
+            (mergeListDict (createClassIndex children) dict)
+            (getClassList attrs)
 
         _ ->
-          (dict, False)
+          dict
   in
-    traverse f Dict.empty nodes
+    List.foldr f Dict.empty nodes
 
 
 updateTagDict : Node -> String -> Dict String (List Node) -> Dict String (List Node)
@@ -114,7 +102,7 @@ mergeListDict d1 d2 =
         k2
         (\v1 -> case v1 of
           Just list ->
-            Just (v2 ++ list)
+            Just (list ++ v2)
 
           Nothing ->
             Just v2
@@ -142,24 +130,24 @@ updateListDict key value dict =
 findElements : (String -> Attributes -> Bool) -> List Node -> List Node
 findElements match nodes =
   let
-    f results node =
+    f node results =
       case node of
         Element tagName attrs children ->
           if match tagName attrs then
-            (results ++ (node :: findElements match children), False)
+            results ++ (node :: findElements match children)
           else
-            (results ++ findElements match children, False)
+            results ++ findElements match children
 
         _ ->
-          (results, False)
+          results
   in
-    traverse f [] nodes
+    List.foldl f [] nodes
 
 
 findElement : (String -> Attributes -> Bool) -> List Node -> Maybe Node
 findElement match nodes =
   let
-    f _ node =
+    f node _ =
       case node of
         Element tagName attrs children ->
           if match tagName attrs then
@@ -175,7 +163,7 @@ findElement match nodes =
         _ ->
           (Nothing, False)
   in
-    traverse f Nothing nodes
+    foldlWithBreak f Nothing nodes
 
 
 matchesToClass : String -> Attributes -> Bool
@@ -216,17 +204,17 @@ getAttribute targetName attrs =
         getAttribute targetName tail
 
 
-traverse : (a -> Node -> (a, Bool)) -> a -> List Node -> a
-traverse f a nodes =
-  case nodes of
-    [] -> a
+foldlWithBreak : (a -> b -> (b, Bool)) -> b -> List a -> b
+foldlWithBreak f b list =
+  case list of
+    [] -> b
 
-    node :: tail ->
-      case f a node of
-        (a, True) -> a
+    a :: tail ->
+      case f a b of
+        (b, True) -> b
 
-        (a, False) ->
-          traverse f a tail
+        (b, False) ->
+          foldlWithBreak f b tail
 
 
 filterMapElements : (String -> Attributes -> List Node -> Maybe b) -> List Node -> List b
