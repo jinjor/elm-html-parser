@@ -149,6 +149,7 @@ ngSetForP =
 -- this logic is used to help optional end tag
 isInvalidNest : String -> String -> Bool
 isInvalidNest tagName childTagName =
+  (tagName == "head" && childTagName == "body") ||
   (tagName == "li" && childTagName == "li") ||
   (tagName == "dt" && (childTagName == "dt" || childTagName == "dd")) ||
   (tagName == "dd" && (childTagName == "dt" || childTagName == "dd")) ||
@@ -162,7 +163,7 @@ isInvalidNest tagName childTagName =
   (tagName == "thead" && (childTagName == "tbody" || childTagName == "tfoot")) ||
   (tagName == "tbody" && (childTagName == "tbody" || childTagName == "tfoot" || childTagName == "table")) ||
   (tagName == "tfoot" && childTagName == "table") ||
-  (tagName == "tr" && childTagName == "tr") ||
+  (tagName == "tr" && (childTagName == "tr" || childTagName == "thead" || childTagName == "tbody" || childTagName == "tfoot")) ||
   (tagName == "td" && (childTagName == "td" || childTagName == "th" || childTagName == "tr" || childTagName == "tbody" || childTagName == "tfoot")) ||
   (tagName == "th" && (childTagName == "td" || childTagName == "th" || childTagName == "tr" || childTagName == "tbody" || childTagName == "tfoot"))
 

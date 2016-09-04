@@ -94,6 +94,9 @@ optionalEndTagTests =
     , test "table" (testParse "<table><caption><col></table>" (Element "table" [] [ Element "caption" [] [], Element "col" [] [] ]))
     , test "table" (testParse "<table><caption><colgroup><col></table>" (Element "table" [] [ Element "caption" [] [], Element "colgroup" [] [ Element "col" [] [] ] ]))
     , test "table" (testParse "<table><colgroup><col></table>" (Element "table" [] [ Element "colgroup" [] [ Element "col" [] [] ] ]))
+    , test "table" (testParse "<table><thead><tr><th><tbody></table>" (Element "table" [] [ Element "thead" [] [ Element "tr" [] [ Element "th" [] [] ] ], Element "tbody" [] [] ]))
+    , test "html" (testParse "<html>a" (Element "html" [] [ Text "a" ]))
+    , test "html" (testParse "<html>a<head>b<body>c" (Element "html" [] [ Text "a", Element "head" [] [ Text "b" ], Element "body" [] [ Text "c" ] ]))
     ]
 
 
