@@ -10549,6 +10549,10 @@ var _user$project$HtmlParser_Util$updateTagDict = F3(
 	function (node, tagName, dict) {
 		return A3(_user$project$HtmlParser_Util$updateListDict, tagName, node, dict);
 	});
+var _user$project$HtmlParser_Util$updateIdDict = F3(
+	function (node, id, dict) {
+		return A3(_user$project$HtmlParser_Util$updateListDict, id, node, dict);
+	});
 var _user$project$HtmlParser_Util$createClassDict = function (nodes) {
 	var f = F2(
 		function (node, dict) {
@@ -10592,19 +10596,18 @@ var _user$project$HtmlParser_Util$createIdDict = function (nodes) {
 		function (node, dict) {
 			var _p20 = node;
 			if (_p20.ctor === 'Element') {
-				var _p22 = _p20._2;
-				var _p21 = A2(_user$project$HtmlParser_Util$getValue, 'id', _p20._1);
-				if (_p21.ctor === 'Just') {
-					return A2(
-						_elm_lang$core$Dict$union,
-						A3(_elm_lang$core$Dict$insert, _p21._0, node, dict),
-						_user$project$HtmlParser_Util$createIdDict(_p22));
-				} else {
-					return A2(
-						_elm_lang$core$Dict$union,
-						dict,
-						_user$project$HtmlParser_Util$createIdDict(_p22));
-				}
+				return function () {
+					var _p21 = A2(_user$project$HtmlParser_Util$getValue, 'id', _p20._1);
+					if (_p21.ctor === 'Just') {
+						return A2(_user$project$HtmlParser_Util$updateIdDict, node, _p21._0);
+					} else {
+						return _elm_lang$core$Basics$identity;
+					}
+				}()(
+					A2(
+						_user$project$HtmlParser_Util$mergeListDict,
+						_user$project$HtmlParser_Util$createIdDict(_p20._2),
+						dict));
 			} else {
 				return dict;
 			}
@@ -10612,11 +10615,14 @@ var _user$project$HtmlParser_Util$createIdDict = function (nodes) {
 	return A3(_elm_lang$core$List$foldl, f, _elm_lang$core$Dict$empty, nodes);
 };
 var _user$project$HtmlParser_Util$matchesToClass = F2(
-	function (targetClassName, attrs) {
+	function (targetClassNames, attrs) {
 		return A2(
-			_elm_lang$core$List$member,
-			targetClassName,
-			_user$project$HtmlParser_Util$getClassList(attrs));
+			_elm_lang$core$List$all,
+			A2(
+				_elm_lang$core$Basics$flip,
+				_elm_lang$core$List$member,
+				_user$project$HtmlParser_Util$getClassList(attrs)),
+			targetClassNames);
 	});
 var _user$project$HtmlParser_Util$matchesToId = F2(
 	function (targetId, attrs) {
@@ -10625,12 +10631,12 @@ var _user$project$HtmlParser_Util$matchesToId = F2(
 			_elm_lang$core$Maybe$Just(targetId));
 	});
 var _user$project$HtmlParser_Util$getElementsByClassName = F2(
-	function (targetClassName, nodes) {
+	function (targetClassNames, nodes) {
 		return A2(
 			_user$project$HtmlParser_Util$findElements,
 			F2(
-				function (_p23, attrs) {
-					return A2(_user$project$HtmlParser_Util$matchesToClass, targetClassName, attrs);
+				function (_p22, attrs) {
+					return A2(_user$project$HtmlParser_Util$matchesToClass, targetClassNames, attrs);
 				}),
 			nodes);
 	});
@@ -10638,7 +10644,7 @@ var _user$project$HtmlParser_Util$getElementsByTagName = F2(
 	function (tagName, nodes) {
 		var targetTagName = _elm_lang$core$String$toLower(tagName);
 		var match = F2(
-			function (tagName, _p24) {
+			function (tagName, _p23) {
 				return _elm_lang$core$Native_Utils.eq(tagName, targetTagName);
 			});
 		return A2(_user$project$HtmlParser_Util$findElements, match, nodes);
@@ -10648,7 +10654,7 @@ var _user$project$HtmlParser_Util$getElementById = F2(
 		return A2(
 			_user$project$HtmlParser_Util$findElement,
 			F2(
-				function (_p25, attrs) {
+				function (_p24, attrs) {
 					return A2(_user$project$HtmlParser_Util$matchesToId, targetId, attrs);
 				}),
 			nodes);

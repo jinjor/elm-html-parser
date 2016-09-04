@@ -8,7 +8,8 @@ module HtmlParser.Util exposing
   , toVirtualDom
   )
 
-{-|
+{-| Utility functions that may help you digging into the contents.
+
 # Query
 @docs getElementById, getElementsByTagName, getElementsByClassName
 
@@ -26,6 +27,9 @@ module HtmlParser.Util exposing
 
 # Get Content
 @docs textContent
+
+# Virtual DOM
+@docs toVirtualDom
 -}
 
 import HtmlParser exposing (Node(..), Attributes)
@@ -34,16 +38,17 @@ import Dict exposing (Dict)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
-{-|
 
+{-| Returns a element by its ID. This function returns a list but it contains at most one value.
+
+Note: This function internally traverses all nodes until the target node is found. For faster access, use createIdDict.
 -}
 getElementById : String -> List Node -> List Node
 getElementById targetId nodes =
   findElement (\_ attrs -> matchesToId targetId attrs) nodes
 
 
-{-|
-
+{-| Returns elements with the given tag name.
 -}
 getElementsByTagName : String -> List Node -> List Node
 getElementsByTagName tagName nodes =
@@ -57,12 +62,11 @@ getElementsByTagName tagName nodes =
     findElements match nodes
 
 
-{-|
-
+{-| Returns all child elements which have all of the given class names.
 -}
-getElementsByClassName : String -> List Node -> List Node
-getElementsByClassName targetClassName nodes =
-  findElements (\_ attrs -> matchesToClass targetClassName attrs) nodes
+getElementsByClassName : List String -> List Node -> List Node
+getElementsByClassName targetClassNames nodes =
+  findElements (\_ attrs -> matchesToClass targetClassNames attrs) nodes
 
 
 matchesToId : String -> Attributes -> Bool
@@ -70,26 +74,24 @@ matchesToId targetId attrs =
   getValue "id" attrs == Just targetId
 
 
-matchesToClass : String -> Attributes -> Bool
-matchesToClass targetClassName attrs =
-  List.member targetClassName (getClassList attrs)
+matchesToClass : List String -> Attributes -> Bool
+matchesToClass targetClassNames attrs =
+  List.all (flip List.member (getClassList attrs)) targetClassNames
 
 
-{-|
-
+{-| Creates a dictionaty for faster access by ID.
 -}
-createIdDict : List Node -> Dict String Node
+createIdDict : List Node -> Dict String (List Node)
 createIdDict nodes =
   let
     f node dict =
       case node of
         Element tagName attrs children ->
-          case getValue "id" attrs of
-            Just id ->
-              Dict.union (Dict.insert id node dict) (createIdDict children)
-
-            Nothing ->
-              Dict.union dict (createIdDict children)
+          ( case getValue "id" attrs of
+              Just id -> updateIdDict node id
+              Nothing -> identity
+          )
+          (mergeListDict (createIdDict children) dict)
 
         _ ->
           dict
@@ -97,8 +99,7 @@ createIdDict nodes =
     List.foldl f Dict.empty nodes
 
 
-{-|
-
+{-| Creates a dictionaty for faster access by tag name.
 -}
 createTagDict : List Node -> Dict String (List Node)
 createTagDict nodes =
@@ -114,8 +115,7 @@ createTagDict nodes =
     List.foldr f Dict.empty nodes
 
 
-{-|
-
+{-| Creates a dictionaty for faster access by single class.
 -}
 createClassDict : List Node -> Dict String (List Node)
 createClassDict nodes =
@@ -132,6 +132,11 @@ createClassDict nodes =
           dict
   in
     List.foldr f Dict.empty nodes
+
+
+updateIdDict : Node -> String -> Dict String (List Node) -> Dict String (List Node)
+updateIdDict node id dict =
+  updateListDict id node dict
 
 
 updateTagDict : Node -> String -> Dict String (List Node) -> Dict String (List Node)
@@ -177,8 +182,7 @@ updateListDict key value dict =
     dict
 
 
-{-|
-
+{-| Find one element that satisfies the given condition.
 -}
 findElement : (String -> Attributes -> Bool) -> List Node -> List Node
 findElement match nodes =
@@ -202,8 +206,7 @@ findElement match nodes =
     foldlWithBreak f [] nodes
 
 
-{-|
-
+{-| Find elements that satisfies the given condition.
 -}
 findElements : (String -> Attributes -> Bool) -> List Node -> List Node
 findElements match nodes =
@@ -235,8 +238,7 @@ foldlWithBreak f b list =
           foldlWithBreak f b tail
 
 
-{-|
-
+{-| Apply a function to every element of a nodes.
 -}
 mapElements : (String -> Attributes -> List Node -> b) -> List Node -> List b
 mapElements f nodes =
@@ -250,8 +252,7 @@ mapElements f nodes =
   ) nodes
 
 
-{-|
-
+{-| Keep only elements that satisfy the predicate.
 -}
 filterElements : (String -> Attributes -> List Node -> Bool) -> List Node -> List Node
 filterElements f nodes =
@@ -265,8 +266,7 @@ filterElements f nodes =
   ) nodes
 
 
-{-|
-
+{-| Apply a function that may succeed to all values in the nodes, but only keep the successes.
 -}
 filterMapElements : (String -> Attributes -> List Node -> Maybe b) -> List Node -> List b
 filterMapElements f nodes =
@@ -280,8 +280,7 @@ filterMapElements f nodes =
   ) nodes
 
 
-{-|
-
+{-| Returns a value from attributes with the given name.
 -}
 getValue : String -> Attributes -> Maybe String
 getValue targetName attrs =
@@ -296,16 +295,14 @@ getValue targetName attrs =
         getValue targetName tail
 
 
-{-|
-
+{-| Returns the ID value from attributes.
 -}
 getId : Attributes -> Maybe String
 getId attrs =
   getValue "id" attrs
 
 
-{-|
-
+{-| Returns the class value from attributes in form of list.
 -}
 getClassList : Attributes -> List String
 getClassList attrs =
@@ -317,8 +314,7 @@ getClassList attrs =
       String.words value
 
 
-{-|
-
+{-| Returns the text content of a node and its descendants.
 -}
 textContent : List Node -> String
 textContent nodes =
@@ -338,8 +334,7 @@ textContentEach node =
       ""
 
 
-{-|
-
+{-| Converts nodes to virtual dom nodes.
 -}
 toVirtualDom : List Node -> List (Html msg)
 toVirtualDom nodes =

@@ -3,7 +3,8 @@ module HtmlParser exposing
   , parse
   )
 
-{-|
+{-| The parser of HTML.
+
 # AST
 @docs Node, Attributes
 
@@ -36,15 +37,13 @@ type alias Attributes =
 
 {-| Parses HTML. The input string is trimmed before parsing.
 
-```elm
 parse "text" == [ Text "text" ]
 
 parse "<h1>Hello<br>World</h1> "
   == [ Element "h1" [] [ Text "Hello", Element "br" [] [], Text "World" ] ]
 
-parse "<a href="http://example.com">Example</a>"
-  == [ Element "a" [("href", StringValue "http://example.com")] [ Text "Example" ] ]
-```
+parse """<a href="http://example.com">Example</a>"""
+  == [ Element "a" [("href", "http://example.com")] [ Text "Example" ] ]
 
 -}
 parse : String -> List Node

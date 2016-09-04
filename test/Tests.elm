@@ -69,6 +69,7 @@ nodeTests =
     ]
 
 
+-- see https://html.spec.whatwg.org/multipage/syntax.html#optional-tags
 optionalEndTagTests : Test
 optionalEndTagTests =
   suite "OptionalEndTag"
@@ -182,8 +183,26 @@ intergrationTests =
           )
         )
       )
-    ]
+    , test "query" (assertEqual
+      (Just ("0", "0", "0", "216"))
+      ( HtmlParser.parse clipboardFromExcel2013
+          |> getElementsByTagName "table"
+          |> (\nodes ->
+            case nodes of
+              Element "table" attrs children :: _ ->
+                -- need a combinator?
+                getValue "border" attrs `Maybe.andThen` \a1 ->
+                getValue "cellpadding" attrs `Maybe.andThen` \a2 ->
+                getValue "cellspacing" attrs `Maybe.andThen` \a3 ->
+                getValue "width" attrs `Maybe.andThen` \a4 ->
+                Just (a1, a2, a3, a4)
 
+              _ ->
+                Nothing
+            )
+        )
+      )
+    ]
 
 
 testInvalid : String -> String -> Assertion
@@ -337,10 +356,13 @@ utilTests =
     , test "tag" (testSearch ["0", "1", "2", "3", "4"] (getElementsByTagName "a")
       "<a id=0> <a id=1> </a> <a id=2> a </a> </a> <a id=3> b <div id=9> </div> <a id=4> </a> c </a>"
       )
-    , test "class" (testSearch [] (getElementsByClassName "c") "<img class=0 id=1>")
-    , test "class" (testSearch ["1"] (getElementsByClassName "c") "<img class=c id=1>")
-    , test "class" (testSearch ["1", "2"] (getElementsByClassName "c") "<img class=c id=1><img class=c id=2>")
-    , test "class" (testSearch ["0", "1", "2", "3", "4"] (getElementsByClassName "c")
+    , test "class" (testSearch [] (getElementsByClassName ["c"]) "<img class=0 id=1>")
+    , test "class" (testSearch ["1"] (getElementsByClassName ["c"]) "<img class=c id=1>")
+    , test "class" (testSearch ["1", "2"] (getElementsByClassName ["c"]) "<img class=c id=1><img class=c id=2>")
+    , test "class" (testSearch ["1", "5"] (getElementsByClassName ["c1", "c2"])
+        "<img class='c2 c1' id=1><img class='c1' id=2><img class='c2' id=3><img class='c2 c3' id=4><img class='c2 c3 c1' id=5>"
+      )
+    , test "class" (testSearch ["0", "1", "2", "3", "4"] (getElementsByClassName ["c"])
       "<a class=c id=0><input class=c id=1><a class=c id=2></a></a><a class=c id=3><a id=9></a><input class=c id=4></a>"
       )
     , test "id" (testSearch ["1"] (getElementById "1") "<img id=1>")
@@ -352,9 +374,9 @@ utilTests =
       ) "<img id=0><img id=2>")
     , test "createIdDict" (testParseComplex (\nodes ->
       case Dict.get "1" (createIdDict nodes) of
-        Just _ -> True
-        Nothing -> False
-      ) "<div> <img id=0> <img id=1> <img id=3> </div>")
+        Just [x,y] -> True
+        _ -> False
+      ) "<div> <img id=0> <img id=1> <img id=3> <img id=1> </div>")
     , test "createTagDict" (testParseComplex (\nodes ->
       case Dict.get "img" (createTagDict nodes) of
         Just nodes ->
