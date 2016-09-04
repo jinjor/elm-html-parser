@@ -10281,10 +10281,7 @@ var _user$project$HtmlParser$nodesAndEnd = A2(
 	_Bogdanp$elm_combine$Combine$end);
 var _user$project$HtmlParser$parse = function (s) {
 	var _p30 = _elm_lang$core$Basics$fst(
-		A2(
-			_Bogdanp$elm_combine$Combine$parse,
-			_user$project$HtmlParser$nodesAndEnd,
-			_elm_lang$core$String$trim(s)));
+		A2(_Bogdanp$elm_combine$Combine$parse, _user$project$HtmlParser$nodesAndEnd, s));
 	if (_p30.ctor === 'Ok') {
 		return _p30._0;
 	} else {

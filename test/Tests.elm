@@ -45,7 +45,7 @@ nodeTests : Test
 nodeTests =
   suite "Node"
     [ test "basic" (testParse "<a></a>" (Element "a" [] []))
-    , test "basic" (testParse " <a></a> " (Element "a" [] []))
+    -- , test "basic" (testParse " <a></a> " (Element "a" [] []))
     , test "basic" (testParse "<A></A>" (Element "a" [] []))
     , test "basic" (testParse "<a>a</a>" (Element "a" [] [ Text "a" ]))
     , test "basic" (testParse "<a> a </a>" (Element "a" [] [ Text " a " ]))

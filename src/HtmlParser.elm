@@ -35,7 +35,7 @@ type alias Attributes =
   List (String, String)
 
 
-{-| Parses HTML. The input string is trimmed before parsing.
+{-| The HTML Parser.
 
 parse "text" == [ Text "text" ]
 
@@ -48,7 +48,7 @@ parse """<a href="http://example.com">Example</a>"""
 -}
 parse : String -> List Node
 parse s =
-  case fst (Combine.parse nodesAndEnd (String.trim s)) of
+  case fst (Combine.parse nodesAndEnd s) of
     Ok x -> x
     Err _ -> []
 
