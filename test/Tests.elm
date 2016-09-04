@@ -10,17 +10,12 @@ import ElmTest exposing (..)
 
 testParse : String -> Node -> Assertion
 testParse s ast =
-  assertEqual (Ok ast) (HtmlParser.parseOne s)
+  assertEqual [ast] (HtmlParser.parse s)
 
 
 testParseComplex : (List Node -> Bool) -> String -> Assertion
 testParseComplex f s =
-  case HtmlParser.parse s of
-    Ok nodes ->
-      assert (f nodes)
-
-    Err e ->
-      ElmTest.fail (toString e)
+  assert (f (HtmlParser.parse s))
 
 
 textNodeTests : Test
@@ -151,7 +146,41 @@ intergrationTests =
     [ test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 15) fullOmission)
     , test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 18) clipboardFromExcel2013)
     , test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 18) clipboardFromOpenOfficeCalc)
+    , test "query" (assertEqual "1\t2\t3\n2\t3\t4\n3\t4\t5\n4\t5\t6\n5\t6\t7\n6\t7\t8"
+      ( HtmlParser.parse clipboardFromOpenOfficeCalc
+          |> getElementsByTagName "tr"
+          |> mapElements
+            (\_ _ innerTr ->
+              innerTr
+                |> mapElements (\_ _ innerTd -> textContent innerTd)
+                |> String.join "\t"
+                |> String.trim
+            )
+          |> String.join "\n"
+        )
+      )
+    , test "query" (assertEqual
+      ["Headlights", "Interior Lights", "Electric locomotive operating sounds"]
+      ( HtmlParser.parse fullOmission
+        |> getElementsByTagName "tbody"
+        |> getElementsByTagName "tr"
+        |> filterMapElements
+          (\_ _ innerTr ->
+            case filterElements (\tagName _ _ -> tagName == "td") innerTr of
+              [td1, td2, td3] ->
+                if String.trim (textContent [td2]) == "✔" &&
+                   String.trim (textContent [td3]) == "✔" then
+                  Just (String.trim (textContent [td1]))
+                else
+                  Nothing
+
+              _ ->
+                Nothing
+          )
+        )
+      )
     ]
+
 
 
 testInvalid : String -> String -> Assertion
@@ -288,19 +317,12 @@ parserTests =
 
 testSearch : List String -> (List Node -> List Node) -> String -> Assertion
 testSearch idList f s =
-  case HtmlParser.parse s of
-    Ok nodes ->
-      assertEqual idList (filterMapElements (\_ attrs _ -> getId attrs) (f nodes))
-
-    Err e ->
-      ElmTest.fail (toString e)
-
-
-getElementsById : String -> List Node -> List Node
-getElementsById id nodes =
-  case getElementById id nodes of
-    Just x -> [x]
-    Nothing -> []
+  assertEqual
+    idList
+    ( filterMapElements
+        (\_ attrs _ -> getId attrs)
+        (f (HtmlParser.parse s))
+    )
 
 
 utilTests : Test
@@ -318,8 +340,8 @@ utilTests =
     , test "class" (testSearch ["0", "1", "2", "3", "4"] (getElementsByClassName "c")
       "<a class=c id=0><input class=c id=1><a class=c id=2></a></a><a class=c id=3><a id=9></a><input class=c id=4></a>"
       )
-    , test "id" (testSearch ["1"] (getElementsById "1") "<img id=1>")
-    , test "id" (testSearch [] (getElementsById "1") "<img id=0>")
+    , test "id" (testSearch ["1"] (getElementById "1") "<img id=1>")
+    , test "id" (testSearch [] (getElementById "1") "<img id=0>")
     , test "createIdDict" (testParseComplex (\nodes ->
       case Dict.get "1" (createIdDict nodes) of
         Just _ -> False

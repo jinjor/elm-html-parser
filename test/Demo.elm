@@ -65,12 +65,7 @@ show : Model a -> Model a
 show model =
   { model |
     dest =
-      case HtmlParser.parse model.src of
-        Ok nodes ->
-          toVirtualDom nodes
-
-        Err e ->
-          [ text (toString e) ]
+      toVirtualDom (HtmlParser.parse model.src)
   }
 
 

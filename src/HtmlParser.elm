@@ -1,6 +1,6 @@
 module HtmlParser exposing
   ( Node(..), Attributes
-  , parse, parseOne
+  , parse
   )
 
 {-|
@@ -8,7 +8,7 @@ module HtmlParser exposing
 @docs Node, Attributes
 
 # Parse
-@docs parse, parseOne
+@docs parse
 -}
 
 import String
@@ -47,22 +47,11 @@ parse "<a href="http://example.com">Example</a>"
 ```
 
 -}
-parse : String -> Result (List String) (List Node)
+parse : String -> List Node
 parse s =
-  fst (Combine.parse nodesAndEnd (String.trim s))
-
-{-| Parses first node. The input string is trimmed before parsing.
-
-```elm
-parseOne "text" == Text "text"
-
-parseOne "<h1>Hello</h1><p>bla bla</p>" == Element "h1" [] [ Text "Hello" ]
-```
-
--}
-parseOne : String -> Result (List String) Node
-parseOne s =
-  fst (Combine.parse (node "") (String.trim s))
+  case fst (Combine.parse nodesAndEnd (String.trim s)) of
+    Ok x -> x
+    Err _ -> []
 
 
 -- PARSER

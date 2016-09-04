@@ -2,7 +2,7 @@ module HtmlParser.Util exposing
   ( getElementById, getElementsByTagName, getElementsByClassName
   , createIdDict, createTagDict, createClassDict
   , findElement, findElements
-  , filterMapElements
+  , mapElements, filterElements, filterMapElements
   , getValue, getId, getClassList
   , textContent
   , toVirtualDom
@@ -19,7 +19,7 @@ module HtmlParser.Util exposing
 @docs findElement, findElements
 
 # Mapping
-@docs filterMapElements
+@docs mapElements, filterElements, filterMapElements
 
 # Attributes
 @docs getValue, getId, getClassList
@@ -37,7 +37,7 @@ import Html.Attributes exposing (..)
 {-|
 
 -}
-getElementById : String -> List Node -> Maybe Node
+getElementById : String -> List Node -> List Node
 getElementById targetId nodes =
   findElement (\_ attrs -> matchesToId targetId attrs) nodes
 
@@ -180,26 +180,26 @@ updateListDict key value dict =
 {-|
 
 -}
-findElement : (String -> Attributes -> Bool) -> List Node -> Maybe Node
+findElement : (String -> Attributes -> Bool) -> List Node -> List Node
 findElement match nodes =
   let
     f node _ =
       case node of
         Element tagName attrs children ->
           if match tagName attrs then
-            (Just node, True)
+            ([node], True)
           else
             case findElement match children of
-              Nothing ->
-                (Nothing, False)
+              [] ->
+                ([], False)
 
               x ->
                 (x, True)
 
         _ ->
-          (Nothing, False)
+          ([], False)
   in
-    foldlWithBreak f Nothing nodes
+    foldlWithBreak f [] nodes
 
 
 {-|
@@ -233,6 +233,36 @@ foldlWithBreak f b list =
 
         (b, False) ->
           foldlWithBreak f b tail
+
+
+{-|
+
+-}
+mapElements : (String -> Attributes -> List Node -> b) -> List Node -> List b
+mapElements f nodes =
+  List.filterMap (\node ->
+    case node of
+      Element tagName attrs children ->
+        Just (f tagName attrs children)
+
+      _ ->
+        Nothing
+  ) nodes
+
+
+{-|
+
+-}
+filterElements : (String -> Attributes -> List Node -> Bool) -> List Node -> List Node
+filterElements f nodes =
+  List.filter (\node ->
+    case node of
+      Element tagName attrs children ->
+        f tagName attrs children
+
+      _ ->
+        False
+  ) nodes
 
 
 {-|
