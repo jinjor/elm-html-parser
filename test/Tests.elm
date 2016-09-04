@@ -320,36 +320,36 @@ utilTests =
       )
     , test "id" (testSearch ["1"] (getElementsById "1") "<img id=1>")
     , test "id" (testSearch [] (getElementsById "1") "<img id=0>")
-    , test "createIndex" (testParseComplex (\nodes ->
-      case Dict.get "1" (createIndex nodes) of
+    , test "createIdDict" (testParseComplex (\nodes ->
+      case Dict.get "1" (createIdDict nodes) of
         Just _ -> False
         Nothing -> True
       ) "<img id=0><img id=2>")
-    , test "createIndex" (testParseComplex (\nodes ->
-      case Dict.get "1" (createIndex nodes) of
+    , test "createIdDict" (testParseComplex (\nodes ->
+      case Dict.get "1" (createIdDict nodes) of
         Just _ -> True
         Nothing -> False
       ) "<div> <img id=0> <img id=1> <img id=3> </div>")
-    , test "createTagIndex" (testParseComplex (\nodes ->
-      case Dict.get "img" (createTagIndex nodes) of
+    , test "createTagDict" (testParseComplex (\nodes ->
+      case Dict.get "img" (createTagDict nodes) of
         Just nodes ->
           (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1"]
         Nothing -> False
       ) "<img id=0><img id=1>")
-    , test "createTagIndex" (testParseComplex (\nodes ->
-      case Dict.get "a" (createTagIndex nodes) of
+    , test "createTagDict" (testParseComplex (\nodes ->
+      case Dict.get "a" (createTagDict nodes) of
         Just nodes ->
           (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1", "2", "3", "4"]
         Nothing -> False
       ) "<a id=0> <a id=1> </a> <a id=2> a </a> </a> <a id=3> b <div id=9> </div> <a id=4> </a> c </a>")
-    , test "createClassIndex" (testParseComplex (\nodes ->
-      case Dict.get "c" (createClassIndex nodes) of
+    , test "createClassDict" (testParseComplex (\nodes ->
+      case Dict.get "c" (createClassDict nodes) of
         Just nodes ->
           (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1"]
         Nothing -> False
       ) "<input class=c id=0><img class=c id=1>")
-    , test "createClassIndex" (testParseComplex (\nodes ->
-      case Dict.get "c" (createClassIndex nodes) of
+    , test "createClassDict" (testParseComplex (\nodes ->
+      case Dict.get "c" (createClassDict nodes) of
         Just nodes ->
           (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1", "2", "3", "4"]
         Nothing -> False
@@ -360,6 +360,12 @@ utilTests =
     , test "attr" (assert <| getClassList [("class", "foo bar baz")] == ["foo", "bar", "baz"])
     , test "attr" (assert <| getClassList [("class", "FOO")] == ["FOO"])
     , test "attr" (assert <| getClassList [("class", "   foo    bar   ")] == ["foo", "bar"])
+    , test "textContent" (testParseComplex (\nodes ->
+      textContent nodes == "This is some text"
+      ) "<div>This is <span>some</span> text</div>")
+    , test "textContent" (testParseComplex (\nodes ->
+      textContent nodes == "This is  text"
+      ) "<div>This is <!--some--> text</div>")
     ]
 
 

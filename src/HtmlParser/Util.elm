@@ -1,17 +1,47 @@
 module HtmlParser.Util exposing
   ( getElementById, getElementsByTagName, getElementsByClassName
-  , createIndex, createTagIndex, createClassIndex
+  , createIdDict, createTagDict, createClassDict
   , findElement, findElements
   , filterMapElements
-  , getId, getClassList
+  , getValue, getId, getClassList
+  , textContent
   )
 
+{-|
+# Query
+@docs getElementById, getElementsByTagName, getElementsByClassName
+
+# Optimize
+@docs createIdDict, createTagDict, createClassDict
+
+# Custom Query
+@docs findElement, findElements
+
+# Mapping
+@docs filterMapElements
+
+# Attributes
+@docs getValue, getId, getClassList
+
+# Get Content
+@docs textContent
+-}
 
 import HtmlParser exposing (Node(..), Attributes)
 import String
 import Dict exposing (Dict)
 
+{-|
 
+-}
+getElementById : String -> List Node -> Maybe Node
+getElementById targetId nodes =
+  findElement (\_ attrs -> matchesToId targetId attrs) nodes
+
+
+{-|
+
+-}
 getElementsByTagName : String -> List Node -> List Node
 getElementsByTagName tagName nodes =
   let
@@ -24,28 +54,39 @@ getElementsByTagName tagName nodes =
     findElements match nodes
 
 
+{-|
+
+-}
 getElementsByClassName : String -> List Node -> List Node
 getElementsByClassName targetClassName nodes =
   findElements (\_ attrs -> matchesToClass targetClassName attrs) nodes
 
 
-getElementById : String -> List Node -> Maybe Node
-getElementById targetId nodes =
-  findElement (\_ attrs -> matchesToId targetId attrs) nodes
+matchesToId : String -> Attributes -> Bool
+matchesToId targetId attrs =
+  getValue "id" attrs == Just targetId
 
 
-createIndex : List Node -> Dict String Node
-createIndex nodes =
+matchesToClass : String -> Attributes -> Bool
+matchesToClass targetClassName attrs =
+  List.member targetClassName (getClassList attrs)
+
+
+{-|
+
+-}
+createIdDict : List Node -> Dict String Node
+createIdDict nodes =
   let
     f node dict =
       case node of
         Element tagName attrs children ->
-          case getAttribute "id" attrs of
+          case getValue "id" attrs of
             Just id ->
-              Dict.union (Dict.insert id node dict) (createIndex children)
+              Dict.union (Dict.insert id node dict) (createIdDict children)
 
             Nothing ->
-              Dict.union dict (createIndex children)
+              Dict.union dict (createIdDict children)
 
         _ ->
           dict
@@ -53,13 +94,16 @@ createIndex nodes =
     List.foldl f Dict.empty nodes
 
 
-createTagIndex : List Node -> Dict String (List Node)
-createTagIndex nodes =
+{-|
+
+-}
+createTagDict : List Node -> Dict String (List Node)
+createTagDict nodes =
   let
     f node dict =
       case node of
         Element tagName attrs children ->
-          updateTagDict node tagName (mergeListDict (createTagIndex children) dict)
+          updateTagDict node tagName (mergeListDict (createTagDict children) dict)
 
         _ ->
           dict
@@ -67,15 +111,18 @@ createTagIndex nodes =
     List.foldr f Dict.empty nodes
 
 
-createClassIndex : List Node -> Dict String (List Node)
-createClassIndex nodes =
+{-|
+
+-}
+createClassDict : List Node -> Dict String (List Node)
+createClassDict nodes =
   let
     f node dict =
       case node of
         Element tagName attrs children ->
           List.foldl
             (updateClassDict node)
-            (mergeListDict (createClassIndex children) dict)
+            (mergeListDict (createClassDict children) dict)
             (getClassList attrs)
 
         _ ->
@@ -127,23 +174,9 @@ updateListDict key value dict =
     dict
 
 
-findElements : (String -> Attributes -> Bool) -> List Node -> List Node
-findElements match nodes =
-  let
-    f node results =
-      case node of
-        Element tagName attrs children ->
-          if match tagName attrs then
-            results ++ (node :: findElements match children)
-          else
-            results ++ findElements match children
+{-|
 
-        _ ->
-          results
-  in
-    List.foldl f [] nodes
-
-
+-}
 findElement : (String -> Attributes -> Bool) -> List Node -> Maybe Node
 findElement match nodes =
   let
@@ -166,42 +199,24 @@ findElement match nodes =
     foldlWithBreak f Nothing nodes
 
 
-matchesToClass : String -> Attributes -> Bool
-matchesToClass targetClassName attrs =
-  List.member targetClassName (getClassList attrs)
+{-|
 
+-}
+findElements : (String -> Attributes -> Bool) -> List Node -> List Node
+findElements match nodes =
+  let
+    f node results =
+      case node of
+        Element tagName attrs children ->
+          if match tagName attrs then
+            results ++ (node :: findElements match children)
+          else
+            results ++ findElements match children
 
-matchesToId : String -> Attributes -> Bool
-matchesToId targetId attrs =
-  getAttribute "id" attrs == Just targetId
-
-
-getClassList : Attributes -> List String
-getClassList attrs =
-  case getAttribute "class" attrs of
-    Nothing ->
-      []
-
-    Just value ->
-      String.words value
-
-
-getId : Attributes -> Maybe String
-getId attrs =
-  getAttribute "id" attrs
-
-
-getAttribute : String -> Attributes -> Maybe String
-getAttribute targetName attrs =
-  case attrs of
-    [] ->
-      Nothing
-
-    (name, value) :: tail ->
-      if name == targetName then
-        Just value
-      else
-        getAttribute targetName tail
+        _ ->
+          results
+  in
+    List.foldl f [] nodes
 
 
 foldlWithBreak : (a -> b -> (b, Bool)) -> b -> List a -> b
@@ -217,6 +232,9 @@ foldlWithBreak f b list =
           foldlWithBreak f b tail
 
 
+{-|
+
+-}
 filterMapElements : (String -> Attributes -> List Node -> Maybe b) -> List Node -> List b
 filterMapElements f nodes =
   List.filterMap (\node ->
@@ -227,3 +245,61 @@ filterMapElements f nodes =
       _ ->
         Nothing
   ) nodes
+
+
+{-|
+
+-}
+getValue : String -> Attributes -> Maybe String
+getValue targetName attrs =
+  case attrs of
+    [] ->
+      Nothing
+
+    (name, value) :: tail ->
+      if name == targetName then
+        Just value
+      else
+        getValue targetName tail
+
+
+{-|
+
+-}
+getId : Attributes -> Maybe String
+getId attrs =
+  getValue "id" attrs
+
+
+{-|
+
+-}
+getClassList : Attributes -> List String
+getClassList attrs =
+  case getValue "class" attrs of
+    Nothing ->
+      []
+
+    Just value ->
+      String.words value
+
+
+{-|
+
+-}
+textContent : List Node -> String
+textContent nodes =
+  String.join "" (List.map textContentEach nodes)
+
+
+textContentEach : Node -> String
+textContentEach node =
+  case node of
+    Element _ _ children ->
+      textContent children
+
+    Text s ->
+      s
+
+    Comment s ->
+      ""
