@@ -354,6 +354,12 @@ utilTests =
           (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1", "2", "3", "4"]
         Nothing -> False
       ) "<a class=c id=0><input class=c id=1><a class=c id=2></a></a><a class=c id=3><a id=9></a><input class=c id=4></a>")
+    , test "attr" (assert <| getId [("id", "foo")] == Just "foo")
+    , test "attr" (assert <| getId [("id", "FOO")] == Just "FOO")
+    , test "attr" (assert <| getId [("id", " foo ")] == Just " foo ")
+    , test "attr" (assert <| getClassList [("class", "foo bar baz")] == ["foo", "bar", "baz"])
+    , test "attr" (assert <| getClassList [("class", "FOO")] == ["FOO"])
+    , test "attr" (assert <| getClassList [("class", "   foo    bar   ")] == ["foo", "bar"])
     ]
 
 
