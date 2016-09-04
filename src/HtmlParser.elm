@@ -3,7 +3,7 @@ module HtmlParser exposing
   , parse
   )
 
-{-| The parser of HTML.
+{-| The HTML Parser.
 
 # AST
 @docs Node, Attributes
@@ -35,8 +35,9 @@ type alias Attributes =
   List (String, String)
 
 
-{-| The HTML Parser.
+{-| Parse HTML.
 
+```elm
 parse "text" == [ Text "text" ]
 
 parse "<h1>Hello<br>World</h1> "
@@ -44,6 +45,7 @@ parse "<h1>Hello<br>World</h1> "
 
 parse """<a href="http://example.com">Example</a>"""
   == [ Element "a" [("href", "http://example.com")] [ Text "Example" ] ]
+```
 
 -}
 parse : String -> List Node
@@ -204,7 +206,6 @@ normalNode parentTagName =
               optional () -- this is invalid
               -- identity
           ) (endTag tagName)
-
   )
 
 
@@ -270,12 +271,6 @@ endTag tagName =
 generalEndTag : Parser String
 generalEndTag =
   between (string "</") (string ">") tagName
-
-
-untilEndTag : String -> Parser ()
-untilEndTag tagName =
-  map (always ()) <|
-  manyTill Combine.Char.anyChar (endTag tagName)
 
 
 singleTag : Parser (String, List (String, String))

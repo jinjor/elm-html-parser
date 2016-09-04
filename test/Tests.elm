@@ -215,8 +215,14 @@ invalidTests : Test
 invalidTests =
   suite "Invalid"
     [ test "basic" (testInvalid "aaa" "<div>aaa")
+    -- , test "basic" (testInvalid "aaa" "<div>aaa</br>bbb</div>")
+    -- , test "basic" (testInvalid "bbb" "<div>aaa</br>bbb</div>")
     -- , test "basic" (testInvalid "aaa" "<div>aaa</br>bbb")
     -- , test "basic" (testInvalid "bbb" "<div>aaa</br>bbb")
+    -- , test "basic" (testInvalid "aaa" "<input>aaa</input>")
+    -- , test "basic" (testInvalid "aaa" "<div>aaa<input>bbb</input>ccc</div>")
+    -- , test "basic" (testInvalid "bbb" "<div>aaa<input>bbb</input>ccc</div>")
+    -- , test "basic" (testInvalid "ccc" "<div>aaa<input>bbb</input>ccc</div>")
     ]
 
 

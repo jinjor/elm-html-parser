@@ -9911,16 +9911,6 @@ var _user$project$HtmlParser$endTag = function (tagName) {
 				_Bogdanp$elm_combine$Combine$string(
 					_elm_lang$core$String$toUpper(tagName)))));
 };
-var _user$project$HtmlParser$untilEndTag = function (tagName) {
-	return A2(
-		_Bogdanp$elm_combine$Combine$map,
-		_elm_lang$core$Basics$always(
-			{ctor: '_Tuple0'}),
-		A2(
-			_Bogdanp$elm_combine$Combine$manyTill,
-			_Bogdanp$elm_combine$Combine_Char$anyChar,
-			_user$project$HtmlParser$endTag(tagName)));
-};
 var _user$project$HtmlParser$attributeValueEntityString = function (quote) {
 	return _Bogdanp$elm_combine$Combine$regex(
 		A2(
