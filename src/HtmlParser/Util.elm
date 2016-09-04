@@ -5,6 +5,7 @@ module HtmlParser.Util exposing
   , filterMapElements
   , getValue, getId, getClassList
   , textContent
+  , toVirtualDom
   )
 
 {-|
@@ -30,6 +31,8 @@ module HtmlParser.Util exposing
 import HtmlParser exposing (Node(..), Attributes)
 import String
 import Dict exposing (Dict)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 
 {-|
 
@@ -303,3 +306,29 @@ textContentEach node =
 
     Comment s ->
       ""
+
+
+{-|
+
+-}
+toVirtualDom : List Node -> List (Html msg)
+toVirtualDom nodes =
+  List.map toVirtualDomEach nodes
+
+
+toVirtualDomEach : Node -> Html msg
+toVirtualDomEach node =
+  case node of
+    Element name attrs children ->
+      Html.node name (List.map toAttribute attrs) (toVirtualDom children)
+
+    Text s ->
+      text s
+
+    Comment _ ->
+      text ""
+
+
+toAttribute : (String, String) -> Attribute msg
+toAttribute (name, value) =
+  attribute name value

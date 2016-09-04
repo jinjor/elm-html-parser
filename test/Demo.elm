@@ -5,6 +5,7 @@ import Html.App exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import HtmlParser exposing (..)
+import HtmlParser.Util exposing (..)
 
 port init : (String -> msg) -> Sub msg
 
@@ -66,7 +67,7 @@ show model =
     dest =
       case HtmlParser.parse model.src of
         Ok nodes ->
-          List.map toVirtualDom nodes
+          toVirtualDom nodes
 
         Err e ->
           [ text (toString e) ]
@@ -87,21 +88,3 @@ view model =
       , div [ style [("min-height", "500px"), ("flex-grow", "1"), ("border", "solid 1px #aaa")] ] model.dest
       ]
     ]
-
-
-toVirtualDom : Node -> Html msg
-toVirtualDom node =
-  case node of
-    Element name attrs children ->
-      Html.node name (List.map toAttribute attrs) (List.map toVirtualDom children)
-
-    Text s ->
-      text s
-
-    Comment _ ->
-      text ""
-
-
-toAttribute : (String, String) -> Attribute msg
-toAttribute (name, value) =
-  attribute name value
