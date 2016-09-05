@@ -53,7 +53,7 @@ table = """
         |> String.trim
     )
   |> String.join "\n"
-) == ["1\t2\t3\n2\t3\t4"]
+) == "1\t2\t3\n2\t3\t4"
 ```
 
 ## LICENSE
