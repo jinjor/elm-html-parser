@@ -87,7 +87,7 @@ tagName =
 
 attributeName : Parser String
 attributeName =
-  map String.toLower (regex "[a-zA-Z][a-zA-Z:\\-]*")
+  map String.toLower (regex "[a-zA-Z][a-zA-Z0-9:\\-]*")
 
 
 attributeQuotedValue : Parser String

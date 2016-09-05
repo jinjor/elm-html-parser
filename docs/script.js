@@ -9961,7 +9961,7 @@ var _user$project$HtmlParser$attributeValue = A2(_Bogdanp$elm_combine$Combine$or
 var _user$project$HtmlParser$attributeName = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	_elm_lang$core$String$toLower,
-	_Bogdanp$elm_combine$Combine$regex('[a-zA-Z][a-zA-Z:\\-]*'));
+	_Bogdanp$elm_combine$Combine$regex('[a-zA-Z][a-zA-Z0-9:\\-]*'));
 var _user$project$HtmlParser$tagName = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	_elm_lang$core$String$toLower,

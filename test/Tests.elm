@@ -150,6 +150,7 @@ attributeTests =
     , test "basic" (testParse """<input DISABLED>""" (Element "input" [("disabled", "")] []))
     , test "basic" (testParse """<input disabled />""" (Element "input" [("disabled", "")] []))
     , test "basic" (testParse """<meta http-equiv=Content-Type>""" (Element "meta" [("http-equiv", "Content-Type")] []))
+    , test "basic" (testParse """<input data-foo2="a">""" (Element "input" [("data-foo2", "a")] []))
     , test "basic" (testParse """<html xmlns:v="urn:schemas-microsoft-com:vml"></html>""" (Element "html" [("xmlns:v", "urn:schemas-microsoft-com:vml")] []))
     ]
 
