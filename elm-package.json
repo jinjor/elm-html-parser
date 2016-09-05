@@ -1,5 +1,5 @@
 {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "summary": "Parse HTML in Elm!",
     "repository": "https://github.com/jinjor/elm-html-parser.git",
     "license": "BSD3",
