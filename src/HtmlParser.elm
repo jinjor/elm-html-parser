@@ -82,12 +82,12 @@ spaced p =
 
 tagName : Parser String
 tagName =
-  regex "[a-zA-Z][a-zA-Z0-9\\-]*"
+  map String.toLower (regex "[a-zA-Z][a-zA-Z0-9\\-]*")
 
 
 attributeName : Parser String
 attributeName =
-  regex "[a-zA-Z][a-zA-Z:\\-]*"
+  map String.toLower (regex "[a-zA-Z][a-zA-Z:\\-]*")
 
 
 attributeQuotedValue : Parser String
@@ -109,7 +109,7 @@ attributeValue =
 
 attributeNameValuePair : Parser (String, String)
 attributeNameValuePair =
-  (\name _ value -> (String.toLower name, value))
+  (\name _ value -> (name, value))
   `map` attributeName
   `andMap` between spaces spaces (string "=")
   `andMap` attributeValue
@@ -118,7 +118,7 @@ attributeNameValuePair =
 attribute : Parser (String, String)
 attribute =
   attributeNameValuePair `or`
-  map (String.toLower >> flip (,) "") attributeName
+  map (flip (,) "") attributeName
 
 
 startTagOnly : Set String
@@ -197,15 +197,24 @@ normalNode parentTagName =
       else if Set.member tagName startTagOnly then
         succeed (Element tagName attrs [])
       else
-        (\children _ -> Element tagName attrs children)
-        `map` many (node tagName)
-        `andMap`
-          ( if Set.member tagName optionalEndTag then
-              optional () -- this is valid
-            else
-              optional () -- this is invalid
-              -- identity
-          ) (endTag tagName)
+        (\children -> Element tagName attrs children)
+        `map` untilEndTag tagName
+  )
+
+
+untilEndTag : String -> Parser (List Node)
+untilEndTag tagName =
+  rec (\_ ->
+    (\children1 children2 -> children1 ++ children2)
+    `map` many (node tagName)
+    `andMap`
+      -- if strict, end tag is optional only when `Set.member tagName optionalEndTag`
+      optional [] ( generalEndTag `andThen` \endTagName ->
+        if tagName == endTagName then
+          succeed []
+        else
+          untilEndTag tagName
+      )
   )
 
 
@@ -254,7 +263,7 @@ singleNode =
 startTag : Parser (String, List (String, String))
 startTag =
   rec (\_ ->
-    (\_ tagName attrs _ -> (String.toLower tagName, attrs))
+    (\_ tagName attrs _ -> (tagName, attrs))
     `map` string "<"
     `andMap` tagName
     `andMap` between spaces spaces (sepBy spaces attribute)
@@ -276,7 +285,7 @@ generalEndTag =
 singleTag : Parser (String, List (String, String))
 singleTag =
   rec (\_ ->
-    (\_ tagName attrs _ -> (String.toLower tagName, attrs))
+    (\_ tagName attrs _ -> (tagName, attrs))
     `map` string "<"
     `andMap` tagName
     `andMap` between spaces spaces (sepBy spaces attribute)
