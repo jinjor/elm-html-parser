@@ -8,9 +8,14 @@ import HtmlParser.Util exposing (..)
 import ElmTest exposing (..)
 
 
+testParseAll : String -> List Node -> Assertion
+testParseAll s astList =
+  assertEqual astList (HtmlParser.parse s)
+
+
 testParse : String -> Node -> Assertion
 testParse s ast =
-  assertEqual [ast] (HtmlParser.parse s)
+  testParseAll s [ast]
 
 
 testParseComplex : (List Node -> Bool) -> String -> Assertion
@@ -45,7 +50,10 @@ nodeTests : Test
 nodeTests =
   suite "Node"
     [ test "basic" (testParse "<a></a>" (Element "a" [] []))
-    -- , test "basic" (testParse " <a></a> " (Element "a" [] []))
+    , test "basic" (testParse "<a></a >" (Element "a" [] []))
+    , test "basic" (testParse "<A></A >" (Element "a" [] []))
+    , test "basic" (testParseAll " <a></a> " [Text " ", Element "a" [] [], Text " "])
+    , test "basic" (testParseAll "a<a></a>b" [Text "a", Element "a" [] [], Text "b"])
     , test "basic" (testParse "<A></A>" (Element "a" [] []))
     , test "basic" (testParse "<a>a</a>" (Element "a" [] [ Text "a" ]))
     , test "basic" (testParse "<a> a </a>" (Element "a" [] [ Text " a " ]))
@@ -62,6 +70,8 @@ nodeTests =
     , test "basic" (testParse "<custom-element></custom-element>" (Element "custom-element" [] []))
     , test "start-only-tag" (testParse "<br>" (Element "br" [] []))
     , test "start-only-tag" (testParse "<BR>" (Element "br" [] []))
+    , test "start-only-tag" (testParse "<br >" (Element "br" [] []))
+    , test "start-only-tag" (testParse "<BR >" (Element "br" [] []))
     , test "start-only-tag" (testParse "<a> <br> </a>" (Element "a" [] [ Text " ", Element "br" [] [], Text " " ]))
     , test "start-only-tag" (testParse "<a><br><br></a>" (Element "a" [] [ Element "br" [] [], Element "br" [] [] ]))
     , test "start-only-tag" (testParse "<a><br><img><hr><meta></a>" (Element "a" [] [ Element "br" [] [], Element "img" [] [], Element "hr" [] [], Element "meta" [] [] ]))
@@ -219,7 +229,7 @@ invalidTests =
     , test "basic" (testInvalid "bbb" "<div>aaa</br>bbb</div>")
     , test "basic" (testInvalid "aaa" "<div>aaa</br>bbb")
     , test "basic" (testInvalid "bbb" "<div>aaa</br>bbb")
-    -- , test "basic" (testInvalid "aaa" "<input>aaa</input>")
+    , test "basic" (testInvalid "aaa" "<input>aaa</input>")
     , test "basic" (testInvalid "aaa" "<div>aaa<input>bbb</input>ccc</div>")
     , test "basic" (testInvalid "bbb" "<div>aaa<input>bbb</input>ccc</div>")
     , test "basic" (testInvalid "ccc" "<div>aaa<input>bbb</input>ccc</div>")

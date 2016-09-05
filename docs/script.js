@@ -9895,22 +9895,6 @@ _user$project$HtmlParser_ops['*>'] = F2(
 				lp),
 			rp);
 	});
-var _user$project$HtmlParser$endTag = function (tagName) {
-	return A2(
-		_Bogdanp$elm_combine$Combine$map,
-		function (_p0) {
-			return {ctor: '_Tuple0'};
-		},
-		A3(
-			_Bogdanp$elm_combine$Combine$between,
-			_Bogdanp$elm_combine$Combine$string('</'),
-			_Bogdanp$elm_combine$Combine$string('>'),
-			A2(
-				_Bogdanp$elm_combine$Combine$or,
-				_Bogdanp$elm_combine$Combine$string(tagName),
-				_Bogdanp$elm_combine$Combine$string(
-					_elm_lang$core$String$toUpper(tagName)))));
-};
 var _user$project$HtmlParser$attributeValueEntityString = function (quote) {
 	return _Bogdanp$elm_combine$Combine$regex(
 		A2(
@@ -9982,11 +9966,6 @@ var _user$project$HtmlParser$tagName = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	_elm_lang$core$String$toLower,
 	_Bogdanp$elm_combine$Combine$regex('[a-zA-Z][a-zA-Z0-9\\-]*'));
-var _user$project$HtmlParser$generalEndTag = A3(
-	_Bogdanp$elm_combine$Combine$between,
-	_Bogdanp$elm_combine$Combine$string('</'),
-	_Bogdanp$elm_combine$Combine$string('>'),
-	_user$project$HtmlParser$tagName);
 var _user$project$HtmlParser$spaces1 = _Bogdanp$elm_combine$Combine$regex('[ \t\r\n]+');
 var _user$project$HtmlParser$spaces = _Bogdanp$elm_combine$Combine$regex('[ \t\r\n]*');
 var _user$project$HtmlParser$spaced = function (p) {
@@ -9999,7 +9978,7 @@ var _user$project$HtmlParser$attributeNameValuePair = A2(
 		A2(
 			_Bogdanp$elm_combine$Combine$map,
 			F3(
-				function (name, _p1, value) {
+				function (name, _p0, value) {
 					return {ctor: '_Tuple2', _0: name, _1: value};
 				}),
 			_user$project$HtmlParser$attributeName),
@@ -10022,31 +10001,55 @@ var _user$project$HtmlParser$attribute = A2(
 				}),
 			''),
 		_user$project$HtmlParser$attributeName));
-var _user$project$HtmlParser$startTag = _Bogdanp$elm_combine$Combine$rec(
-	function (_p2) {
-		return A2(
+var _user$project$HtmlParser$startTag = A2(
+	_Bogdanp$elm_combine$Combine$andMap,
+	A2(
+		_Bogdanp$elm_combine$Combine$andMap,
+		A2(
 			_Bogdanp$elm_combine$Combine$andMap,
 			A2(
-				_Bogdanp$elm_combine$Combine$andMap,
-				A2(
-					_Bogdanp$elm_combine$Combine$andMap,
-					A2(
-						_Bogdanp$elm_combine$Combine$map,
-						F4(
-							function (_p4, tagName, attrs, _p3) {
-								return {ctor: '_Tuple2', _0: tagName, _1: attrs};
-							}),
-						_Bogdanp$elm_combine$Combine$string('<')),
-					_user$project$HtmlParser$tagName),
-				A3(
-					_Bogdanp$elm_combine$Combine$between,
-					_user$project$HtmlParser$spaces,
-					_user$project$HtmlParser$spaces,
-					A2(_Bogdanp$elm_combine$Combine$sepBy, _user$project$HtmlParser$spaces, _user$project$HtmlParser$attribute))),
-			_Bogdanp$elm_combine$Combine$string('>'));
-	});
+				_Bogdanp$elm_combine$Combine$map,
+				F4(
+					function (_p2, tagName, attrs, _p1) {
+						return {ctor: '_Tuple2', _0: tagName, _1: attrs};
+					}),
+				_Bogdanp$elm_combine$Combine$string('<')),
+			_user$project$HtmlParser$tagName),
+		A3(
+			_Bogdanp$elm_combine$Combine$between,
+			_user$project$HtmlParser$spaces,
+			_user$project$HtmlParser$spaces,
+			A2(_Bogdanp$elm_combine$Combine$sepBy, _user$project$HtmlParser$spaces, _user$project$HtmlParser$attribute))),
+	_Bogdanp$elm_combine$Combine$string('>'));
+var _user$project$HtmlParser$generalEndTag = A2(
+	_Bogdanp$elm_combine$Combine$andMap,
+	A2(
+		_Bogdanp$elm_combine$Combine$andMap,
+		A2(
+			_Bogdanp$elm_combine$Combine$andMap,
+			A2(
+				_Bogdanp$elm_combine$Combine$map,
+				F4(
+					function (_p5, tagName, _p4, _p3) {
+						return tagName;
+					}),
+				_Bogdanp$elm_combine$Combine$string('</')),
+			_user$project$HtmlParser$tagName),
+		_user$project$HtmlParser$spaces),
+	_Bogdanp$elm_combine$Combine$string('>'));
+var _user$project$HtmlParser$endTag = function (tagName) {
+	return A2(
+		_Bogdanp$elm_combine$Combine$andThen,
+		_user$project$HtmlParser$generalEndTag,
+		function (endTagName) {
+			return _elm_lang$core$Native_Utils.eq(tagName, endTagName) ? _Bogdanp$elm_combine$Combine$succeed(
+				{ctor: '_Tuple0'}) : _Bogdanp$elm_combine$Combine$fail(
+				_elm_lang$core$Native_List.fromArray(
+					[]));
+		});
+};
 var _user$project$HtmlParser$singleTag = _Bogdanp$elm_combine$Combine$rec(
-	function (_p5) {
+	function (_p6) {
 		return A2(
 			_Bogdanp$elm_combine$Combine$andMap,
 			A2(
@@ -10056,7 +10059,7 @@ var _user$project$HtmlParser$singleTag = _Bogdanp$elm_combine$Combine$rec(
 					A2(
 						_Bogdanp$elm_combine$Combine$map,
 						F4(
-							function (_p7, tagName, attrs, _p6) {
+							function (_p8, tagName, attrs, _p7) {
 								return {ctor: '_Tuple2', _0: tagName, _1: attrs};
 							}),
 						_Bogdanp$elm_combine$Combine$string('<')),
@@ -10091,7 +10094,7 @@ var _user$project$HtmlParser$Element = F3(
 	});
 var _user$project$HtmlParser$doctypeNode = A2(
 	_Bogdanp$elm_combine$Combine$map,
-	function (_p8) {
+	function (_p9) {
 		return A3(
 			_user$project$HtmlParser$Element,
 			'!DOCTYPE',
@@ -10103,12 +10106,12 @@ var _user$project$HtmlParser$doctypeNode = A2(
 	_Bogdanp$elm_combine$Combine$regex('<!DOCTYPE [^>]*>'));
 var _user$project$HtmlParser$singleNode = A2(
 	_Bogdanp$elm_combine$Combine$map,
-	function (_p9) {
-		var _p10 = _p9;
+	function (_p10) {
+		var _p11 = _p10;
 		return A3(
 			_user$project$HtmlParser$Element,
-			_p10._0,
-			_p10._1,
+			_p11._0,
+			_p11._1,
 			_elm_lang$core$Native_List.fromArray(
 				[]));
 	},
@@ -10119,24 +10122,24 @@ var _user$project$HtmlParser$Text = function (a) {
 var _user$project$HtmlParser$textNode = A2(_Bogdanp$elm_combine$Combine$map, _user$project$HtmlParser$Text, _user$project$HtmlParser$textNodeString);
 var _user$project$HtmlParser$untilScriptEnd = function (tagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
-		function (_p11) {
+		function (_p12) {
 			return A2(
 				_Bogdanp$elm_combine$Combine$map,
-				function (_p12) {
-					var _p13 = _p12;
-					var _p15 = _p13._0;
-					var _p14 = _p13._1;
-					return _elm_lang$core$Native_Utils.eq(_p15, '') ? _p14 : A2(
+				function (_p13) {
+					var _p14 = _p13;
+					var _p16 = _p14._0;
+					var _p15 = _p14._1;
+					return _elm_lang$core$Native_Utils.eq(_p16, '') ? _p15 : A2(
 						_elm_lang$core$List_ops['::'],
-						_user$project$HtmlParser$Text(_p15),
-						_p14);
+						_user$project$HtmlParser$Text(_p16),
+						_p15);
 				},
 				_user$project$HtmlParser$untilScriptEndHelp(tagName));
 		});
 };
 var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
-		function (_p16) {
+		function (_p17) {
 			return A2(
 				_Bogdanp$elm_combine$Combine$andThen,
 				_Bogdanp$elm_combine$Combine$regex('[^<]*'),
@@ -10152,7 +10155,7 @@ var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 									A2(
 										_Bogdanp$elm_combine$Combine$map,
 										F3(
-											function (_p17, comment, rest) {
+											function (_p18, comment, rest) {
 												return {
 													ctor: '_Tuple2',
 													_0: s,
@@ -10164,7 +10167,7 @@ var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 								_user$project$HtmlParser$untilScriptEnd(tagName)),
 							A2(
 								_Bogdanp$elm_combine$Combine$map,
-								function (_p18) {
+								function (_p19) {
 									return {
 										ctor: '_Tuple2',
 										_0: s,
@@ -10178,15 +10181,15 @@ var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 							A2(
 								_Bogdanp$elm_combine$Combine$map,
 								F2(
-									function (lt, _p19) {
-										var _p20 = _p19;
+									function (lt, _p20) {
+										var _p21 = _p20;
 										return {
 											ctor: '_Tuple2',
 											_0: A2(
 												_elm_lang$core$Basics_ops['++'],
 												s,
-												A2(_elm_lang$core$Basics_ops['++'], lt, _p20._0)),
-											_1: _p20._1
+												A2(_elm_lang$core$Basics_ops['++'], lt, _p21._0)),
+											_1: _p21._1
 										};
 									}),
 								_Bogdanp$elm_combine$Combine$string('<')),
@@ -10196,39 +10199,39 @@ var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 };
 var _user$project$HtmlParser$normalNode = function (parentTagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
-		function (_p21) {
+		function (_p22) {
 			return A2(
 				_Bogdanp$elm_combine$Combine$andThen,
 				_user$project$HtmlParser$startTag,
-				function (_p22) {
-					var _p23 = _p22;
-					var _p25 = _p23._0;
-					var _p24 = _p23._1;
-					return (_elm_lang$core$Native_Utils.eq(_p25, 'script') || _elm_lang$core$Native_Utils.eq(_p25, 'style')) ? A2(
+				function (_p23) {
+					var _p24 = _p23;
+					var _p26 = _p24._0;
+					var _p25 = _p24._1;
+					return (_elm_lang$core$Native_Utils.eq(_p26, 'script') || _elm_lang$core$Native_Utils.eq(_p26, 'style')) ? A2(
 						_Bogdanp$elm_combine$Combine$map,
 						function (children) {
-							return A3(_user$project$HtmlParser$Element, _p25, _p24, children);
+							return A3(_user$project$HtmlParser$Element, _p26, _p25, children);
 						},
-						_user$project$HtmlParser$untilScriptEnd(_p25)) : (A2(_user$project$HtmlParser$isInvalidNest, parentTagName, _p25) ? _Bogdanp$elm_combine$Combine$fail(
+						_user$project$HtmlParser$untilScriptEnd(_p26)) : (A2(_user$project$HtmlParser$isInvalidNest, parentTagName, _p26) ? _Bogdanp$elm_combine$Combine$fail(
 						_elm_lang$core$Native_List.fromArray(
-							[])) : (A2(_elm_lang$core$Set$member, _p25, _user$project$HtmlParser$startTagOnly) ? _Bogdanp$elm_combine$Combine$succeed(
+							[])) : (A2(_elm_lang$core$Set$member, _p26, _user$project$HtmlParser$startTagOnly) ? _Bogdanp$elm_combine$Combine$succeed(
 						A3(
 							_user$project$HtmlParser$Element,
+							_p26,
 							_p25,
-							_p24,
 							_elm_lang$core$Native_List.fromArray(
 								[]))) : A2(
 						_Bogdanp$elm_combine$Combine$map,
 						function (children) {
-							return A3(_user$project$HtmlParser$Element, _p25, _p24, children);
+							return A3(_user$project$HtmlParser$Element, _p26, _p25, children);
 						},
-						_user$project$HtmlParser$untilEndTag(_p25))));
+						_user$project$HtmlParser$untilEndTag(_p26))));
 				});
 		});
 };
 var _user$project$HtmlParser$untilEndTag = function (tagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
-		function (_p26) {
+		function (_p27) {
 			return A2(
 				_Bogdanp$elm_combine$Combine$andMap,
 				A2(
@@ -10255,7 +10258,7 @@ var _user$project$HtmlParser$untilEndTag = function (tagName) {
 };
 var _user$project$HtmlParser$node = function (parentTagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
-		function (_p27) {
+		function (_p28) {
 			return A2(
 				_Bogdanp$elm_combine$Combine$or,
 				A2(
@@ -10273,17 +10276,16 @@ var _user$project$HtmlParser$nodesAndEnd = A2(
 	A2(
 		_Bogdanp$elm_combine$Combine$map,
 		F2(
-			function (nodes, _p28) {
+			function (nodes, _p29) {
 				return nodes;
 			}),
-		_Bogdanp$elm_combine$Combine$many(
-			_user$project$HtmlParser$node(''))),
+		_user$project$HtmlParser$untilEndTag('')),
 	_Bogdanp$elm_combine$Combine$end);
 var _user$project$HtmlParser$parse = function (s) {
-	var _p29 = _elm_lang$core$Basics$fst(
+	var _p30 = _elm_lang$core$Basics$fst(
 		A2(_Bogdanp$elm_combine$Combine$parse, _user$project$HtmlParser$nodesAndEnd, s));
-	if (_p29.ctor === 'Ok') {
-		return _p29._0;
+	if (_p30.ctor === 'Ok') {
+		return _p30._0;
 	} else {
 		return _elm_lang$core$Native_List.fromArray(
 			[]);

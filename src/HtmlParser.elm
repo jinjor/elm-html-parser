@@ -61,7 +61,7 @@ parse s =
 nodesAndEnd : Parser (List Node)
 nodesAndEnd =
   (\nodes _ -> nodes)
-  `map` many (node "")
+  `map` untilEndTag ""
   `andMap` end
 
 
@@ -262,24 +262,29 @@ singleNode =
 
 startTag : Parser (String, List (String, String))
 startTag =
-  rec (\_ ->
-    (\_ tagName attrs _ -> (tagName, attrs))
-    `map` string "<"
-    `andMap` tagName
-    `andMap` between spaces spaces (sepBy spaces attribute)
-    `andMap` string ">"
-  )
+  (\_ tagName attrs _ -> (tagName, attrs))
+  `map` string "<"
+  `andMap` tagName
+  `andMap` between spaces spaces (sepBy spaces attribute)
+  `andMap` string ">"
 
 
 endTag : String -> Parser ()
 endTag tagName =
-  (\_ -> ())
-  `map` between (string "</") (string ">") (string tagName `or` string (String.toUpper tagName))
+  generalEndTag `andThen` \endTagName ->
+    if tagName == endTagName then
+      succeed ()
+    else
+      fail []
 
 
 generalEndTag : Parser String
 generalEndTag =
-  between (string "</") (string ">") tagName
+  (\_ tagName _ _ -> tagName)
+  `map` string "</"
+  `andMap` tagName
+  `andMap` spaces
+  `andMap` string ">"
 
 
 singleTag : Parser (String, List (String, String))
