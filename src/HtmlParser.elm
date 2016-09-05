@@ -99,7 +99,7 @@ attributeQuotedValue =
 -- HTML5
 attributeBareValue : Parser String
 attributeBareValue =
-  regex """[^ ^`^"^'^<^>^=]+"""
+  regex """[^ ^`^"^'^<^>^=^\n^\r^\t]+"""
 
 
 attributeValue : Parser String

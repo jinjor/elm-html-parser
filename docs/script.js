@@ -9944,7 +9944,7 @@ var _user$project$HtmlParser$optionalEndTag = _elm_lang$core$Set$fromList(
 var _user$project$HtmlParser$startTagOnly = _elm_lang$core$Set$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		['br', 'img', 'hr', 'meta', 'input', 'embed', 'area', 'base', 'col', 'keygen', 'link', 'param', 'source', 'command', 'link', 'track', 'wbr']));
-var _user$project$HtmlParser$attributeBareValue = _Bogdanp$elm_combine$Combine$regex('[^ ^`^\"^\'^<^>^=]+');
+var _user$project$HtmlParser$attributeBareValue = _Bogdanp$elm_combine$Combine$regex('[^ ^`^\"^\'^<^>^=^\n^\r^\t]+');
 var _user$project$HtmlParser$attributeQuotedValue = A2(
 	_Bogdanp$elm_combine$Combine$or,
 	A3(
