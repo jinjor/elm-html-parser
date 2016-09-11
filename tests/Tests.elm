@@ -1,31 +1,32 @@
 module Tests exposing (..)
 
+import Test exposing (..)
+import Expect exposing (Expectation)
 import String
 import Dict
 import Combine as RawParser exposing (..)
 import HtmlParser as HtmlParser exposing (..)
 import HtmlParser.Util exposing (..)
-import ElmTest exposing (..)
 
 
-testParseAll : String -> List Node -> Assertion
-testParseAll s astList =
-  assertEqual astList (HtmlParser.parse s)
+testParseAll : String -> List Node -> (() -> Expectation)
+testParseAll s astList = \_ ->
+  Expect.equal astList (HtmlParser.parse s)
 
 
-testParse : String -> Node -> Assertion
+testParse : String -> Node -> (() -> Expectation)
 testParse s ast =
   testParseAll s [ast]
 
 
-testParseComplex : (List Node -> Bool) -> String -> Assertion
-testParseComplex f s =
-  assert (f (HtmlParser.parse s))
+testParseComplex : (List Node -> Bool) -> String -> (() -> Expectation)
+testParseComplex f s = \_ ->
+  Expect.true "" (f (HtmlParser.parse s))
 
 
 textNodeTests : Test
 textNodeTests =
-  suite "TextNode"
+  describe "TextNode"
     [ test "basic" (testParse "1" (Text "1"))
     , test "basic" (testParse "a" (Text "a"))
     , test "basic" (testParse "1a" (Text "1a"))
@@ -48,7 +49,7 @@ textNodeTests =
 
 nodeTests : Test
 nodeTests =
-  suite "Node"
+  describe "Node"
     [ test "basic" (testParse "<a></a>" (Element "a" [] []))
     , test "basic" (testParse "<a></a >" (Element "a" [] []))
     , test "basic" (testParse "<A></A >" (Element "a" [] []))
@@ -82,7 +83,7 @@ nodeTests =
 -- see https://html.spec.whatwg.org/multipage/syntax.html#optional-tags
 optionalEndTagTests : Test
 optionalEndTagTests =
-  suite "OptionalEndTag"
+  describe "OptionalEndTag"
     [ test "ul" (testParse "<ul><li></li></ul>" (Element "ul" [] [ Element "li" [] [] ]))
     , test "ul" (testParse "<ul><li></ul>" (Element "ul" [] [ Element "li" [] [] ]))
     , test "ul" (testParse "<ul><li><li></ul>" (Element "ul" [] [ Element "li" [] [], Element "li" [] [] ]))
@@ -113,7 +114,7 @@ optionalEndTagTests =
 
 scriptTests : Test
 scriptTests =
-  suite "Script"
+  describe "Script"
     [ test "script" (testParse """<script></script>""" (Element "script" [] []))
     , test "script" (testParse """<SCRIPT></SCRIPT>""" (Element "script" [] []))
     , test "script" (testParse """<script src="script.js">foo</script>""" (Element "script" [("src", "script.js")] [ Text "foo" ]))
@@ -126,7 +127,7 @@ scriptTests =
 
 commentTests : Test
 commentTests =
-  suite "Comment"
+  describe "Comment"
     [ test "basic" (testParse """<!---->""" (Comment ""))
     , test "basic" (testParse """<!--foo\t\r\n -->""" (Comment "foo\t\r\n "))
     , test "basic" (testParse """<!--<div></div>-->""" (Comment "<div></div>"))
@@ -137,7 +138,7 @@ commentTests =
 
 attributeTests : Test
 attributeTests =
-  suite "Attribute"
+  describe "Attribute"
     [ test "basic" (testParse """<a href="example.com"></a>""" (Element "a" [("href", "example.com")] []))
     , test "basic" (testParse """<a href='example.com'></a>""" (Element "a" [("href", "example.com")] []))
     , test "basic" (testParse """<a href=example.com></a>""" (Element "a" [("href", "example.com")] []))
@@ -157,11 +158,11 @@ attributeTests =
 
 intergrationTests : Test
 intergrationTests =
-  suite "Integration"
+  describe "Integration"
     [ test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 15) fullOmission)
     , test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 18) clipboardFromExcel2013)
     , test "table" (testParseComplex (\nodes -> (List.length <| getElementsByTagName "td" nodes) == 18) clipboardFromOpenOfficeCalc)
-    , test "query" (assertEqual "1\t2\t3\n2\t3\t4\n3\t4\t5\n4\t5\t6\n5\t6\t7\n6\t7\t8"
+    , test "query" (\_ -> Expect.equal "1\t2\t3\n2\t3\t4\n3\t4\t5\n4\t5\t6\n5\t6\t7\n6\t7\t8"
       ( HtmlParser.parse clipboardFromOpenOfficeCalc
           |> getElementsByTagName "tr"
           |> mapElements
@@ -174,7 +175,7 @@ intergrationTests =
           |> String.join "\n"
         )
       )
-    , test "query" (assertEqual
+    , test "query" (\_ -> Expect.equal
       ["Headlights", "Interior Lights", "Electric locomotive operating sounds"]
       ( HtmlParser.parse fullOmission
         |> getElementsByTagName "tbody"
@@ -194,7 +195,7 @@ intergrationTests =
           )
         )
       )
-    , test "query" (assertEqual
+    , test "query" (\_ -> Expect.equal
       (Just ("0", "0", "0", "216"))
       ( HtmlParser.parse clipboardFromExcel2013
           |> getElementsByTagName "table"
@@ -216,15 +217,15 @@ intergrationTests =
     ]
 
 
-testInvalid : String -> String -> Assertion
-testInvalid included s =
-  assert <| String.contains included <| toString <| HtmlParser.parse s
+testInvalid : String -> String -> (() -> Expectation)
+testInvalid included s = \_ ->
+  Expect.true "" <| String.contains included <| toString <| HtmlParser.parse s
 
 
 -- This tests is NOT from spec. You cannot expect this behavior as proper one.
 invalidTests : Test
 invalidTests =
-  suite "Invalid"
+  describe "Invalid"
     [ test "basic" (testInvalid "aaa" "<div>aaa")
     , test "basic" (testInvalid "aaa" "<div>aaa</br>bbb</div>")
     , test "basic" (testInvalid "bbb" "<div>aaa</br>bbb</div>")
@@ -342,7 +343,7 @@ clipboardFromOpenOfficeCalc = """
 
 parserTests : Test
 parserTests =
-  suite "Parser"
+  describe "Parser"
     [ textNodeTests
     , nodeTests
     , optionalEndTagTests
@@ -354,9 +355,9 @@ parserTests =
     ]
 
 
-testSearch : List String -> (List Node -> List Node) -> String -> Assertion
-testSearch idList f s =
-  assertEqual
+testSearch : List String -> (List Node -> List Node) -> String -> (() -> Expectation)
+testSearch idList f s = \_ ->
+  Expect.equal
     idList
     ( filterMapElements
         (\_ attrs _ -> getId attrs)
@@ -366,7 +367,7 @@ testSearch idList f s =
 
 utilTests : Test
 utilTests =
-  suite "Util"
+  describe "Util"
     [ test "tag" (testSearch [] (getElementsByTagName "input") "<img id=1>")
     , test "tag" (testSearch ["1"] (getElementsByTagName "img") "<img id=1>")
     , test "tag" (testSearch ["1", "2"] (getElementsByTagName "img") "<img id=1><img id=2>")
@@ -418,12 +419,12 @@ utilTests =
           (filterMapElements (\_ attrs _ -> getId attrs) nodes) == ["0", "1", "2", "3", "4"]
         Nothing -> False
       ) "<a class=c id=0><input class=c id=1><a class=c id=2></a></a><a class=c id=3><a id=9></a><input class=c id=4></a>")
-    , test "attr" (assert <| getId [("id", "foo")] == Just "foo")
-    , test "attr" (assert <| getId [("id", "FOO")] == Just "FOO")
-    , test "attr" (assert <| getId [("id", " foo ")] == Just " foo ")
-    , test "attr" (assert <| getClassList [("class", "foo bar baz")] == ["foo", "bar", "baz"])
-    , test "attr" (assert <| getClassList [("class", "FOO")] == ["FOO"])
-    , test "attr" (assert <| getClassList [("class", "   foo    bar   ")] == ["foo", "bar"])
+    , test "attr" (\_ -> Expect.true "" <| getId [("id", "foo")] == Just "foo")
+    , test "attr" (\_ -> Expect.true "" <| getId [("id", "FOO")] == Just "FOO")
+    , test "attr" (\_ -> Expect.true "" <| getId [("id", " foo ")] == Just " foo ")
+    , test "attr" (\_ -> Expect.true "" <| getClassList [("class", "foo bar baz")] == ["foo", "bar", "baz"])
+    , test "attr" (\_ -> Expect.true "" <| getClassList [("class", "FOO")] == ["FOO"])
+    , test "attr" (\_ -> Expect.true "" <| getClassList [("class", "   foo    bar   ")] == ["foo", "bar"])
     , test "textContent" (testParseComplex (\nodes ->
       textContent nodes == "This is some text"
       ) "<div>This is <span>some</span> text</div>")
@@ -433,14 +434,9 @@ utilTests =
     ]
 
 
-tests : Test
-tests =
-  suite "HtmlParser"
+all : Test
+all =
+  describe "HtmlParser"
     [ parserTests
     , utilTests
     ]
-
-
-main : Program Never
-main =
-  runSuite tests

@@ -6840,6 +6840,137 @@ var _elm_lang$core$Json_Decode$dict = function (decoder) {
 };
 var _elm_lang$core$Json_Decode$Decoder = {ctor: 'Decoder'};
 
+var _elm_lang$core$Set$foldr = F3(
+	function (f, b, _p0) {
+		var _p1 = _p0;
+		return A3(
+			_elm_lang$core$Dict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p1._0);
+	});
+var _elm_lang$core$Set$foldl = F3(
+	function (f, b, _p3) {
+		var _p4 = _p3;
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, _p5, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p4._0);
+	});
+var _elm_lang$core$Set$toList = function (_p6) {
+	var _p7 = _p6;
+	return _elm_lang$core$Dict$keys(_p7._0);
+};
+var _elm_lang$core$Set$size = function (_p8) {
+	var _p9 = _p8;
+	return _elm_lang$core$Dict$size(_p9._0);
+};
+var _elm_lang$core$Set$member = F2(
+	function (k, _p10) {
+		var _p11 = _p10;
+		return A2(_elm_lang$core$Dict$member, k, _p11._0);
+	});
+var _elm_lang$core$Set$isEmpty = function (_p12) {
+	var _p13 = _p12;
+	return _elm_lang$core$Dict$isEmpty(_p13._0);
+};
+var _elm_lang$core$Set$Set_elm_builtin = function (a) {
+	return {ctor: 'Set_elm_builtin', _0: a};
+};
+var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
+var _elm_lang$core$Set$singleton = function (k) {
+	return _elm_lang$core$Set$Set_elm_builtin(
+		A2(
+			_elm_lang$core$Dict$singleton,
+			k,
+			{ctor: '_Tuple0'}));
+};
+var _elm_lang$core$Set$insert = F2(
+	function (k, _p14) {
+		var _p15 = _p14;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A3(
+				_elm_lang$core$Dict$insert,
+				k,
+				{ctor: '_Tuple0'},
+				_p15._0));
+	});
+var _elm_lang$core$Set$fromList = function (xs) {
+	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
+};
+var _elm_lang$core$Set$map = F2(
+	function (f, s) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_elm_lang$core$Set$toList(s)));
+	});
+var _elm_lang$core$Set$remove = F2(
+	function (k, _p16) {
+		var _p17 = _p16;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$remove, k, _p17._0));
+	});
+var _elm_lang$core$Set$union = F2(
+	function (_p19, _p18) {
+		var _p20 = _p19;
+		var _p21 = _p18;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
+	});
+var _elm_lang$core$Set$intersect = F2(
+	function (_p23, _p22) {
+		var _p24 = _p23;
+		var _p25 = _p22;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
+	});
+var _elm_lang$core$Set$diff = F2(
+	function (_p27, _p26) {
+		var _p28 = _p27;
+		var _p29 = _p26;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
+	});
+var _elm_lang$core$Set$filter = F2(
+	function (p, _p30) {
+		var _p31 = _p30;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, _p32) {
+						return p(k);
+					}),
+				_p31._0));
+	});
+var _elm_lang$core$Set$partition = F2(
+	function (p, _p33) {
+		var _p34 = _p33;
+		var _p35 = A2(
+			_elm_lang$core$Dict$partition,
+			F2(
+				function (k, _p36) {
+					return p(k);
+				}),
+			_p34._0);
+		var p1 = _p35._0;
+		var p2 = _p35._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
+			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
+		};
+	});
+
 //import Native.Json //
 
 var _elm_lang$virtual_dom$Native_VirtualDom = function() {
@@ -8467,137 +8598,6 @@ var _elm_lang$html$Html_App$beginnerProgram = function (_p1) {
 };
 var _elm_lang$html$Html_App$map = _elm_lang$virtual_dom$VirtualDom$map;
 
-var _elm_lang$core$Set$foldr = F3(
-	function (f, b, _p0) {
-		var _p1 = _p0;
-		return A3(
-			_elm_lang$core$Dict$foldr,
-			F3(
-				function (k, _p2, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p1._0);
-	});
-var _elm_lang$core$Set$foldl = F3(
-	function (f, b, _p3) {
-		var _p4 = _p3;
-		return A3(
-			_elm_lang$core$Dict$foldl,
-			F3(
-				function (k, _p5, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p4._0);
-	});
-var _elm_lang$core$Set$toList = function (_p6) {
-	var _p7 = _p6;
-	return _elm_lang$core$Dict$keys(_p7._0);
-};
-var _elm_lang$core$Set$size = function (_p8) {
-	var _p9 = _p8;
-	return _elm_lang$core$Dict$size(_p9._0);
-};
-var _elm_lang$core$Set$member = F2(
-	function (k, _p10) {
-		var _p11 = _p10;
-		return A2(_elm_lang$core$Dict$member, k, _p11._0);
-	});
-var _elm_lang$core$Set$isEmpty = function (_p12) {
-	var _p13 = _p12;
-	return _elm_lang$core$Dict$isEmpty(_p13._0);
-};
-var _elm_lang$core$Set$Set_elm_builtin = function (a) {
-	return {ctor: 'Set_elm_builtin', _0: a};
-};
-var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
-var _elm_lang$core$Set$singleton = function (k) {
-	return _elm_lang$core$Set$Set_elm_builtin(
-		A2(
-			_elm_lang$core$Dict$singleton,
-			k,
-			{ctor: '_Tuple0'}));
-};
-var _elm_lang$core$Set$insert = F2(
-	function (k, _p14) {
-		var _p15 = _p14;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A3(
-				_elm_lang$core$Dict$insert,
-				k,
-				{ctor: '_Tuple0'},
-				_p15._0));
-	});
-var _elm_lang$core$Set$fromList = function (xs) {
-	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
-};
-var _elm_lang$core$Set$map = F2(
-	function (f, s) {
-		return _elm_lang$core$Set$fromList(
-			A2(
-				_elm_lang$core$List$map,
-				f,
-				_elm_lang$core$Set$toList(s)));
-	});
-var _elm_lang$core$Set$remove = F2(
-	function (k, _p16) {
-		var _p17 = _p16;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$remove, k, _p17._0));
-	});
-var _elm_lang$core$Set$union = F2(
-	function (_p19, _p18) {
-		var _p20 = _p19;
-		var _p21 = _p18;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
-	});
-var _elm_lang$core$Set$intersect = F2(
-	function (_p23, _p22) {
-		var _p24 = _p23;
-		var _p25 = _p22;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
-	});
-var _elm_lang$core$Set$diff = F2(
-	function (_p27, _p26) {
-		var _p28 = _p27;
-		var _p29 = _p26;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
-	});
-var _elm_lang$core$Set$filter = F2(
-	function (p, _p30) {
-		var _p31 = _p30;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(
-				_elm_lang$core$Dict$filter,
-				F2(
-					function (k, _p32) {
-						return p(k);
-					}),
-				_p31._0));
-	});
-var _elm_lang$core$Set$partition = F2(
-	function (p, _p33) {
-		var _p34 = _p33;
-		var _p35 = A2(
-			_elm_lang$core$Dict$partition,
-			F2(
-				function (k, _p36) {
-					return p(k);
-				}),
-			_p34._0);
-		var p1 = _p35._0;
-		var p2 = _p35._1;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
-			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
-		};
-	});
-
 var _elm_lang$html$Html_Attributes$attribute = _elm_lang$virtual_dom$VirtualDom$attribute;
 var _elm_lang$html$Html_Attributes$contextmenu = function (value) {
 	return A2(_elm_lang$html$Html_Attributes$attribute, 'contextmenu', value);
@@ -9051,7 +9051,7 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
-var _user$project$Escape$dict = _elm_lang$core$Dict$fromList(
+var _jinjor$elm_html_parser$Escape$dict = _elm_lang$core$Dict$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		[
 			{ctor: '_Tuple2', _0: '&#8482;', _1: '™'},
@@ -9884,8 +9884,8 @@ var _user$project$Escape$dict = _elm_lang$core$Dict$fromList(
 			{ctor: '_Tuple2', _0: '&thorn;', _1: 'þ'}
 		]));
 
-var _user$project$HtmlParser_ops = _user$project$HtmlParser_ops || {};
-_user$project$HtmlParser_ops['*>'] = F2(
+var _jinjor$elm_html_parser$HtmlParser_ops = _jinjor$elm_html_parser$HtmlParser_ops || {};
+_jinjor$elm_html_parser$HtmlParser_ops['*>'] = F2(
 	function (lp, rp) {
 		return A2(
 			_Bogdanp$elm_combine$Combine$andMap,
@@ -9895,24 +9895,24 @@ _user$project$HtmlParser_ops['*>'] = F2(
 				lp),
 			rp);
 	});
-var _user$project$HtmlParser$attributeValueEntityString = function (quote) {
+var _jinjor$elm_html_parser$HtmlParser$attributeValueEntityString = function (quote) {
 	return _Bogdanp$elm_combine$Combine$regex(
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			'[^<^&^',
 			A2(_elm_lang$core$Basics_ops['++'], quote, ']*')));
 };
-var _user$project$HtmlParser$textNodeNonEntityString = _Bogdanp$elm_combine$Combine$regex('[^<^&]*');
-var _user$project$HtmlParser$entityString = A2(
+var _jinjor$elm_html_parser$HtmlParser$textNodeNonEntityString = _Bogdanp$elm_combine$Combine$regex('[^<^&]*');
+var _jinjor$elm_html_parser$HtmlParser$entityString = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	function (code) {
 		return A2(
 			_elm_lang$core$Maybe$withDefault,
 			code,
-			A2(_elm_lang$core$Dict$get, code, _user$project$Escape$dict));
+			A2(_elm_lang$core$Dict$get, code, _jinjor$elm_html_parser$Escape$dict));
 	},
 	_Bogdanp$elm_combine$Combine$regex('&[#0-9a-zA-Z]*;'));
-var _user$project$HtmlParser$attributeString = function (quote) {
+var _jinjor$elm_html_parser$HtmlParser$attributeString = function (quote) {
 	return A2(
 		_Bogdanp$elm_combine$Combine$map,
 		function (list) {
@@ -9921,57 +9921,57 @@ var _user$project$HtmlParser$attributeString = function (quote) {
 		_Bogdanp$elm_combine$Combine$many(
 			A2(
 				_Bogdanp$elm_combine$Combine$or,
-				_user$project$HtmlParser$entityString,
-				_user$project$HtmlParser$attributeValueEntityString(quote))));
+				_jinjor$elm_html_parser$HtmlParser$entityString,
+				_jinjor$elm_html_parser$HtmlParser$attributeValueEntityString(quote))));
 };
-var _user$project$HtmlParser$textNodeString = A2(
+var _jinjor$elm_html_parser$HtmlParser$textNodeString = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	function (list) {
 		return A2(_elm_lang$core$String$join, '', list);
 	},
 	_Bogdanp$elm_combine$Combine$many(
-		A2(_Bogdanp$elm_combine$Combine$or, _user$project$HtmlParser$entityString, _user$project$HtmlParser$textNodeNonEntityString)));
-var _user$project$HtmlParser$ngSetForP = _elm_lang$core$Set$fromList(
+		A2(_Bogdanp$elm_combine$Combine$or, _jinjor$elm_html_parser$HtmlParser$entityString, _jinjor$elm_html_parser$HtmlParser$textNodeNonEntityString)));
+var _jinjor$elm_html_parser$HtmlParser$ngSetForP = _elm_lang$core$Set$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		['address', 'article', 'aside', 'blockquote', 'details', 'div', 'dl', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul']));
-var _user$project$HtmlParser$isInvalidNest = F2(
+var _jinjor$elm_html_parser$HtmlParser$isInvalidNest = F2(
 	function (tagName, childTagName) {
-		return (_elm_lang$core$Native_Utils.eq(tagName, 'head') && _elm_lang$core$Native_Utils.eq(childTagName, 'body')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'li') && _elm_lang$core$Native_Utils.eq(childTagName, 'li')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'dt') && (_elm_lang$core$Native_Utils.eq(childTagName, 'dt') || _elm_lang$core$Native_Utils.eq(childTagName, 'dd'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'dd') && (_elm_lang$core$Native_Utils.eq(childTagName, 'dt') || _elm_lang$core$Native_Utils.eq(childTagName, 'dd'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'p') && A2(_elm_lang$core$Set$member, childTagName, _user$project$HtmlParser$ngSetForP)) || ((_elm_lang$core$Native_Utils.eq(tagName, 'rt') && (_elm_lang$core$Native_Utils.eq(childTagName, 'rt') || _elm_lang$core$Native_Utils.eq(childTagName, 'rp'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'rp') && (_elm_lang$core$Native_Utils.eq(childTagName, 'rt') || _elm_lang$core$Native_Utils.eq(childTagName, 'rp'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'optgroup') && _elm_lang$core$Native_Utils.eq(childTagName, 'optgroup')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'option') && (_elm_lang$core$Native_Utils.eq(childTagName, 'option') || _elm_lang$core$Native_Utils.eq(childTagName, 'optgroup'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'colgroup') && (!_elm_lang$core$Native_Utils.eq(childTagName, 'col'))) || (_elm_lang$core$Native_Utils.eq(tagName, 'caption') || ((_elm_lang$core$Native_Utils.eq(tagName, 'thead') && (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'tbody') && (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tfoot') || _elm_lang$core$Native_Utils.eq(childTagName, 'table')))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'tfoot') && _elm_lang$core$Native_Utils.eq(childTagName, 'table')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'tr') && (_elm_lang$core$Native_Utils.eq(childTagName, 'tr') || (_elm_lang$core$Native_Utils.eq(childTagName, 'thead') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot'))))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'td') && (_elm_lang$core$Native_Utils.eq(childTagName, 'td') || (_elm_lang$core$Native_Utils.eq(childTagName, 'th') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tr') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot')))))) || (_elm_lang$core$Native_Utils.eq(tagName, 'th') && (_elm_lang$core$Native_Utils.eq(childTagName, 'td') || (_elm_lang$core$Native_Utils.eq(childTagName, 'th') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tr') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot')))))))))))))))))))));
+		return (_elm_lang$core$Native_Utils.eq(tagName, 'head') && _elm_lang$core$Native_Utils.eq(childTagName, 'body')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'li') && _elm_lang$core$Native_Utils.eq(childTagName, 'li')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'dt') && (_elm_lang$core$Native_Utils.eq(childTagName, 'dt') || _elm_lang$core$Native_Utils.eq(childTagName, 'dd'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'dd') && (_elm_lang$core$Native_Utils.eq(childTagName, 'dt') || _elm_lang$core$Native_Utils.eq(childTagName, 'dd'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'p') && A2(_elm_lang$core$Set$member, childTagName, _jinjor$elm_html_parser$HtmlParser$ngSetForP)) || ((_elm_lang$core$Native_Utils.eq(tagName, 'rt') && (_elm_lang$core$Native_Utils.eq(childTagName, 'rt') || _elm_lang$core$Native_Utils.eq(childTagName, 'rp'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'rp') && (_elm_lang$core$Native_Utils.eq(childTagName, 'rt') || _elm_lang$core$Native_Utils.eq(childTagName, 'rp'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'optgroup') && _elm_lang$core$Native_Utils.eq(childTagName, 'optgroup')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'option') && (_elm_lang$core$Native_Utils.eq(childTagName, 'option') || _elm_lang$core$Native_Utils.eq(childTagName, 'optgroup'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'colgroup') && (!_elm_lang$core$Native_Utils.eq(childTagName, 'col'))) || (_elm_lang$core$Native_Utils.eq(tagName, 'caption') || ((_elm_lang$core$Native_Utils.eq(tagName, 'thead') && (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot'))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'tbody') && (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tfoot') || _elm_lang$core$Native_Utils.eq(childTagName, 'table')))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'tfoot') && _elm_lang$core$Native_Utils.eq(childTagName, 'table')) || ((_elm_lang$core$Native_Utils.eq(tagName, 'tr') && (_elm_lang$core$Native_Utils.eq(childTagName, 'tr') || (_elm_lang$core$Native_Utils.eq(childTagName, 'thead') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot'))))) || ((_elm_lang$core$Native_Utils.eq(tagName, 'td') && (_elm_lang$core$Native_Utils.eq(childTagName, 'td') || (_elm_lang$core$Native_Utils.eq(childTagName, 'th') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tr') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot')))))) || (_elm_lang$core$Native_Utils.eq(tagName, 'th') && (_elm_lang$core$Native_Utils.eq(childTagName, 'td') || (_elm_lang$core$Native_Utils.eq(childTagName, 'th') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tr') || (_elm_lang$core$Native_Utils.eq(childTagName, 'tbody') || _elm_lang$core$Native_Utils.eq(childTagName, 'tfoot')))))))))))))))))))));
 	});
-var _user$project$HtmlParser$optionalEndTag = _elm_lang$core$Set$fromList(
+var _jinjor$elm_html_parser$HtmlParser$optionalEndTag = _elm_lang$core$Set$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		['li', 'dt', 'dd', 'p', 'rt', 'rp', 'optgroup', 'option', 'colgroup', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'td', 'th']));
-var _user$project$HtmlParser$startTagOnly = _elm_lang$core$Set$fromList(
+var _jinjor$elm_html_parser$HtmlParser$startTagOnly = _elm_lang$core$Set$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		['br', 'img', 'hr', 'meta', 'input', 'embed', 'area', 'base', 'col', 'keygen', 'link', 'param', 'source', 'command', 'link', 'track', 'wbr']));
-var _user$project$HtmlParser$attributeBareValue = _Bogdanp$elm_combine$Combine$regex('[^ ^`^\"^\'^<^>^=^\n^\r^\t]+');
-var _user$project$HtmlParser$attributeQuotedValue = A2(
+var _jinjor$elm_html_parser$HtmlParser$attributeBareValue = _Bogdanp$elm_combine$Combine$regex('[^ ^`^\"^\'^<^>^=^\n^\r^\t]+');
+var _jinjor$elm_html_parser$HtmlParser$attributeQuotedValue = A2(
 	_Bogdanp$elm_combine$Combine$or,
 	A3(
 		_Bogdanp$elm_combine$Combine$between,
 		_Bogdanp$elm_combine$Combine$string('\"'),
 		_Bogdanp$elm_combine$Combine$string('\"'),
-		_user$project$HtmlParser$attributeString('\"')),
+		_jinjor$elm_html_parser$HtmlParser$attributeString('\"')),
 	A3(
 		_Bogdanp$elm_combine$Combine$between,
 		_Bogdanp$elm_combine$Combine$string('\''),
 		_Bogdanp$elm_combine$Combine$string('\''),
-		_user$project$HtmlParser$attributeString('\'')));
-var _user$project$HtmlParser$attributeValue = A2(_Bogdanp$elm_combine$Combine$or, _user$project$HtmlParser$attributeQuotedValue, _user$project$HtmlParser$attributeBareValue);
-var _user$project$HtmlParser$attributeName = A2(
+		_jinjor$elm_html_parser$HtmlParser$attributeString('\'')));
+var _jinjor$elm_html_parser$HtmlParser$attributeValue = A2(_Bogdanp$elm_combine$Combine$or, _jinjor$elm_html_parser$HtmlParser$attributeQuotedValue, _jinjor$elm_html_parser$HtmlParser$attributeBareValue);
+var _jinjor$elm_html_parser$HtmlParser$attributeName = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	_elm_lang$core$String$toLower,
 	_Bogdanp$elm_combine$Combine$regex('[a-zA-Z][a-zA-Z0-9:\\-]*'));
-var _user$project$HtmlParser$tagName = A2(
+var _jinjor$elm_html_parser$HtmlParser$tagName = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	_elm_lang$core$String$toLower,
 	_Bogdanp$elm_combine$Combine$regex('[a-zA-Z][a-zA-Z0-9\\-]*'));
-var _user$project$HtmlParser$spaces1 = _Bogdanp$elm_combine$Combine$regex('[ \t\r\n]+');
-var _user$project$HtmlParser$spaces = _Bogdanp$elm_combine$Combine$regex('[ \t\r\n]*');
-var _user$project$HtmlParser$spaced = function (p) {
-	return A3(_Bogdanp$elm_combine$Combine$between, _user$project$HtmlParser$spaces, _user$project$HtmlParser$spaces, p);
+var _jinjor$elm_html_parser$HtmlParser$spaces1 = _Bogdanp$elm_combine$Combine$regex('[ \t\r\n]+');
+var _jinjor$elm_html_parser$HtmlParser$spaces = _Bogdanp$elm_combine$Combine$regex('[ \t\r\n]*');
+var _jinjor$elm_html_parser$HtmlParser$spaced = function (p) {
+	return A3(_Bogdanp$elm_combine$Combine$between, _jinjor$elm_html_parser$HtmlParser$spaces, _jinjor$elm_html_parser$HtmlParser$spaces, p);
 };
-var _user$project$HtmlParser$attributeNameValuePair = A2(
+var _jinjor$elm_html_parser$HtmlParser$attributeNameValuePair = A2(
 	_Bogdanp$elm_combine$Combine$andMap,
 	A2(
 		_Bogdanp$elm_combine$Combine$andMap,
@@ -9981,16 +9981,16 @@ var _user$project$HtmlParser$attributeNameValuePair = A2(
 				function (name, _p0, value) {
 					return {ctor: '_Tuple2', _0: name, _1: value};
 				}),
-			_user$project$HtmlParser$attributeName),
+			_jinjor$elm_html_parser$HtmlParser$attributeName),
 		A3(
 			_Bogdanp$elm_combine$Combine$between,
-			_user$project$HtmlParser$spaces,
-			_user$project$HtmlParser$spaces,
+			_jinjor$elm_html_parser$HtmlParser$spaces,
+			_jinjor$elm_html_parser$HtmlParser$spaces,
 			_Bogdanp$elm_combine$Combine$string('='))),
-	_user$project$HtmlParser$attributeValue);
-var _user$project$HtmlParser$attribute = A2(
+	_jinjor$elm_html_parser$HtmlParser$attributeValue);
+var _jinjor$elm_html_parser$HtmlParser$attribute = A2(
 	_Bogdanp$elm_combine$Combine$or,
-	_user$project$HtmlParser$attributeNameValuePair,
+	_jinjor$elm_html_parser$HtmlParser$attributeNameValuePair,
 	A2(
 		_Bogdanp$elm_combine$Combine$map,
 		A2(
@@ -10000,8 +10000,8 @@ var _user$project$HtmlParser$attribute = A2(
 					return {ctor: '_Tuple2', _0: v0, _1: v1};
 				}),
 			''),
-		_user$project$HtmlParser$attributeName));
-var _user$project$HtmlParser$startTag = A2(
+		_jinjor$elm_html_parser$HtmlParser$attributeName));
+var _jinjor$elm_html_parser$HtmlParser$startTag = A2(
 	_Bogdanp$elm_combine$Combine$andMap,
 	A2(
 		_Bogdanp$elm_combine$Combine$andMap,
@@ -10014,14 +10014,14 @@ var _user$project$HtmlParser$startTag = A2(
 						return {ctor: '_Tuple2', _0: tagName, _1: attrs};
 					}),
 				_Bogdanp$elm_combine$Combine$string('<')),
-			_user$project$HtmlParser$tagName),
+			_jinjor$elm_html_parser$HtmlParser$tagName),
 		A3(
 			_Bogdanp$elm_combine$Combine$between,
-			_user$project$HtmlParser$spaces,
-			_user$project$HtmlParser$spaces,
-			A2(_Bogdanp$elm_combine$Combine$sepBy, _user$project$HtmlParser$spaces, _user$project$HtmlParser$attribute))),
+			_jinjor$elm_html_parser$HtmlParser$spaces,
+			_jinjor$elm_html_parser$HtmlParser$spaces,
+			A2(_Bogdanp$elm_combine$Combine$sepBy, _jinjor$elm_html_parser$HtmlParser$spaces, _jinjor$elm_html_parser$HtmlParser$attribute))),
 	_Bogdanp$elm_combine$Combine$string('>'));
-var _user$project$HtmlParser$generalEndTag = A2(
+var _jinjor$elm_html_parser$HtmlParser$generalEndTag = A2(
 	_Bogdanp$elm_combine$Combine$andMap,
 	A2(
 		_Bogdanp$elm_combine$Combine$andMap,
@@ -10034,13 +10034,13 @@ var _user$project$HtmlParser$generalEndTag = A2(
 						return tagName;
 					}),
 				_Bogdanp$elm_combine$Combine$string('</')),
-			_user$project$HtmlParser$tagName),
-		_user$project$HtmlParser$spaces),
+			_jinjor$elm_html_parser$HtmlParser$tagName),
+		_jinjor$elm_html_parser$HtmlParser$spaces),
 	_Bogdanp$elm_combine$Combine$string('>'));
-var _user$project$HtmlParser$endTag = function (tagName) {
+var _jinjor$elm_html_parser$HtmlParser$endTag = function (tagName) {
 	return A2(
 		_Bogdanp$elm_combine$Combine$andThen,
-		_user$project$HtmlParser$generalEndTag,
+		_jinjor$elm_html_parser$HtmlParser$generalEndTag,
 		function (endTagName) {
 			return _elm_lang$core$Native_Utils.eq(tagName, endTagName) ? _Bogdanp$elm_combine$Combine$succeed(
 				{ctor: '_Tuple0'}) : _Bogdanp$elm_combine$Combine$fail(
@@ -10048,7 +10048,7 @@ var _user$project$HtmlParser$endTag = function (tagName) {
 					[]));
 		});
 };
-var _user$project$HtmlParser$singleTag = _Bogdanp$elm_combine$Combine$rec(
+var _jinjor$elm_html_parser$HtmlParser$singleTag = _Bogdanp$elm_combine$Combine$rec(
 	function (_p6) {
 		return A2(
 			_Bogdanp$elm_combine$Combine$andMap,
@@ -10063,20 +10063,20 @@ var _user$project$HtmlParser$singleTag = _Bogdanp$elm_combine$Combine$rec(
 								return {ctor: '_Tuple2', _0: tagName, _1: attrs};
 							}),
 						_Bogdanp$elm_combine$Combine$string('<')),
-					_user$project$HtmlParser$tagName),
+					_jinjor$elm_html_parser$HtmlParser$tagName),
 				A3(
 					_Bogdanp$elm_combine$Combine$between,
-					_user$project$HtmlParser$spaces,
-					_user$project$HtmlParser$spaces,
-					A2(_Bogdanp$elm_combine$Combine$sepBy, _user$project$HtmlParser$spaces, _user$project$HtmlParser$attribute))),
+					_jinjor$elm_html_parser$HtmlParser$spaces,
+					_jinjor$elm_html_parser$HtmlParser$spaces,
+					A2(_Bogdanp$elm_combine$Combine$sepBy, _jinjor$elm_html_parser$HtmlParser$spaces, _jinjor$elm_html_parser$HtmlParser$attribute))),
 			_Bogdanp$elm_combine$Combine$string('/>'));
 	});
-var _user$project$HtmlParser$Comment = function (a) {
+var _jinjor$elm_html_parser$HtmlParser$Comment = function (a) {
 	return {ctor: 'Comment', _0: a};
 };
-var _user$project$HtmlParser$untilCommentEnd = A2(
+var _jinjor$elm_html_parser$HtmlParser$untilCommentEnd = A2(
 	_Bogdanp$elm_combine$Combine$map,
-	_user$project$HtmlParser$Comment,
+	_jinjor$elm_html_parser$HtmlParser$Comment,
 	A2(
 		_Bogdanp$elm_combine$Combine$map,
 		_elm_lang$core$String$fromList,
@@ -10084,19 +10084,19 @@ var _user$project$HtmlParser$untilCommentEnd = A2(
 			_Bogdanp$elm_combine$Combine$manyTill,
 			_Bogdanp$elm_combine$Combine_Char$anyChar,
 			_Bogdanp$elm_combine$Combine$string('-->'))));
-var _user$project$HtmlParser$commentNode = A2(
-	_user$project$HtmlParser_ops['*>'],
+var _jinjor$elm_html_parser$HtmlParser$commentNode = A2(
+	_jinjor$elm_html_parser$HtmlParser_ops['*>'],
 	_Bogdanp$elm_combine$Combine$string('<!--'),
-	_user$project$HtmlParser$untilCommentEnd);
-var _user$project$HtmlParser$Element = F3(
+	_jinjor$elm_html_parser$HtmlParser$untilCommentEnd);
+var _jinjor$elm_html_parser$HtmlParser$Element = F3(
 	function (a, b, c) {
 		return {ctor: 'Element', _0: a, _1: b, _2: c};
 	});
-var _user$project$HtmlParser$doctypeNode = A2(
+var _jinjor$elm_html_parser$HtmlParser$doctypeNode = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	function (_p9) {
 		return A3(
-			_user$project$HtmlParser$Element,
+			_jinjor$elm_html_parser$HtmlParser$Element,
 			'!DOCTYPE',
 			_elm_lang$core$Native_List.fromArray(
 				[]),
@@ -10104,23 +10104,23 @@ var _user$project$HtmlParser$doctypeNode = A2(
 				[]));
 	},
 	_Bogdanp$elm_combine$Combine$regex('<!DOCTYPE [^>]*>'));
-var _user$project$HtmlParser$singleNode = A2(
+var _jinjor$elm_html_parser$HtmlParser$singleNode = A2(
 	_Bogdanp$elm_combine$Combine$map,
 	function (_p10) {
 		var _p11 = _p10;
 		return A3(
-			_user$project$HtmlParser$Element,
+			_jinjor$elm_html_parser$HtmlParser$Element,
 			_p11._0,
 			_p11._1,
 			_elm_lang$core$Native_List.fromArray(
 				[]));
 	},
-	_user$project$HtmlParser$singleTag);
-var _user$project$HtmlParser$Text = function (a) {
+	_jinjor$elm_html_parser$HtmlParser$singleTag);
+var _jinjor$elm_html_parser$HtmlParser$Text = function (a) {
 	return {ctor: 'Text', _0: a};
 };
-var _user$project$HtmlParser$textNode = A2(_Bogdanp$elm_combine$Combine$map, _user$project$HtmlParser$Text, _user$project$HtmlParser$textNodeString);
-var _user$project$HtmlParser$untilScriptEnd = function (tagName) {
+var _jinjor$elm_html_parser$HtmlParser$textNode = A2(_Bogdanp$elm_combine$Combine$map, _jinjor$elm_html_parser$HtmlParser$Text, _jinjor$elm_html_parser$HtmlParser$textNodeString);
+var _jinjor$elm_html_parser$HtmlParser$untilScriptEnd = function (tagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
 		function (_p12) {
 			return A2(
@@ -10131,13 +10131,13 @@ var _user$project$HtmlParser$untilScriptEnd = function (tagName) {
 					var _p15 = _p14._1;
 					return _elm_lang$core$Native_Utils.eq(_p16, '') ? _p15 : A2(
 						_elm_lang$core$List_ops['::'],
-						_user$project$HtmlParser$Text(_p16),
+						_jinjor$elm_html_parser$HtmlParser$Text(_p16),
 						_p15);
 				},
-				_user$project$HtmlParser$untilScriptEndHelp(tagName));
+				_jinjor$elm_html_parser$HtmlParser$untilScriptEndHelp(tagName));
 		});
 };
-var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
+var _jinjor$elm_html_parser$HtmlParser$untilScriptEndHelp = function (tagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
 		function (_p17) {
 			return A2(
@@ -10163,8 +10163,8 @@ var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 												};
 											}),
 										_Bogdanp$elm_combine$Combine$string('<!--')),
-									_user$project$HtmlParser$untilCommentEnd),
-								_user$project$HtmlParser$untilScriptEnd(tagName)),
+									_jinjor$elm_html_parser$HtmlParser$untilCommentEnd),
+								_jinjor$elm_html_parser$HtmlParser$untilScriptEnd(tagName)),
 							A2(
 								_Bogdanp$elm_combine$Combine$map,
 								function (_p19) {
@@ -10175,7 +10175,7 @@ var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 											[])
 									};
 								},
-								_user$project$HtmlParser$endTag(tagName))),
+								_jinjor$elm_html_parser$HtmlParser$endTag(tagName))),
 						A2(
 							_Bogdanp$elm_combine$Combine$andMap,
 							A2(
@@ -10193,16 +10193,16 @@ var _user$project$HtmlParser$untilScriptEndHelp = function (tagName) {
 										};
 									}),
 								_Bogdanp$elm_combine$Combine$string('<')),
-							_user$project$HtmlParser$untilScriptEndHelp(tagName)));
+							_jinjor$elm_html_parser$HtmlParser$untilScriptEndHelp(tagName)));
 				});
 		});
 };
-var _user$project$HtmlParser$normalNode = function (parentTagName) {
+var _jinjor$elm_html_parser$HtmlParser$normalNode = function (parentTagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
 		function (_p22) {
 			return A2(
 				_Bogdanp$elm_combine$Combine$andThen,
-				_user$project$HtmlParser$startTag,
+				_jinjor$elm_html_parser$HtmlParser$startTag,
 				function (_p23) {
 					var _p24 = _p23;
 					var _p26 = _p24._0;
@@ -10210,26 +10210,26 @@ var _user$project$HtmlParser$normalNode = function (parentTagName) {
 					return (_elm_lang$core$Native_Utils.eq(_p26, 'script') || _elm_lang$core$Native_Utils.eq(_p26, 'style')) ? A2(
 						_Bogdanp$elm_combine$Combine$map,
 						function (children) {
-							return A3(_user$project$HtmlParser$Element, _p26, _p25, children);
+							return A3(_jinjor$elm_html_parser$HtmlParser$Element, _p26, _p25, children);
 						},
-						_user$project$HtmlParser$untilScriptEnd(_p26)) : (A2(_user$project$HtmlParser$isInvalidNest, parentTagName, _p26) ? _Bogdanp$elm_combine$Combine$fail(
+						_jinjor$elm_html_parser$HtmlParser$untilScriptEnd(_p26)) : (A2(_jinjor$elm_html_parser$HtmlParser$isInvalidNest, parentTagName, _p26) ? _Bogdanp$elm_combine$Combine$fail(
 						_elm_lang$core$Native_List.fromArray(
-							[])) : (A2(_elm_lang$core$Set$member, _p26, _user$project$HtmlParser$startTagOnly) ? _Bogdanp$elm_combine$Combine$succeed(
+							[])) : (A2(_elm_lang$core$Set$member, _p26, _jinjor$elm_html_parser$HtmlParser$startTagOnly) ? _Bogdanp$elm_combine$Combine$succeed(
 						A3(
-							_user$project$HtmlParser$Element,
+							_jinjor$elm_html_parser$HtmlParser$Element,
 							_p26,
 							_p25,
 							_elm_lang$core$Native_List.fromArray(
 								[]))) : A2(
 						_Bogdanp$elm_combine$Combine$map,
 						function (children) {
-							return A3(_user$project$HtmlParser$Element, _p26, _p25, children);
+							return A3(_jinjor$elm_html_parser$HtmlParser$Element, _p26, _p25, children);
 						},
-						_user$project$HtmlParser$untilEndTag(_p26))));
+						_jinjor$elm_html_parser$HtmlParser$untilEndTag(_p26))));
 				});
 		});
 };
-var _user$project$HtmlParser$untilEndTag = function (tagName) {
+var _jinjor$elm_html_parser$HtmlParser$untilEndTag = function (tagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
 		function (_p27) {
 			return A2(
@@ -10241,22 +10241,22 @@ var _user$project$HtmlParser$untilEndTag = function (tagName) {
 							return A2(_elm_lang$core$Basics_ops['++'], children1, children2);
 						}),
 					_Bogdanp$elm_combine$Combine$many(
-						_user$project$HtmlParser$node(tagName))),
+						_jinjor$elm_html_parser$HtmlParser$node(tagName))),
 				A2(
 					_Bogdanp$elm_combine$Combine$optional,
 					_elm_lang$core$Native_List.fromArray(
 						[]),
 					A2(
 						_Bogdanp$elm_combine$Combine$andThen,
-						_user$project$HtmlParser$generalEndTag,
+						_jinjor$elm_html_parser$HtmlParser$generalEndTag,
 						function (endTagName) {
 							return _elm_lang$core$Native_Utils.eq(tagName, endTagName) ? _Bogdanp$elm_combine$Combine$succeed(
 								_elm_lang$core$Native_List.fromArray(
-									[])) : _user$project$HtmlParser$untilEndTag(tagName);
+									[])) : _jinjor$elm_html_parser$HtmlParser$untilEndTag(tagName);
 						})));
 		});
 };
-var _user$project$HtmlParser$node = function (parentTagName) {
+var _jinjor$elm_html_parser$HtmlParser$node = function (parentTagName) {
 	return _Bogdanp$elm_combine$Combine$rec(
 		function (_p28) {
 			return A2(
@@ -10265,13 +10265,13 @@ var _user$project$HtmlParser$node = function (parentTagName) {
 					_Bogdanp$elm_combine$Combine$or,
 					A2(
 						_Bogdanp$elm_combine$Combine$or,
-						A2(_Bogdanp$elm_combine$Combine$or, _user$project$HtmlParser$doctypeNode, _user$project$HtmlParser$singleNode),
-						_user$project$HtmlParser$normalNode(parentTagName)),
-					_user$project$HtmlParser$commentNode),
-				_user$project$HtmlParser$textNode);
+						A2(_Bogdanp$elm_combine$Combine$or, _jinjor$elm_html_parser$HtmlParser$doctypeNode, _jinjor$elm_html_parser$HtmlParser$singleNode),
+						_jinjor$elm_html_parser$HtmlParser$normalNode(parentTagName)),
+					_jinjor$elm_html_parser$HtmlParser$commentNode),
+				_jinjor$elm_html_parser$HtmlParser$textNode);
 		});
 };
-var _user$project$HtmlParser$nodesAndEnd = A2(
+var _jinjor$elm_html_parser$HtmlParser$nodesAndEnd = A2(
 	_Bogdanp$elm_combine$Combine$andMap,
 	A2(
 		_Bogdanp$elm_combine$Combine$map,
@@ -10279,11 +10279,11 @@ var _user$project$HtmlParser$nodesAndEnd = A2(
 			function (nodes, _p29) {
 				return nodes;
 			}),
-		_user$project$HtmlParser$untilEndTag('')),
+		_jinjor$elm_html_parser$HtmlParser$untilEndTag('')),
 	_Bogdanp$elm_combine$Combine$end);
-var _user$project$HtmlParser$parse = function (s) {
+var _jinjor$elm_html_parser$HtmlParser$parse = function (s) {
 	var _p30 = _elm_lang$core$Basics$fst(
-		A2(_Bogdanp$elm_combine$Combine$parse, _user$project$HtmlParser$nodesAndEnd, s));
+		A2(_Bogdanp$elm_combine$Combine$parse, _jinjor$elm_html_parser$HtmlParser$nodesAndEnd, s));
 	if (_p30.ctor === 'Ok') {
 		return _p30._0;
 	} else {
@@ -10292,46 +10292,46 @@ var _user$project$HtmlParser$parse = function (s) {
 	}
 };
 
-var _user$project$HtmlParser_Util$toAttribute = function (_p0) {
+var _jinjor$elm_html_parser$HtmlParser_Util$toAttribute = function (_p0) {
 	var _p1 = _p0;
 	return A2(_elm_lang$html$Html_Attributes$attribute, _p1._0, _p1._1);
 };
-var _user$project$HtmlParser_Util$toVirtualDom = function (nodes) {
-	return A2(_elm_lang$core$List$map, _user$project$HtmlParser_Util$toVirtualDomEach, nodes);
+var _jinjor$elm_html_parser$HtmlParser_Util$toVirtualDom = function (nodes) {
+	return A2(_elm_lang$core$List$map, _jinjor$elm_html_parser$HtmlParser_Util$toVirtualDomEach, nodes);
 };
-var _user$project$HtmlParser_Util$toVirtualDomEach = function (node) {
+var _jinjor$elm_html_parser$HtmlParser_Util$toVirtualDomEach = function (node) {
 	var _p2 = node;
 	switch (_p2.ctor) {
 		case 'Element':
 			return A3(
 				_elm_lang$html$Html$node,
 				_p2._0,
-				A2(_elm_lang$core$List$map, _user$project$HtmlParser_Util$toAttribute, _p2._1),
-				_user$project$HtmlParser_Util$toVirtualDom(_p2._2));
+				A2(_elm_lang$core$List$map, _jinjor$elm_html_parser$HtmlParser_Util$toAttribute, _p2._1),
+				_jinjor$elm_html_parser$HtmlParser_Util$toVirtualDom(_p2._2));
 		case 'Text':
 			return _elm_lang$html$Html$text(_p2._0);
 		default:
 			return _elm_lang$html$Html$text('');
 	}
 };
-var _user$project$HtmlParser_Util$textContent = function (nodes) {
+var _jinjor$elm_html_parser$HtmlParser_Util$textContent = function (nodes) {
 	return A2(
 		_elm_lang$core$String$join,
 		'',
-		A2(_elm_lang$core$List$map, _user$project$HtmlParser_Util$textContentEach, nodes));
+		A2(_elm_lang$core$List$map, _jinjor$elm_html_parser$HtmlParser_Util$textContentEach, nodes));
 };
-var _user$project$HtmlParser_Util$textContentEach = function (node) {
+var _jinjor$elm_html_parser$HtmlParser_Util$textContentEach = function (node) {
 	var _p3 = node;
 	switch (_p3.ctor) {
 		case 'Element':
-			return _user$project$HtmlParser_Util$textContent(_p3._2);
+			return _jinjor$elm_html_parser$HtmlParser_Util$textContent(_p3._2);
 		case 'Text':
 			return _p3._0;
 		default:
 			return '';
 	}
 };
-var _user$project$HtmlParser_Util$getValue = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$getValue = F2(
 	function (targetName, attrs) {
 		getValue:
 		while (true) {
@@ -10351,11 +10351,11 @@ var _user$project$HtmlParser_Util$getValue = F2(
 			}
 		}
 	});
-var _user$project$HtmlParser_Util$getId = function (attrs) {
-	return A2(_user$project$HtmlParser_Util$getValue, 'id', attrs);
+var _jinjor$elm_html_parser$HtmlParser_Util$getId = function (attrs) {
+	return A2(_jinjor$elm_html_parser$HtmlParser_Util$getValue, 'id', attrs);
 };
-var _user$project$HtmlParser_Util$getClassList = function (attrs) {
-	var _p5 = A2(_user$project$HtmlParser_Util$getValue, 'class', attrs);
+var _jinjor$elm_html_parser$HtmlParser_Util$getClassList = function (attrs) {
+	var _p5 = A2(_jinjor$elm_html_parser$HtmlParser_Util$getValue, 'class', attrs);
 	if (_p5.ctor === 'Nothing') {
 		return _elm_lang$core$Native_List.fromArray(
 			[]);
@@ -10363,7 +10363,7 @@ var _user$project$HtmlParser_Util$getClassList = function (attrs) {
 		return _elm_lang$core$String$words(_p5._0);
 	}
 };
-var _user$project$HtmlParser_Util$filterMapElements = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$filterMapElements = F2(
 	function (f, nodes) {
 		return A2(
 			_elm_lang$core$List$filterMap,
@@ -10377,7 +10377,7 @@ var _user$project$HtmlParser_Util$filterMapElements = F2(
 			},
 			nodes);
 	});
-var _user$project$HtmlParser_Util$filterElements = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$filterElements = F2(
 	function (f, nodes) {
 		return A2(
 			_elm_lang$core$List$filter,
@@ -10391,7 +10391,7 @@ var _user$project$HtmlParser_Util$filterElements = F2(
 			},
 			nodes);
 	});
-var _user$project$HtmlParser_Util$mapElements = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$mapElements = F2(
 	function (f, nodes) {
 		return A2(
 			_elm_lang$core$List$filterMap,
@@ -10406,7 +10406,7 @@ var _user$project$HtmlParser_Util$mapElements = F2(
 			},
 			nodes);
 	});
-var _user$project$HtmlParser_Util$foldlWithBreak = F3(
+var _jinjor$elm_html_parser$HtmlParser_Util$foldlWithBreak = F3(
 	function (f, b, list) {
 		foldlWithBreak:
 		while (true) {
@@ -10429,7 +10429,7 @@ var _user$project$HtmlParser_Util$foldlWithBreak = F3(
 			}
 		}
 	});
-var _user$project$HtmlParser_Util$findElements = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$findElements = F2(
 	function (match, nodes) {
 		var f = F2(
 			function (node, results) {
@@ -10442,10 +10442,10 @@ var _user$project$HtmlParser_Util$findElements = F2(
 						A2(
 							_elm_lang$core$List_ops['::'],
 							node,
-							A2(_user$project$HtmlParser_Util$findElements, match, _p12))) : A2(
+							A2(_jinjor$elm_html_parser$HtmlParser_Util$findElements, match, _p12))) : A2(
 						_elm_lang$core$Basics_ops['++'],
 						results,
-						A2(_user$project$HtmlParser_Util$findElements, match, _p12));
+						A2(_jinjor$elm_html_parser$HtmlParser_Util$findElements, match, _p12));
 				} else {
 					return results;
 				}
@@ -10457,7 +10457,7 @@ var _user$project$HtmlParser_Util$findElements = F2(
 				[]),
 			nodes);
 	});
-var _user$project$HtmlParser_Util$findElement = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$findElement = F2(
 	function (match, nodes) {
 		var f = F2(
 			function (node, _p13) {
@@ -10471,7 +10471,7 @@ var _user$project$HtmlParser_Util$findElement = F2(
 							_1: true
 						};
 					} else {
-						var _p15 = A2(_user$project$HtmlParser_Util$findElement, match, _p14._2);
+						var _p15 = A2(_jinjor$elm_html_parser$HtmlParser_Util$findElement, match, _p14._2);
 						if (_p15.ctor === '[]') {
 							return {
 								ctor: '_Tuple2',
@@ -10493,13 +10493,13 @@ var _user$project$HtmlParser_Util$findElement = F2(
 				}
 			});
 		return A3(
-			_user$project$HtmlParser_Util$foldlWithBreak,
+			_jinjor$elm_html_parser$HtmlParser_Util$foldlWithBreak,
 			f,
 			_elm_lang$core$Native_List.fromArray(
 				[]),
 			nodes);
 	});
-var _user$project$HtmlParser_Util$updateListDict = F3(
+var _jinjor$elm_html_parser$HtmlParser_Util$updateListDict = F3(
 	function (key, value, dict) {
 		return A3(
 			_elm_lang$core$Dict$update,
@@ -10517,7 +10517,7 @@ var _user$project$HtmlParser_Util$updateListDict = F3(
 			},
 			dict);
 	});
-var _user$project$HtmlParser_Util$mergeListDict = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$mergeListDict = F2(
 	function (d1, d2) {
 		return A3(
 			_elm_lang$core$Dict$foldl,
@@ -10540,49 +10540,49 @@ var _user$project$HtmlParser_Util$mergeListDict = F2(
 			d1,
 			d2);
 	});
-var _user$project$HtmlParser_Util$updateClassDict = F3(
+var _jinjor$elm_html_parser$HtmlParser_Util$updateClassDict = F3(
 	function (node, $class, dict) {
-		return A3(_user$project$HtmlParser_Util$updateListDict, $class, node, dict);
+		return A3(_jinjor$elm_html_parser$HtmlParser_Util$updateListDict, $class, node, dict);
 	});
-var _user$project$HtmlParser_Util$updateTagDict = F3(
+var _jinjor$elm_html_parser$HtmlParser_Util$updateTagDict = F3(
 	function (node, tagName, dict) {
-		return A3(_user$project$HtmlParser_Util$updateListDict, tagName, node, dict);
+		return A3(_jinjor$elm_html_parser$HtmlParser_Util$updateListDict, tagName, node, dict);
 	});
-var _user$project$HtmlParser_Util$updateIdDict = F3(
+var _jinjor$elm_html_parser$HtmlParser_Util$updateIdDict = F3(
 	function (node, id, dict) {
-		return A3(_user$project$HtmlParser_Util$updateListDict, id, node, dict);
+		return A3(_jinjor$elm_html_parser$HtmlParser_Util$updateListDict, id, node, dict);
 	});
-var _user$project$HtmlParser_Util$createClassDict = function (nodes) {
+var _jinjor$elm_html_parser$HtmlParser_Util$createClassDict = function (nodes) {
 	var f = F2(
 		function (node, dict) {
 			var _p18 = node;
 			if (_p18.ctor === 'Element') {
 				return A3(
 					_elm_lang$core$List$foldl,
-					_user$project$HtmlParser_Util$updateClassDict(node),
+					_jinjor$elm_html_parser$HtmlParser_Util$updateClassDict(node),
 					A2(
-						_user$project$HtmlParser_Util$mergeListDict,
-						_user$project$HtmlParser_Util$createClassDict(_p18._2),
+						_jinjor$elm_html_parser$HtmlParser_Util$mergeListDict,
+						_jinjor$elm_html_parser$HtmlParser_Util$createClassDict(_p18._2),
 						dict),
-					_user$project$HtmlParser_Util$getClassList(_p18._1));
+					_jinjor$elm_html_parser$HtmlParser_Util$getClassList(_p18._1));
 			} else {
 				return dict;
 			}
 		});
 	return A3(_elm_lang$core$List$foldr, f, _elm_lang$core$Dict$empty, nodes);
 };
-var _user$project$HtmlParser_Util$createTagDict = function (nodes) {
+var _jinjor$elm_html_parser$HtmlParser_Util$createTagDict = function (nodes) {
 	var f = F2(
 		function (node, dict) {
 			var _p19 = node;
 			if (_p19.ctor === 'Element') {
 				return A3(
-					_user$project$HtmlParser_Util$updateTagDict,
+					_jinjor$elm_html_parser$HtmlParser_Util$updateTagDict,
 					node,
 					_p19._0,
 					A2(
-						_user$project$HtmlParser_Util$mergeListDict,
-						_user$project$HtmlParser_Util$createTagDict(_p19._2),
+						_jinjor$elm_html_parser$HtmlParser_Util$mergeListDict,
+						_jinjor$elm_html_parser$HtmlParser_Util$createTagDict(_p19._2),
 						dict));
 			} else {
 				return dict;
@@ -10590,22 +10590,22 @@ var _user$project$HtmlParser_Util$createTagDict = function (nodes) {
 		});
 	return A3(_elm_lang$core$List$foldr, f, _elm_lang$core$Dict$empty, nodes);
 };
-var _user$project$HtmlParser_Util$createIdDict = function (nodes) {
+var _jinjor$elm_html_parser$HtmlParser_Util$createIdDict = function (nodes) {
 	var f = F2(
 		function (node, dict) {
 			var _p20 = node;
 			if (_p20.ctor === 'Element') {
 				return function () {
-					var _p21 = A2(_user$project$HtmlParser_Util$getValue, 'id', _p20._1);
+					var _p21 = A2(_jinjor$elm_html_parser$HtmlParser_Util$getValue, 'id', _p20._1);
 					if (_p21.ctor === 'Just') {
-						return A2(_user$project$HtmlParser_Util$updateIdDict, node, _p21._0);
+						return A2(_jinjor$elm_html_parser$HtmlParser_Util$updateIdDict, node, _p21._0);
 					} else {
 						return _elm_lang$core$Basics$identity;
 					}
 				}()(
 					A2(
-						_user$project$HtmlParser_Util$mergeListDict,
-						_user$project$HtmlParser_Util$createIdDict(_p20._2),
+						_jinjor$elm_html_parser$HtmlParser_Util$mergeListDict,
+						_jinjor$elm_html_parser$HtmlParser_Util$createIdDict(_p20._2),
 						dict));
 			} else {
 				return dict;
@@ -10613,53 +10613,53 @@ var _user$project$HtmlParser_Util$createIdDict = function (nodes) {
 		});
 	return A3(_elm_lang$core$List$foldl, f, _elm_lang$core$Dict$empty, nodes);
 };
-var _user$project$HtmlParser_Util$matchesToClass = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$matchesToClass = F2(
 	function (targetClassNames, attrs) {
 		return A2(
 			_elm_lang$core$List$all,
 			A2(
 				_elm_lang$core$Basics$flip,
 				_elm_lang$core$List$member,
-				_user$project$HtmlParser_Util$getClassList(attrs)),
+				_jinjor$elm_html_parser$HtmlParser_Util$getClassList(attrs)),
 			targetClassNames);
 	});
-var _user$project$HtmlParser_Util$matchesToId = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$matchesToId = F2(
 	function (targetId, attrs) {
 		return _elm_lang$core$Native_Utils.eq(
-			A2(_user$project$HtmlParser_Util$getValue, 'id', attrs),
+			A2(_jinjor$elm_html_parser$HtmlParser_Util$getValue, 'id', attrs),
 			_elm_lang$core$Maybe$Just(targetId));
 	});
-var _user$project$HtmlParser_Util$getElementsByClassName = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$getElementsByClassName = F2(
 	function (targetClassNames, nodes) {
 		return A2(
-			_user$project$HtmlParser_Util$findElements,
+			_jinjor$elm_html_parser$HtmlParser_Util$findElements,
 			F2(
 				function (_p22, attrs) {
-					return A2(_user$project$HtmlParser_Util$matchesToClass, targetClassNames, attrs);
+					return A2(_jinjor$elm_html_parser$HtmlParser_Util$matchesToClass, targetClassNames, attrs);
 				}),
 			nodes);
 	});
-var _user$project$HtmlParser_Util$getElementsByTagName = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$getElementsByTagName = F2(
 	function (tagName, nodes) {
 		var targetTagName = _elm_lang$core$String$toLower(tagName);
 		var match = F2(
 			function (tagName, _p23) {
 				return _elm_lang$core$Native_Utils.eq(tagName, targetTagName);
 			});
-		return A2(_user$project$HtmlParser_Util$findElements, match, nodes);
+		return A2(_jinjor$elm_html_parser$HtmlParser_Util$findElements, match, nodes);
 	});
-var _user$project$HtmlParser_Util$getElementById = F2(
+var _jinjor$elm_html_parser$HtmlParser_Util$getElementById = F2(
 	function (targetId, nodes) {
 		return A2(
-			_user$project$HtmlParser_Util$findElement,
+			_jinjor$elm_html_parser$HtmlParser_Util$findElement,
 			F2(
 				function (_p24, attrs) {
-					return A2(_user$project$HtmlParser_Util$matchesToId, targetId, attrs);
+					return A2(_jinjor$elm_html_parser$HtmlParser_Util$matchesToId, targetId, attrs);
 				}),
 			nodes);
 	});
 
-var _user$project$Demo$view = function (model) {
+var _jinjor$elm_html_parser$Demo$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -10742,20 +10742,20 @@ var _user$project$Demo$view = function (model) {
 					]))
 			]));
 };
-var _user$project$Demo$show = function (model) {
+var _jinjor$elm_html_parser$Demo$show = function (model) {
 	return _elm_lang$core$Native_Utils.update(
 		model,
 		{
-			dest: _user$project$HtmlParser_Util$toVirtualDom(
-				_user$project$HtmlParser$parse(model.src))
+			dest: _jinjor$elm_html_parser$HtmlParser_Util$toVirtualDom(
+				_jinjor$elm_html_parser$HtmlParser$parse(model.src))
 		});
 };
-var _user$project$Demo$update = F2(
+var _jinjor$elm_html_parser$Demo$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
 		switch (_p0.ctor) {
 			case 'Init':
-				return _user$project$Demo$show(
+				return _jinjor$elm_html_parser$Demo$show(
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{src: _p0._0}));
@@ -10764,58 +10764,58 @@ var _user$project$Demo$update = F2(
 					model,
 					{src: _p0._0});
 			default:
-				return _user$project$Demo$show(model);
+				return _jinjor$elm_html_parser$Demo$show(model);
 		}
 	});
-var _user$project$Demo$initialModel = {
+var _jinjor$elm_html_parser$Demo$initialModel = {
 	src: '',
 	dest: _elm_lang$core$Native_List.fromArray(
 		[
 			_elm_lang$html$Html$text('')
 		])
 };
-var _user$project$Demo$init = _elm_lang$core$Native_Platform.incomingPort('init', _elm_lang$core$Json_Decode$string);
-var _user$project$Demo$input = _elm_lang$core$Native_Platform.incomingPort('input', _elm_lang$core$Json_Decode$string);
-var _user$project$Demo$parse = _elm_lang$core$Native_Platform.incomingPort(
+var _jinjor$elm_html_parser$Demo$init = _elm_lang$core$Native_Platform.incomingPort('init', _elm_lang$core$Json_Decode$string);
+var _jinjor$elm_html_parser$Demo$input = _elm_lang$core$Native_Platform.incomingPort('input', _elm_lang$core$Json_Decode$string);
+var _jinjor$elm_html_parser$Demo$parse = _elm_lang$core$Native_Platform.incomingPort(
 	'parse',
 	_elm_lang$core$Json_Decode$succeed(
 		{}));
-var _user$project$Demo$Model = F2(
+var _jinjor$elm_html_parser$Demo$Model = F2(
 	function (a, b) {
 		return {src: a, dest: b};
 	});
-var _user$project$Demo$Show = {ctor: 'Show'};
-var _user$project$Demo$Input = function (a) {
+var _jinjor$elm_html_parser$Demo$Show = {ctor: 'Show'};
+var _jinjor$elm_html_parser$Demo$Input = function (a) {
 	return {ctor: 'Input', _0: a};
 };
-var _user$project$Demo$Init = function (a) {
+var _jinjor$elm_html_parser$Demo$Init = function (a) {
 	return {ctor: 'Init', _0: a};
 };
-var _user$project$Demo$main = {
+var _jinjor$elm_html_parser$Demo$main = {
 	main: _elm_lang$html$Html_App$program(
 		{
 			init: A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
-				_user$project$Demo$initialModel,
+				_jinjor$elm_html_parser$Demo$initialModel,
 				_elm_lang$core$Native_List.fromArray(
 					[])),
 			update: F2(
 				function (msg, model) {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						A2(_user$project$Demo$update, msg, model),
+						A2(_jinjor$elm_html_parser$Demo$update, msg, model),
 						_elm_lang$core$Native_List.fromArray(
 							[]));
 				}),
-			view: _user$project$Demo$view,
+			view: _jinjor$elm_html_parser$Demo$view,
 			subscriptions: function (_p1) {
 				return _elm_lang$core$Platform_Sub$batch(
 					_elm_lang$core$Native_List.fromArray(
 						[
-							_user$project$Demo$init(_user$project$Demo$Init),
-							_user$project$Demo$input(_user$project$Demo$Input),
-							_user$project$Demo$parse(
-							_elm_lang$core$Basics$always(_user$project$Demo$Show))
+							_jinjor$elm_html_parser$Demo$init(_jinjor$elm_html_parser$Demo$Init),
+							_jinjor$elm_html_parser$Demo$input(_jinjor$elm_html_parser$Demo$Input),
+							_jinjor$elm_html_parser$Demo$parse(
+							_elm_lang$core$Basics$always(_jinjor$elm_html_parser$Demo$Show))
 						]));
 			}
 		})
@@ -10823,7 +10823,7 @@ var _user$project$Demo$main = {
 
 var Elm = {};
 Elm['Demo'] = Elm['Demo'] || {};
-_elm_lang$core$Native_Platform.addPublicModule(Elm['Demo'], 'Demo', typeof _user$project$Demo$main === 'undefined' ? null : _user$project$Demo$main);
+_elm_lang$core$Native_Platform.addPublicModule(Elm['Demo'], 'Demo', typeof _jinjor$elm_html_parser$Demo$main === 'undefined' ? null : _jinjor$elm_html_parser$Demo$main);
 
 if (typeof define === "function" && define['amd'])
 {
