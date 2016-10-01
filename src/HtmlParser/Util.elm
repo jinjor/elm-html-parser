@@ -405,13 +405,13 @@ toVirtualDomSvg nodes =
 toVirtualDomSvgEach : HtmlParser.Node -> Svg msg
 toVirtualDomSvgEach node =
   case node of
-    HtmlParser.Element name attrs children ->
+    Element name attrs children ->
       Svg.node name (List.map toSvgAttribute attrs) (toVirtualDomSvg children)
 
-    HtmlParser.Text s ->
+    Text s ->
       text s
 
-    HtmlParser.Comment _ ->
+    Comment _ ->
       text ""
 
 
