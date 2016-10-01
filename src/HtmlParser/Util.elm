@@ -400,7 +400,7 @@ toAttribute (name, value) =
 
 {-| Converts nodes to virtual dom SVG nodes.
 
-Note: If node list contains <svg> tag, you can use `toVirtualDom` instead.
+Note: If node list contains `<svg>` tag, you can use `toVirtualDom` instead.
 Otherwise, use this function.
 
 ```elm
