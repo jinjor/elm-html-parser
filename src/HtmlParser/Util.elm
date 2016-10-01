@@ -5,7 +5,7 @@ module HtmlParser.Util exposing
   , mapElements, filterElements, filterMapElements
   , getValue, getId, getClassList
   , textContent
-  , toVirtualDom
+  , toVirtualDom, toVirtualDomSvg
   )
 
 {-| Utility functions that may help you digging into the contents.
@@ -62,7 +62,7 @@ table = """
 @docs textContent
 
 # Virtual DOM
-@docs toVirtualDom
+@docs toVirtualDom, toVirtualDomSvg
 -}
 
 import HtmlParser exposing (Node(..), Attributes)
@@ -398,14 +398,26 @@ toAttribute (name, value) =
   attribute name value
 
 
-{-| Converts nodes to virtual dom SVG nodes
+{-| Converts nodes to virtual dom SVG nodes.
+
+Note: If node list contains <svg> tag, you can use `toVirtualDom` instead.
+Otherwise, use this function.
+
+```elm
+svg : Svg msg
+svg =
+  parse """<circle cx="40" cy="40" r="24" style="stroke:#006600; fill:#00cc00"/>"""
+  |> toVirtualDomSvg
+  |> Svg.svg []
+```
+
 -}
-toVirtualDomSvg : List HtmlParser.Node -> List (Svg msg)
+toVirtualDomSvg : List Node -> List (Svg msg)
 toVirtualDomSvg nodes =
   List.map toVirtualDomSvgEach nodes
 
 
-toVirtualDomSvgEach : HtmlParser.Node -> Svg msg
+toVirtualDomSvgEach : Node -> Svg msg
 toVirtualDomSvgEach node =
   case node of
     Element name attrs children ->
