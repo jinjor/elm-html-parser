@@ -381,7 +381,10 @@ toVirtualDomEach : Node -> Html msg
 toVirtualDomEach node =
   case node of
     Element name attrs children ->
-      Html.node name (List.map toAttribute attrs) (toVirtualDom children)
+      if name == "svg" then
+        toVirtualDomSvgEach node
+      else
+        Html.node name (List.map toAttribute attrs) (toVirtualDom children)
 
     Text s ->
       text s
