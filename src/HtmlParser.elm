@@ -226,13 +226,13 @@ textNode =
 textNodeString : Parser String
 textNodeString =
   (\list -> String.join "" list)
-  `map` many (entityString `or` textNodeNonEntityString)
+  `map` many (entityString `or` (string "&") `or` textNodeNonEntityString)
 
 
 attributeString : String -> Parser String
 attributeString quote =
   (\list -> String.join "" list)
-  `map` many (entityString `or` attributeValueEntityString quote)
+  `map` many (entityString `or` (string "&") `or` attributeValueEntityString quote)
 
 
 entityString : Parser String
