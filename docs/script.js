@@ -10269,7 +10269,10 @@ var _jinjor$elm_html_parser$HtmlParser$attributeString = function (quote) {
 		_Bogdanp$elm_combine$Combine$many(
 			A2(
 				_Bogdanp$elm_combine$Combine$or,
-				_jinjor$elm_html_parser$HtmlParser$entityString,
+				A2(
+					_Bogdanp$elm_combine$Combine$or,
+					_jinjor$elm_html_parser$HtmlParser$entityString,
+					_Bogdanp$elm_combine$Combine$string('&')),
 				_jinjor$elm_html_parser$HtmlParser$attributeValueEntityString(quote))));
 };
 var _jinjor$elm_html_parser$HtmlParser$textNodeString = A2(
@@ -10278,7 +10281,13 @@ var _jinjor$elm_html_parser$HtmlParser$textNodeString = A2(
 		return A2(_elm_lang$core$String$join, '', list);
 	},
 	_Bogdanp$elm_combine$Combine$many(
-		A2(_Bogdanp$elm_combine$Combine$or, _jinjor$elm_html_parser$HtmlParser$entityString, _jinjor$elm_html_parser$HtmlParser$textNodeNonEntityString)));
+		A2(
+			_Bogdanp$elm_combine$Combine$or,
+			A2(
+				_Bogdanp$elm_combine$Combine$or,
+				_jinjor$elm_html_parser$HtmlParser$entityString,
+				_Bogdanp$elm_combine$Combine$string('&')),
+			_jinjor$elm_html_parser$HtmlParser$textNodeNonEntityString)));
 var _jinjor$elm_html_parser$HtmlParser$ngSetForP = _elm_lang$core$Set$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		['address', 'article', 'aside', 'blockquote', 'details', 'div', 'dl', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul']));
@@ -11032,12 +11041,6 @@ var _jinjor$elm_html_parser$HtmlParser_Util$getElementById = F2(
 			nodes);
 	});
 
-var _jinjor$elm_html_parser$Demo$svg = A2(
-	_elm_lang$svg$Svg$svg,
-	_elm_lang$core$Native_List.fromArray(
-		[]),
-	_jinjor$elm_html_parser$HtmlParser_Util$toVirtualDomSvg(
-		_jinjor$elm_html_parser$HtmlParser$parse('<circle cx=\"40\" cy=\"40\" r=\"24\" style=\"stroke:#006600; fill:#00cc00\">')));
 var _jinjor$elm_html_parser$Demo$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -11118,8 +11121,7 @@ var _jinjor$elm_html_parser$Demo$view = function (model) {
 									]))
 							]),
 						model.dest)
-					])),
-				_jinjor$elm_html_parser$Demo$svg
+					]))
 			]));
 };
 var _jinjor$elm_html_parser$Demo$show = function (model) {
