@@ -1,7 +1,6 @@
 port module Demo exposing (..)
 
 import Html exposing (..)
-import Html.App exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import HtmlParser exposing (..)
@@ -14,7 +13,7 @@ port input : (String -> msg) -> Sub msg
 port parse : ({} -> msg) -> Sub msg
 
 
-main : Program Never
+main : Program Never (Model Msg) Msg
 main =
   program
     { init = initialModel ! []

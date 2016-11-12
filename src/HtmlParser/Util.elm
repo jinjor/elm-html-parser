@@ -66,7 +66,6 @@ table = """
 -}
 
 import HtmlParser exposing (Node(..), Attributes)
-import String
 import Dict exposing (Dict)
 import Html exposing (..)
 import Html.Attributes exposing (..)
