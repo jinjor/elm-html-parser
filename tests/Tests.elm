@@ -2,7 +2,6 @@ module Tests exposing (..)
 
 import Test exposing (..)
 import Expect exposing (Expectation)
-import String
 import Dict
 import Combine as RawParser exposing (..)
 import HtmlParser as HtmlParser exposing (..)
@@ -206,11 +205,12 @@ intergrationTests =
             case nodes of
               Element "table" attrs children :: _ ->
                 -- need a combinator?
-                getValue "border" attrs `Maybe.andThen` \a1 ->
-                getValue "cellpadding" attrs `Maybe.andThen` \a2 ->
-                getValue "cellspacing" attrs `Maybe.andThen` \a3 ->
-                getValue "width" attrs `Maybe.andThen` \a4 ->
+                getValue "border" attrs |> Maybe.andThen (\a1 ->
+                getValue "cellpadding" attrs |> Maybe.andThen (\a2 ->
+                getValue "cellspacing" attrs |> Maybe.andThen (\a3 ->
+                getValue "width" attrs |> Maybe.andThen (\a4 ->
                 Just (a1, a2, a3, a4)
+                ))))
 
               _ ->
                 Nothing

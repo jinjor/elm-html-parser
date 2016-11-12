@@ -12,11 +12,10 @@ module HtmlParser exposing
 @docs parse
 -}
 
-import String
+
 import Combine exposing (..)
 import Combine.Char
 import Set exposing (Set)
-import String
 import Escape
 import Dict
 
@@ -50,74 +49,74 @@ parse """<a href="http://example.com">Example</a>"""
 -}
 parse : String -> List Node
 parse s =
-  case fst (Combine.parse nodesAndEnd s) of
-    Ok x -> x
+  case Combine.parse nodesAndEnd s of
+    Ok (_, _, x) -> x
     Err _ -> []
 
 
 -- PARSER
 
 
-nodesAndEnd : Parser (List Node)
+nodesAndEnd : Parser s (List Node)
 nodesAndEnd =
   (\nodes _ -> nodes)
-  `map` untilEndTag ""
-  `andMap` end
+  <$> untilEndTag ""
+  <*> end
 
 
-spaces : Parser String
+spaces : Parser s String
 spaces =
   regex "[ \t\r\n]*"
 
 
-spaces1 : Parser String
+spaces1 : Parser s String
 spaces1 =
   regex "[ \t\r\n]+"
 
 
-spaced : Parser a -> Parser a
+spaced : Parser s a -> Parser s a
 spaced p =
   between spaces spaces p
 
 
-tagName : Parser String
+tagName : Parser s String
 tagName =
   map String.toLower (regex "[a-zA-Z][a-zA-Z0-9\\-]*")
 
 
-attributeName : Parser String
+attributeName : Parser s String
 attributeName =
   map String.toLower (regex "[a-zA-Z][a-zA-Z0-9:\\-]*")
 
 
-attributeQuotedValue : Parser String
+attributeQuotedValue : Parser s String
 attributeQuotedValue =
-  between (string "\"") (string "\"") (attributeString "\"") `or`
+  between (string "\"") (string "\"") (attributeString "\"") <|>
   between (string "'") (string "'") (attributeString "'")
 
 
 -- HTML5
-attributeBareValue : Parser String
+attributeBareValue : Parser s String
 attributeBareValue =
   regex """[^ ^`^"^'^<^>^=^\n^\r^\t]+"""
 
 
-attributeValue : Parser String
+attributeValue : Parser s String
 attributeValue =
-  attributeQuotedValue `or` attributeBareValue
+  attributeQuotedValue <|> attributeBareValue
 
 
-attributeNameValuePair : Parser (String, String)
+attributeNameValuePair : Parser s (String, String)
 attributeNameValuePair =
   (\name _ value -> (name, value))
-  `map` attributeName
-  `andMap` between spaces spaces (string "=")
-  `andMap` attributeValue
+  <$> attributeName
+  <*> between spaces spaces (string "=")
+  <*> attributeValue
 
 
-attribute : Parser (String, String)
+attribute : Parser s (String, String)
 attribute =
-  attributeNameValuePair `or`
+  attributeNameValuePair <|>
   map (flip (,) "") attributeName
 
 
@@ -169,174 +168,181 @@ isInvalidNest tagName childTagName =
   (tagName == "th" && (childTagName == "td" || childTagName == "th" || childTagName == "tr" || childTagName == "tbody" || childTagName == "tfoot"))
 
 
-node : String -> Parser Node
+node : String -> Parser s Node
 node parentTagName =
-  rec (\_ ->
-    doctypeNode `or`
-    singleNode `or`
-    normalNode parentTagName `or`
-    commentNode `or`
+  lazy (\_ ->
+    doctypeNode <|>
+    singleNode <|>
+    normalNode parentTagName <|>
+    commentNode <|>
     textNode
   )
 
 
-doctypeNode : Parser Node
+doctypeNode : Parser s Node
 doctypeNode =
   map (\_ -> Element "!DOCTYPE" [] []) (regex "<!DOCTYPE [^>]*>")
 
 
-normalNode : String -> Parser Node
+normalNode : String -> Parser s Node
 normalNode parentTagName =
-  rec (\_ ->
-    startTag `andThen` \(tagName, attrs) ->
-      if tagName == "script" || tagName == "style" then
-        (\children -> Element tagName attrs children)
-        `map` untilScriptEnd tagName
-      else if isInvalidNest parentTagName tagName then
-        fail []
-      else if Set.member tagName startTagOnly then
-        succeed (Element tagName attrs [])
-      else
-        (\children -> Element tagName attrs children)
-        `map` untilEndTag tagName
-  )
-
-
-untilEndTag : String -> Parser (List Node)
-untilEndTag tagName =
-  rec (\_ ->
-    (\children1 children2 -> children1 ++ children2)
-    `map` many (node tagName)
-    `andMap`
-      -- if strict, end tag is optional only when `Set.member tagName optionalEndTag`
-      optional [] ( generalEndTag `andThen` \endTagName ->
-        if tagName == endTagName then
-          succeed []
+  lazy (\_ ->
+    startTag
+      |> andThen (\(tagName, attrs) ->
+        if tagName == "script" || tagName == "style" then
+          (\children -> Element tagName attrs children)
+          <$> untilScriptEnd tagName
+        else if isInvalidNest parentTagName tagName then
+          fail ""
+        else if Set.member tagName startTagOnly then
+          succeed (Element tagName attrs [])
         else
-          untilEndTag tagName
+          (\children -> Element tagName attrs children)
+          <$> untilEndTag tagName
       )
   )
 
 
-textNode : Parser Node
+untilEndTag : String -> Parser s (List Node)
+untilEndTag tagName =
+  lazy (\_ ->
+    (\children1 children2 -> children1 ++ children2)
+    <$> many (node tagName)
+    <*>
+      -- if strict, end tag is optional only when `Set.member tagName optionalEndTag`
+      optional []
+        ( generalEndTag
+          |> andThen
+            (\endTagName ->
+              if tagName == endTagName then
+                succeed []
+              else
+                untilEndTag tagName
+            )
+        )
+  )
+
+
+textNode : Parser s Node
 textNode =
   map Text textNodeString
 
 
-textNodeString : Parser String
+textNodeString : Parser s String
 textNodeString =
   (\list -> String.join "" list)
-  `map` many (entityString `or` (string "&") `or` textNodeNonEntityString)
+  <$> many (entityString <|> (string "&") <|> textNodeNonEntityString)
 
 
-attributeString : String -> Parser String
+attributeString : String -> Parser s String
 attributeString quote =
   (\list -> String.join "" list)
-  `map` many (entityString `or` (string "&") `or` attributeValueEntityString quote)
+  <$> many (entityString <|> (string "&") <|> attributeValueEntityString quote)
 
 
-entityString : Parser String
+entityString : Parser s String
 entityString =
   (\code ->
     Maybe.withDefault
       code
       (Dict.get code Escape.dict)
   )
-  `map` (regex "&[#0-9a-zA-Z]*;")
+  <$> (regex "&[#0-9a-zA-Z]*;")
 
 
-textNodeNonEntityString : Parser String
+textNodeNonEntityString : Parser s String
 textNodeNonEntityString =
   regex "[^<^&]*"
 
 
-attributeValueEntityString : String -> Parser String
+attributeValueEntityString : String -> Parser s String
 attributeValueEntityString quote =
   regex ("[^<^&^" ++ quote ++ "]*")
 
 
-singleNode : Parser Node
+singleNode : Parser s Node
 singleNode =
   map (\(tagName, attrs) -> Element tagName attrs []) singleTag
 
 
-startTag : Parser (String, List (String, String))
+startTag : Parser s (String, List (String, String))
 startTag =
   (\_ tagName attrs _ -> (tagName, attrs))
-  `map` string "<"
-  `andMap` tagName
-  `andMap` between spaces spaces (sepBy spaces attribute)
-  `andMap` string ">"
+  <$> string "<"
+  <*> tagName
+  <*> between spaces spaces (sepBy spaces attribute)
+  <*> string ">"
 
 
-endTag : String -> Parser ()
+endTag : String -> Parser s ()
 endTag tagName =
-  generalEndTag `andThen` \endTagName ->
-    if tagName == endTagName then
-      succeed ()
-    else
-      fail []
+  generalEndTag
+    |> andThen
+      (\endTagName ->
+        if tagName == endTagName then
+          succeed ()
+        else
+          fail ""
+      )
 
 
-generalEndTag : Parser String
+generalEndTag : Parser s String
 generalEndTag =
   (\_ tagName _ _ -> tagName)
-  `map` string "</"
-  `andMap` tagName
-  `andMap` spaces
-  `andMap` string ">"
+  <$> string "</"
+  <*> tagName
+  <*> spaces
+  <*> string ">"
 
 
-singleTag : Parser (String, List (String, String))
+singleTag : Parser s (String, List (String, String))
 singleTag =
-  rec (\_ ->
+  lazy (\_ ->
     (\_ tagName attrs _ -> (tagName, attrs))
-    `map` string "<"
-    `andMap` tagName
-    `andMap` between spaces spaces (sepBy spaces attribute)
-    `andMap` string "/>"
+    <$> string "<"
+    <*> tagName
+    <*> between spaces spaces (sepBy spaces attribute)
+    <*> string "/>"
   )
 
 
-(*>) : Parser x -> Parser res -> Parser res
-(*>) lp rp =
-  (flip always) `map` lp `andMap` rp
-
-
-commentNode : Parser Node
+commentNode : Parser s Node
 commentNode =
   string "<!--" *> untilCommentEnd
 
 
-untilCommentEnd : Parser Node
+untilCommentEnd : Parser s Node
 untilCommentEnd =
   map Comment <|
   map String.fromList <|
   manyTill Combine.Char.anyChar (string "-->")
 
 
-untilScriptEnd : String -> Parser (List Node)
+untilScriptEnd : String -> Parser s (List Node)
 untilScriptEnd tagName =
-  rec (\_ ->
+  lazy (\_ ->
     (\(s, rest) -> if s == "" then rest else Text s :: rest)
-    `map` untilScriptEndHelp tagName
+    <$> untilScriptEndHelp tagName
   )
 
 
-untilScriptEndHelp : String -> Parser (String, List Node)
+untilScriptEndHelp : String -> Parser s (String, List Node)
 untilScriptEndHelp tagName =
-  rec (\_ ->
-    (regex "[^<]*") `andThen` \s ->
-      ( (\_ comment rest -> (s, comment :: rest))
-        `map` string "<!--"
-        `andMap` untilCommentEnd
-        `andMap` untilScriptEnd tagName
-      ) `or`
-      ( (\_ -> (s, []))
-        `map` endTag tagName
-      ) `or`
-      ( (\lt (next, rest) -> (s ++ lt ++ next, rest))
-        `map` string "<"
-        `andMap` untilScriptEndHelp tagName
-      )
+  lazy (\_ ->
+    (regex "[^<]*")
+      |> andThen
+        (\s ->
+          ( (\_ comment rest -> (s, comment :: rest))
+            <$> string "<!--"
+            <*> untilCommentEnd
+            <*> untilScriptEnd tagName
+          ) <|>
+          ( (\_ -> (s, []))
+            <$> endTag tagName
+          ) <|>
+          ( (\lt (next, rest) -> (s ++ lt ++ next, rest))
+            <$> string "<"
+            <*> untilScriptEndHelp tagName
+          )
+        )
   )
