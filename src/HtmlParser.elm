@@ -98,7 +98,7 @@ attributeQuotedValue =
 -- HTML5
 attributeBareValue : Parser s String
 attributeBareValue =
-  regex """[^ ^`^"^'^<^>^=^\n^\r^\t]+"""
+  regex """[^ `"'<>=\n\r\t]+"""
 
 
 attributeValue : Parser s String
@@ -252,12 +252,12 @@ entityString =
 
 textNodeNonEntityString : Parser s String
 textNodeNonEntityString =
-  regex "[^<^&]*"
+  regex "[^<&]*"
 
 
 attributeValueEntityString : String -> Parser s String
 attributeValueEntityString quote =
-  regex ("[^<^&^" ++ quote ++ "]*")
+  regex ("[^<&" ++ quote ++ "]*")
 
 
 singleNode : Parser s Node

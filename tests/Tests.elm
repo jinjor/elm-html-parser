@@ -29,6 +29,7 @@ textNodeTests =
     [ test "basic" (testParse "1" (Text "1"))
     , test "basic" (testParse "a" (Text "a"))
     , test "basic" (testParse "1a" (Text "1a"))
+    , test "basic" (testParse "^" (Text "^"))
     , test "decode" (testParse "&" (Text "&"))
     , test "decode" (testParse "&amp;" (Text "&"))
     , test "decode" (testParse "&lt;" (Text "<"))
