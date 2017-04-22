@@ -1,365 +1,1449 @@
-™	&#8482;	 
-€	 	&euro;
-Space	&#32;	&nbsp;
-!	&#33;	 
-"	&#34;	&quot;
-#	&#35;	 
-$	&#36;	 
-%	&#37;	 
-&	&#38;	&amp;
-'	&#39;	 
-(	&#40;	 
-)	&#41;	 
-*	&#42;	 
-+	&#43;	 
-,	&#44;	 
--	&#45;	 
-.	&#46;	 
-/	&#47;	 
-0	&#48;	 
-1	&#49;	 
-2	&#50;	 
-3	&#51;	 
-4	&#52;	 
-5	&#53;	 
-6	&#54;	 
-7	&#55;	 
-8	&#56;	 
-9	&#57;	 
-:	&#58;	 
-;	&#59;	 
-<	&#60;	&lt;
-=	&#61;	 
->	&#62;	&gt;
-?	&#63;	 
-@	&#64;	 
-A	&#65;	 
-B	&#66;	 
-C	&#67;	 
-D	&#68;	 
-E	&#69;	 
-F	&#70;	 
-G	&#71;	 
-H	&#72;	 
-I	&#73;	 
-J	&#74;	 
-K	&#75;	 
-L	&#76;	 
-M	&#77;	 
-N	&#78;	 
-O	&#79;	 
-P	&#80;	 
-Q	&#81;	 
-R	&#82;	 
-S	&#83;	 
-T	&#84;	 
-U	&#85;	 
-V	&#86;	 
-W	&#87;	 
-X	&#88;	 
-Y	&#89;	 
-Z	&#90;	 
-[	&#91;	 
-\	&#92;	 
-]	&#93;	 
-^	&#94;	 
-_	&#95;	 
-`	&#96;	 
-a	&#97;	 
-b	&#98;	 
-c	&#99;	 
-d	&#100;	 
-e	&#101;	 
-f	&#102;	 
-g	&#103;	 
-h	&#104;	 
-i	&#105;	 
-j	&#106;	 
-k	&#107;	 
-l	&#108;	 
-m	&#109;	 
-n	&#110;	 
-o	&#111;	 
-p	&#112;	 
-q	&#113;	 
-r	&#114;	 
-s	&#115;	 
-t	&#116;	 
-u	&#117;	 
-v	&#118;	 
-w	&#119;	 
-x	&#120;	 
-y	&#121;	 
-z	&#122;	 
-{	&#123;	 
-|	&#124;	 
-}	&#125;	 
-~	&#126;	 
-Non-breaking space	&#160;	&nbsp;
-¡	&#161;	&iexcl;
-¢	&#162;	&cent;
-£	&#163;	&pound;
-¤	&#164;	&curren;
-¥	&#165;	&yen;
-¦	&#166;	&brvbar;
-§	&#167;	&sect;
-¨	&#168;	&uml;
-©	&#169;	&copy;
-ª	&#170;	&ordf;
-«	&#171;	 
-¬	&#172;	&not;
-	&#173;	&shy;
-®	&#174;	&reg;
-¯	&#175;	&macr;
-°	&#176;	&deg;
-±	&#177;	&plusmn;
-²	&#178;	&sup2;
-³	&#179;	&sup3;
-´	&#180;	&acute;
-µ	&#181;	&micro;
-¶	&#182;	&para;
-·	&#183;	&middot;
-¸	&#184;	&cedil;
-¹	&#185;	&sup1;
-º	&#186;	&ordm;
-»	&#187;	&raquo;
-¼	&#188;	&frac14;
-½	&#189;	&frac12;
-¾	&#190;	&frac34;
-¿	&#191;	&iquest;
-À	&#192;	&Agrave;
-Á	&#193;	&Aacute;
-Â	&#194;	&Acirc;
-Ã	&#195;	&Atilde;
-Ä	&#196;	&Auml;
-Å	&#197	&Aring;
-Æ	&#198;	&AElig;
-Ç	&#199;	&Ccedil;
-È	&#200;	&Egrave;
-É	&#201;	&Eacute;
-Ê	&#202;	&Ecirc;
-Ë	&#203;	&Euml;
-Ì	&#204;	&Igrave;
-Í	&#205;	&Iacute;
-Î	&#206;	&Icirc;
-Ï	&#207;	&Iuml;
-Ð	&#208;	&ETH;
-Ñ	&#209;	&Ntilde;
-Ò	&#210;	&Ograve;
-Ó	&#211;	&Oacute;
-Ô	&#212;	&Ocirc;
-Õ	&#213;	&Otilde;
-Ö	&#214;	&Ouml;
-×	&#215;	&times;
-Ø	&#216;	&Oslash;
-Ù	&#217;	&Ugrave;
-Ú	&#218;	&Uacute;
-Û	&#219;	&Ucirc;
-Ü	&#220;	&Uuml;
-Ý	&#221;	&Yacute;
-Þ	&#222;	&THORN;
-ß	&#223;	&szlig;
-à	&#224;	&agrave;
-á	&#225;	&aacute;
-â	&#226;	&acirc;
-ã	&#227;	&atilde;
-ä	&#228;	&auml;
-å	&#229;	&aring;
-æ	&#230;	&aelig;
-ç	&#231;	&ccedil;
-è	&#232;	&egrave;
-é	&#233;	&eacute;
-ê	&#234;	&ecirc;
-ë	&#235;	&euml;
-ì	&#236;	&igrave;
-í	&#237	&iacute;
-î	&#238;	&icirc;
-ï	&#239;	&iuml;
-ð	&#240;	&eth;
-ñ	&#241;	&ntilde;
-ò	&#242;	&ograve;
-ó	&#243;	&oacute;
-ô	&#244;	&ocirc;
-õ	&#245;	&otilde;
-ö	&#246;	&ouml;
-÷	&#247;	&divide;
-ø	&#248;	&oslash;
-ù	&#249;	&ugrave;
-ú	&#250;	&uacute;
-û	&#251;	&ucirc;
-ü	&#252;	&uuml;
-ý	&#253;	&yacute;
-þ	&#254;	&thorn;
-ÿ	&#255;	 
-Ā	&#256;	 
-ā	&#257;	 
-Ă	&#258;	 
-ă	&#259;	 
-Ą	&#260;	 
-ą	&#261;	 
-Ć	&#262;	 
-ć	&#263;	 
-Ĉ	&#264;	 
-ĉ	&#265;	 
-Ċ	&#266;	 
-ċ	&#267;	 
-Č	&#268;	 
-č	&#269;	 
-Ď	&#270;	 
-ď	&#271;	 
-Đ	&#272;	 
-đ	&#273;	 
-Ē	&#274;	 
-ē	&#275;	 
-Ĕ	&#276;	 
-ĕ	&#277	 
-Ė	&#278;	 
-ė	&#279;	 
-Ę	&#280;	 
-ę	&#281;	 
-Ě	&#282;	 
-ě	&#283;	 
-Ĝ	&#284;	 
-ĝ	&#285;	 
-Ğ	&#286;	 
-ğ	&#287;	 
-Ġ	&#288;	 
-ġ	&#289;	 
-Ģ	&#290;	 
-ģ	&#291;	 
-Ĥ	&#292;	 
-ĥ	&#293;	 
-Ħ	&#294;	 
-ħ	&#295;	 
-Ĩ	&#296;	 
-ĩ	&#297;	 
-Ī	&#298;	 
-ī	&#299;	 
-Ĭ	&#300;	 
-ĭ	&#301;	 
-Į	&#302;	 
-į	&#303;	 
-İ	&#304;	 
-ı	&#305;	 
-Ĳ	&#306;	 
-ĳ	&#307;	 
-Ĵ	&#308;	 
-ĵ	&#309;	 
-Ķ	&#310;	 
-ķ	&#311;	 
-ĸ	&#312;	 
-Ĺ	&#313;	 
-ĺ	&#314;	 
-Ļ	&#315;	 
-ļ	&#316;	 
-Ľ	&#317	 
-ľ	&#318;	 
-Ŀ	&#319;	 
-ŀ	&#320;	 
-Ł	&#321;	 
-ł	&#322;	 
-Ń	&#323;	 
-ń	&#324;	 
-Ņ	&#325;	 
-ņ	&#326;	 
-Ň	&#327;	 
-ň	&#328;	 
-ŉ	&#329;	 
-Ŋ	&#330;	 
-ŋ	&#331;	 
-Ō	&#332;	 
-ō	&#333;	 
-Ŏ	&#334;	 
-ŏ	&#335;	 
-Ő	&#336;	 
-ő	&#337;	 
-Œ	&#338;	 
-œ	&#339;	 
-Ŕ	&#340;	 
-ŕ	&#341;	 
-Ŗ	&#342;	 
-ŗ	&#343;	 
-Ř	&#344;	 
-ř	&#345;	 
-Ś	&#346;	 
-ś	&#347;	 
-Ŝ	&#348;	 
-ŝ	&#349;	 
-Ş	&#350;	 
-ş	&#351;	 
-Š	&#352;	 
-š	&#353;	 
-Ţ	&#354;	 
-ţ	&#355;	 
-Ť	&#356;	 
-ť	&#357	 
-Ŧ	&#358;	 
-ŧ	&#359;	 
-Ũ	&#360;	 
-ũ	&#361;	 
-Ū	&#362;	 
-ū	&#363;	 
-Ŭ	&#364;	 
-ŭ	&#365;	 
-Ů	&#366;	 
-ů	&#367;	 
-Ű	&#368;	 
-ű	&#369;	 
-Ų	&#370;	 
-ų	&#371;	 
-Ŵ	&#372;	 
-ŵ	&#373;	 
-Ŷ	&#374;	 
-ŷ	&#375;	 
-Ÿ	&#376;	 
-Ź	&#377;	 
-ź	&#378;	 
-Ż	&#379;	 
-ż	&#380;	 
-Ž	&#381;	 
-ž	&#382;	 
-ſ	&#383;	 
-Ŕ	&#340;	 
-ŕ	&#341;	 
-Ŗ	&#342;	 
-ŗ	&#343;	 
-Ř	&#344;	 
-ř	&#345;	 
-Ś	&#346;	 
-ś	&#347;	 
-Ŝ	&#348;	 
-ŝ	&#349;	 
-Ş	&#350;	 
-ş	&#351;	 
-Š	&#352;	 
-š	&#353;	 
-Ţ	&#354;	 
-ţ	&#355;	 
-Ť	&#356;	 
-ť	&#577;	 
-Ŧ	&#358;	 
-ŧ	&#359;	 
-Ũ	&#360;	 
-ũ	&#361;	 
-Ū	&#362;	 
-ū	&#363;	 
-Ŭ	&#364;	 
-ŭ	&#365;	 
-Ů	&#366;	 
-ů	&#367;	 
-Ű	&#368;	 
-ű	&#369;	 
-Ų	&#370;	 
-ų	&#371;	 
-Ŵ	&#372;	 
-ŵ	&#373;	 
-Ŷ	&#374;	 
-ŷ	&#375;	 
-Ÿ	&#376;	 
-Ź	&#377	 
-ź	&#378;	 
-Ż	&#379;	 
-ż	&#380;	 
-Ž	&#381;	 
-ž	&#382;	 
-ſ	&#383;
+__&Tab;__&#x00009;__&#9;,
+
+__&NewLine;__&#x0000A;__&#10;,
+!__&excl;__&#x00021;__&#33;,
+"__&quot; &QUOT;__&#x00022;__&#34;,
+#__&num;__&#x00023;__&#35;,
+$__&dollar;__&#x00024;__&#36;,
+%__&percnt;__&#x00025;__&#37;,
+&__&amp; &AMP;__&#x00026;__&#38;,
+'__&apos;__&#x00027;__&#39;,
+(__&lpar;__&#x00028;__&#40;,
+)__&rpar;__&#x00029;__&#41;,
+*__&ast; &midast;__&#x0002A;__&#42;,
++__&plus;__&#x0002B;__&#43;,
+,__&comma;__&#x0002C;__&#44;,
+.__&period;__&#x0002E;__&#46;,
+/__&sol;__&#x0002F;__&#47;,
+:__&colon;__&#x0003A;__&#58;,
+;__&semi;__&#x0003B;__&#59;,
+<__&lt; &LT;__&#x0003C;__&#60;,
+=__&equals;__&#x0003D;__&#61;,
+>__&gt; &GT;__&#x0003E;__&#62;,
+?__&quest;__&#x0003F;__&#63;,
+@__&commat;__&#x00040;__&#64;,
+[__&lsqb; &lbrack;__&#x0005B;__&#91;,
+\__&bsol;__&#x0005C;__&#92;,
+]__&rsqb; &rbrack;__&#x0005D;__&#93;,
+^__&Hat;__&#x0005E;__&#94;,
+___&lowbar;__&#x0005F;__&#95;,
+`__&grave; &DiacriticalGrave;__&#x00060;__&#96;,
+{__&lcub; &lbrace;__&#x0007B;__&#123;,
+|__&verbar; &vert; &VerticalLine;__&#x0007C;__&#124;,
+}__&rcub; &rbrace;__&#x0007D;__&#125;,
+ __&nbsp; &NonBreakingSpace;__&#x000A0;__&#160;,
+¡__&iexcl;__&#x000A1;__&#161;,
+¢__&cent;__&#x000A2;__&#162;,
+£__&pound;__&#x000A3;__&#163;,
+¤__&curren;__&#x000A4;__&#164;,
+¥__&yen;__&#x000A5;__&#165;,
+¦__&brvbar;__&#x000A6;__&#166;,
+§__&sect;__&#x000A7;__&#167;,
+¨__&Dot; &die; &DoubleDot; &uml;__&#x000A8;__&#168;,
+©__&copy; &COPY;__&#x000A9;__&#169;,
+ª__&ordf;__&#x000AA;__&#170;,
+«__&laquo;__&#x000AB;__&#171;,
+¬__&not;__&#x000AC;__&#172;,
+­__&shy;__&#x000AD;__&#173;,
+®__&reg; &circledR; &REG;__&#x000AE;__&#174;,
+¯__&macr; &OverBar; &strns;__&#x000AF;__&#175;,
+°__&deg;__&#x000B0;__&#176;,
+±__&plusmn; &pm; &PlusMinus;__&#x000B1;__&#177;,
+²__&sup2;__&#x000B2;__&#178;,
+³__&sup3;__&#x000B3;__&#179;,
+´__&acute; &DiacriticalAcute;__&#x000B4;__&#180;,
+µ__&micro;__&#x000B5;__&#181;,
+¶__&para;__&#x000B6;__&#182;,
+·__&middot; &centerdot; &CenterDot;__&#x000B7;__&#183;,
+¸__&cedil; &Cedilla;__&#x000B8;__&#184;,
+¹__&sup1;__&#x000B9;__&#185;,
+º__&ordm;__&#x000BA;__&#186;,
+»__&raquo;__&#x000BB;__&#187;,
+¼__&frac14;__&#x000BC;__&#188;,
+½__&frac12; &half;__&#x000BD;__&#189;,
+¾__&frac34;__&#x000BE;__&#190;,
+¿__&iquest;__&#x000BF;__&#191;,
+À__&Agrave;__&#x000C0;__&#192;,
+Á__&Aacute;__&#x000C1;__&#193;,
+Â__&Acirc;__&#x000C2;__&#194;,
+Ã__&Atilde;__&#x000C3;__&#195;,
+Ä__&Auml;__&#x000C4;__&#196;,
+Å__&Aring;__&#x000C5;__&#197;,
+Æ__&AElig;__&#x000C6;__&#198;,
+Ç__&Ccedil;__&#x000C7;__&#199;,
+È__&Egrave;__&#x000C8;__&#200;,
+É__&Eacute;__&#x000C9;__&#201;,
+Ê__&Ecirc;__&#x000CA;__&#202;,
+Ë__&Euml;__&#x000CB;__&#203;,
+Ì__&Igrave;__&#x000CC;__&#204;,
+Í__&Iacute;__&#x000CD;__&#205;,
+Î__&Icirc;__&#x000CE;__&#206;,
+Ï__&Iuml;__&#x000CF;__&#207;,
+Ð__&ETH;__&#x000D0;__&#208;,
+Ñ__&Ntilde;__&#x000D1;__&#209;,
+Ò__&Ograve;__&#x000D2;__&#210;,
+Ó__&Oacute;__&#x000D3;__&#211;,
+Ô__&Ocirc;__&#x000D4;__&#212;,
+Õ__&Otilde;__&#x000D5;__&#213;,
+Ö__&Ouml;__&#x000D6;__&#214;,
+×__&times;__&#x000D7;__&#215;,
+Ø__&Oslash;__&#x000D8;__&#216;,
+Ù__&Ugrave;__&#x000D9;__&#217;,
+Ú__&Uacute;__&#x000DA;__&#218;,
+Û__&Ucirc;__&#x000DB;__&#219;,
+Ü__&Uuml;__&#x000DC;__&#220;,
+Ý__&Yacute;__&#x000DD;__&#221;,
+Þ__&THORN;__&#x000DE;__&#222;,
+ß__&szlig;__&#x000DF;__&#223;,
+à__&agrave;__&#x000E0;__&#224;,
+á__&aacute;__&#x000E1;__&#225;,
+â__&acirc;__&#x000E2;__&#226;,
+ã__&atilde;__&#x000E3;__&#227;,
+ä__&auml;__&#x000E4;__&#228;,
+å__&aring;__&#x000E5;__&#229;,
+æ__&aelig;__&#x000E6;__&#230;,
+ç__&ccedil;__&#x000E7;__&#231;,
+è__&egrave;__&#x000E8;__&#232;,
+é__&eacute;__&#x000E9;__&#233;,
+ê__&ecirc;__&#x000EA;__&#234;,
+ë__&euml;__&#x000EB;__&#235;,
+ì__&igrave;__&#x000EC;__&#236;,
+í__&iacute;__&#x000ED;__&#237;,
+î__&icirc;__&#x000EE;__&#238;,
+ï__&iuml;__&#x000EF;__&#239;,
+ð__&eth;__&#x000F0;__&#240;,
+ñ__&ntilde;__&#x000F1;__&#241;,
+ò__&ograve;__&#x000F2;__&#242;,
+ó__&oacute;__&#x000F3;__&#243;,
+ô__&ocirc;__&#x000F4;__&#244;,
+õ__&otilde;__&#x000F5;__&#245;,
+ö__&ouml;__&#x000F6;__&#246;,
+÷__&divide; &div;__&#x000F7;__&#247;,
+ø__&oslash;__&#x000F8;__&#248;,
+ù__&ugrave;__&#x000F9;__&#249;,
+ú__&uacute;__&#x000FA;__&#250;,
+û__&ucirc;__&#x000FB;__&#251;,
+ü__&uuml;__&#x000FC;__&#252;,
+ý__&yacute;__&#x000FD;__&#253;,
+þ__&thorn;__&#x000FE;__&#254;,
+ÿ__&yuml;__&#x000FF;__&#255;,
+Ā__&Amacr;__&#x00100;__&#256;,
+ā__&amacr;__&#x00101;__&#257;,
+Ă__&Abreve;__&#x00102;__&#258;,
+ă__&abreve;__&#x00103;__&#259;,
+Ą__&Aogon;__&#x00104;__&#260;,
+ą__&aogon;__&#x00105;__&#261;,
+Ć__&Cacute;__&#x00106;__&#262;,
+ć__&cacute;__&#x00107;__&#263;,
+Ĉ__&Ccirc;__&#x00108;__&#264;,
+ĉ__&ccirc;__&#x00109;__&#265;,
+Ċ__&Cdot;__&#x0010A;__&#266;,
+ċ__&cdot;__&#x0010B;__&#267;,
+Č__&Ccaron;__&#x0010C;__&#268;,
+č__&ccaron;__&#x0010D;__&#269;,
+Ď__&Dcaron;__&#x0010E;__&#270;,
+ď__&dcaron;__&#x0010F;__&#271;,
+Đ__&Dstrok;__&#x00110;__&#272;,
+đ__&dstrok;__&#x00111;__&#273;,
+Ē__&Emacr;__&#x00112;__&#274;,
+ē__&emacr;__&#x00113;__&#275;,
+Ė__&Edot;__&#x00116;__&#278;,
+ė__&edot;__&#x00117;__&#279;,
+Ę__&Eogon;__&#x00118;__&#280;,
+ę__&eogon;__&#x00119;__&#281;,
+Ě__&Ecaron;__&#x0011A;__&#282;,
+ě__&ecaron;__&#x0011B;__&#283;,
+Ĝ__&Gcirc;__&#x0011C;__&#284;,
+ĝ__&gcirc;__&#x0011D;__&#285;,
+Ğ__&Gbreve;__&#x0011E;__&#286;,
+ğ__&gbreve;__&#x0011F;__&#287;,
+Ġ__&Gdot;__&#x00120;__&#288;,
+ġ__&gdot;__&#x00121;__&#289;,
+Ģ__&Gcedil;__&#x00122;__&#290;,
+Ĥ__&Hcirc;__&#x00124;__&#292;,
+ĥ__&hcirc;__&#x00125;__&#293;,
+Ħ__&Hstrok;__&#x00126;__&#294;,
+ħ__&hstrok;__&#x00127;__&#295;,
+Ĩ__&Itilde;__&#x00128;__&#296;,
+ĩ__&itilde;__&#x00129;__&#297;,
+Ī__&Imacr;__&#x0012A;__&#298;,
+ī__&imacr;__&#x0012B;__&#299;,
+Į__&Iogon;__&#x0012E;__&#302;,
+į__&iogon;__&#x0012F;__&#303;,
+İ__&Idot;__&#x00130;__&#304;,
+ı__&imath; &inodot;__&#x00131;__&#305;,
+Ĳ__&IJlig;__&#x00132;__&#306;,
+ĳ__&ijlig;__&#x00133;__&#307;,
+Ĵ__&Jcirc;__&#x00134;__&#308;,
+ĵ__&jcirc;__&#x00135;__&#309;,
+Ķ__&Kcedil;__&#x00136;__&#310;,
+ķ__&kcedil;__&#x00137;__&#311;,
+ĸ__&kgreen;__&#x00138;__&#312;,
+Ĺ__&Lacute;__&#x00139;__&#313;,
+ĺ__&lacute;__&#x0013A;__&#314;,
+Ļ__&Lcedil;__&#x0013B;__&#315;,
+ļ__&lcedil;__&#x0013C;__&#316;,
+Ľ__&Lcaron;__&#x0013D;__&#317;,
+ľ__&lcaron;__&#x0013E;__&#318;,
+Ŀ__&Lmidot;__&#x0013F;__&#319;,
+ŀ__&lmidot;__&#x00140;__&#320;,
+Ł__&Lstrok;__&#x00141;__&#321;,
+ł__&lstrok;__&#x00142;__&#322;,
+Ń__&Nacute;__&#x00143;__&#323;,
+ń__&nacute;__&#x00144;__&#324;,
+Ņ__&Ncedil;__&#x00145;__&#325;,
+ņ__&ncedil;__&#x00146;__&#326;,
+Ň__&Ncaron;__&#x00147;__&#327;,
+ň__&ncaron;__&#x00148;__&#328;,
+ŉ__&napos;__&#x00149;__&#329;,
+Ŋ__&ENG;__&#x0014A;__&#330;,
+ŋ__&eng;__&#x0014B;__&#331;,
+Ō__&Omacr;__&#x0014C;__&#332;,
+ō__&omacr;__&#x0014D;__&#333;,
+Ő__&Odblac;__&#x00150;__&#336;,
+ő__&odblac;__&#x00151;__&#337;,
+Œ__&OElig;__&#x00152;__&#338;,
+œ__&oelig;__&#x00153;__&#339;,
+Ŕ__&Racute;__&#x00154;__&#340;,
+ŕ__&racute;__&#x00155;__&#341;,
+Ŗ__&Rcedil;__&#x00156;__&#342;,
+ŗ__&rcedil;__&#x00157;__&#343;,
+Ř__&Rcaron;__&#x00158;__&#344;,
+ř__&rcaron;__&#x00159;__&#345;,
+Ś__&Sacute;__&#x0015A;__&#346;,
+ś__&sacute;__&#x0015B;__&#347;,
+Ŝ__&Scirc;__&#x0015C;__&#348;,
+ŝ__&scirc;__&#x0015D;__&#349;,
+Ş__&Scedil;__&#x0015E;__&#350;,
+ş__&scedil;__&#x0015F;__&#351;,
+Š__&Scaron;__&#x00160;__&#352;,
+š__&scaron;__&#x00161;__&#353;,
+Ţ__&Tcedil;__&#x00162;__&#354;,
+ţ__&tcedil;__&#x00163;__&#355;,
+Ť__&Tcaron;__&#x00164;__&#356;,
+ť__&tcaron;__&#x00165;__&#357;,
+Ŧ__&Tstrok;__&#x00166;__&#358;,
+ŧ__&tstrok;__&#x00167;__&#359;,
+Ũ__&Utilde;__&#x00168;__&#360;,
+ũ__&utilde;__&#x00169;__&#361;,
+Ū__&Umacr;__&#x0016A;__&#362;,
+ū__&umacr;__&#x0016B;__&#363;,
+Ŭ__&Ubreve;__&#x0016C;__&#364;,
+ŭ__&ubreve;__&#x0016D;__&#365;,
+Ů__&Uring;__&#x0016E;__&#366;,
+ů__&uring;__&#x0016F;__&#367;,
+Ű__&Udblac;__&#x00170;__&#368;,
+ű__&udblac;__&#x00171;__&#369;,
+Ų__&Uogon;__&#x00172;__&#370;,
+ų__&uogon;__&#x00173;__&#371;,
+Ŵ__&Wcirc;__&#x00174;__&#372;,
+ŵ__&wcirc;__&#x00175;__&#373;,
+Ŷ__&Ycirc;__&#x00176;__&#374;,
+ŷ__&ycirc;__&#x00177;__&#375;,
+Ÿ__&Yuml;__&#x00178;__&#376;,
+Ź__&Zacute;__&#x00179;__&#377;,
+ź__&zacute;__&#x0017A;__&#378;,
+Ż__&Zdot;__&#x0017B;__&#379;,
+ż__&zdot;__&#x0017C;__&#380;,
+Ž__&Zcaron;__&#x0017D;__&#381;,
+ž__&zcaron;__&#x0017E;__&#382;,
+ƒ__&fnof;__&#x00192;__&#402;,
+Ƶ__&imped;__&#x001B5;__&#437;,
+ǵ__&gacute;__&#x001F5;__&#501;,
+ȷ__&jmath;__&#x00237;__&#567;,
+ˆ__&circ;__&#x002C6;__&#710;,
+ˇ__&caron; &Hacek;__&#x002C7;__&#711;,
+˘__&breve; &Breve;__&#x002D8;__&#728;,
+˙__&dot; &DiacriticalDot;__&#x002D9;__&#729;,
+˚__&ring;__&#x002DA;__&#730;,
+˛__&ogon;__&#x002DB;__&#731;,
+˜__&tilde; &DiacriticalTilde;__&#x002DC;__&#732;,
+˝__&dblac; &DiacriticalDoubleAcute;__&#x002DD;__&#733;,
+̑__&DownBreve;__&#x00311;__&#785;,
+̲__&UnderBar;__&#x00332;__&#818;,
+Α__&Alpha;__&#x00391;__&#913;,
+Β__&Beta;__&#x00392;__&#914;,
+Γ__&Gamma;__&#x00393;__&#915;,
+Δ__&Delta;__&#x00394;__&#916;,
+Ε__&Epsilon;__&#x00395;__&#917;,
+Ζ__&Zeta;__&#x00396;__&#918;,
+Η__&Eta;__&#x00397;__&#919;,
+Θ__&Theta;__&#x00398;__&#920;,
+Ι__&Iota;__&#x00399;__&#921;,
+Κ__&Kappa;__&#x0039A;__&#922;,
+Λ__&Lambda;__&#x0039B;__&#923;,
+Μ__&Mu;__&#x0039C;__&#924;,
+Ν__&Nu;__&#x0039D;__&#925;,
+Ξ__&Xi;__&#x0039E;__&#926;,
+Ο__&Omicron;__&#x0039F;__&#927;,
+Π__&Pi;__&#x003A0;__&#928;,
+Ρ__&Rho;__&#x003A1;__&#929;,
+Σ__&Sigma;__&#x003A3;__&#931;,
+Τ__&Tau;__&#x003A4;__&#932;,
+Υ__&Upsilon;__&#x003A5;__&#933;,
+Φ__&Phi;__&#x003A6;__&#934;,
+Χ__&Chi;__&#x003A7;__&#935;,
+Ψ__&Psi;__&#x003A8;__&#936;,
+Ω__&Omega;__&#x003A9;__&#937;,
+α__&alpha;__&#x003B1;__&#945;,
+β__&beta;__&#x003B2;__&#946;,
+γ__&gamma;__&#x003B3;__&#947;,
+δ__&delta;__&#x003B4;__&#948;,
+ε__&epsiv; &varepsilon; &epsilon;__&#x003B5;__&#949;,
+ζ__&zeta;__&#x003B6;__&#950;,
+η__&eta;__&#x003B7;__&#951;,
+θ__&theta;__&#x003B8;__&#952;,
+ι__&iota;__&#x003B9;__&#953;,
+κ__&kappa;__&#x003BA;__&#954;,
+λ__&lambda;__&#x003BB;__&#955;,
+μ__&mu;__&#x003BC;__&#956;,
+ν__&nu;__&#x003BD;__&#957;,
+ξ__&xi;__&#x003BE;__&#958;,
+ο__&omicron;__&#x003BF;__&#959;,
+π__&pi;__&#x003C0;__&#960;,
+ρ__&rho;__&#x003C1;__&#961;,
+ς__&sigmav; &varsigma; &sigmaf;__&#x003C2;__&#962;,
+σ__&sigma;__&#x003C3;__&#963;,
+τ__&tau;__&#x003C4;__&#964;,
+υ__&upsi; &upsilon;__&#x003C5;__&#965;,
+φ__&phi; &phiv; &varphi;__&#x003C6;__&#966;,
+χ__&chi;__&#x003C7;__&#967;,
+ψ__&psi;__&#x003C8;__&#968;,
+ω__&omega;__&#x003C9;__&#969;,
+ϑ__&thetav; &vartheta; &thetasym;__&#x003D1;__&#977;,
+ϒ__&Upsi; &upsih;__&#x003D2;__&#978;,
+ϕ__&straightphi;__&#x003D5;__&#981;,
+ϖ__&piv; &varpi;__&#x003D6;__&#982;,
+Ϝ__&Gammad;__&#x003DC;__&#988;,
+ϝ__&gammad; &digamma;__&#x003DD;__&#989;,
+ϰ__&kappav; &varkappa;__&#x003F0;__&#1008;,
+ϱ__&rhov; &varrho;__&#x003F1;__&#1009;,
+ϵ__&epsi; &straightepsilon;__&#x003F5;__&#1013;,
+϶__&bepsi; &backepsilon;__&#x003F6;__&#1014;,
+Ё__&IOcy;__&#x00401;__&#1025;,
+Ђ__&DJcy;__&#x00402;__&#1026;,
+Ѓ__&GJcy;__&#x00403;__&#1027;,
+Є__&Jukcy;__&#x00404;__&#1028;,
+Ѕ__&DScy;__&#x00405;__&#1029;,
+І__&Iukcy;__&#x00406;__&#1030;,
+Ї__&YIcy;__&#x00407;__&#1031;,
+Ј__&Jsercy;__&#x00408;__&#1032;,
+Љ__&LJcy;__&#x00409;__&#1033;,
+Њ__&NJcy;__&#x0040A;__&#1034;,
+Ћ__&TSHcy;__&#x0040B;__&#1035;,
+Ќ__&KJcy;__&#x0040C;__&#1036;,
+Ў__&Ubrcy;__&#x0040E;__&#1038;,
+Џ__&DZcy;__&#x0040F;__&#1039;,
+А__&Acy;__&#x00410;__&#1040;,
+Б__&Bcy;__&#x00411;__&#1041;,
+В__&Vcy;__&#x00412;__&#1042;,
+Г__&Gcy;__&#x00413;__&#1043;,
+Д__&Dcy;__&#x00414;__&#1044;,
+Е__&IEcy;__&#x00415;__&#1045;,
+Ж__&ZHcy;__&#x00416;__&#1046;,
+З__&Zcy;__&#x00417;__&#1047;,
+И__&Icy;__&#x00418;__&#1048;,
+Й__&Jcy;__&#x00419;__&#1049;,
+К__&Kcy;__&#x0041A;__&#1050;,
+Л__&Lcy;__&#x0041B;__&#1051;,
+М__&Mcy;__&#x0041C;__&#1052;,
+Н__&Ncy;__&#x0041D;__&#1053;,
+О__&Ocy;__&#x0041E;__&#1054;,
+П__&Pcy;__&#x0041F;__&#1055;,
+Р__&Rcy;__&#x00420;__&#1056;,
+С__&Scy;__&#x00421;__&#1057;,
+Т__&Tcy;__&#x00422;__&#1058;,
+У__&Ucy;__&#x00423;__&#1059;,
+Ф__&Fcy;__&#x00424;__&#1060;,
+Х__&KHcy;__&#x00425;__&#1061;,
+Ц__&TScy;__&#x00426;__&#1062;,
+Ч__&CHcy;__&#x00427;__&#1063;,
+Ш__&SHcy;__&#x00428;__&#1064;,
+Щ__&SHCHcy;__&#x00429;__&#1065;,
+Ъ__&HARDcy;__&#x0042A;__&#1066;,
+Ы__&Ycy;__&#x0042B;__&#1067;,
+Ь__&SOFTcy;__&#x0042C;__&#1068;,
+Э__&Ecy;__&#x0042D;__&#1069;,
+Ю__&YUcy;__&#x0042E;__&#1070;,
+Я__&YAcy;__&#x0042F;__&#1071;,
+а__&acy;__&#x00430;__&#1072;,
+б__&bcy;__&#x00431;__&#1073;,
+в__&vcy;__&#x00432;__&#1074;,
+г__&gcy;__&#x00433;__&#1075;,
+д__&dcy;__&#x00434;__&#1076;,
+е__&iecy;__&#x00435;__&#1077;,
+ж__&zhcy;__&#x00436;__&#1078;,
+з__&zcy;__&#x00437;__&#1079;,
+и__&icy;__&#x00438;__&#1080;,
+й__&jcy;__&#x00439;__&#1081;,
+к__&kcy;__&#x0043A;__&#1082;,
+л__&lcy;__&#x0043B;__&#1083;,
+м__&mcy;__&#x0043C;__&#1084;,
+н__&ncy;__&#x0043D;__&#1085;,
+о__&ocy;__&#x0043E;__&#1086;,
+п__&pcy;__&#x0043F;__&#1087;,
+р__&rcy;__&#x00440;__&#1088;,
+с__&scy;__&#x00441;__&#1089;,
+т__&tcy;__&#x00442;__&#1090;,
+у__&ucy;__&#x00443;__&#1091;,
+ф__&fcy;__&#x00444;__&#1092;,
+х__&khcy;__&#x00445;__&#1093;,
+ц__&tscy;__&#x00446;__&#1094;,
+ч__&chcy;__&#x00447;__&#1095;,
+ш__&shcy;__&#x00448;__&#1096;,
+щ__&shchcy;__&#x00449;__&#1097;,
+ъ__&hardcy;__&#x0044A;__&#1098;,
+ы__&ycy;__&#x0044B;__&#1099;,
+ь__&softcy;__&#x0044C;__&#1100;,
+э__&ecy;__&#x0044D;__&#1101;,
+ю__&yucy;__&#x0044E;__&#1102;,
+я__&yacy;__&#x0044F;__&#1103;,
+ё__&iocy;__&#x00451;__&#1105;,
+ђ__&djcy;__&#x00452;__&#1106;,
+ѓ__&gjcy;__&#x00453;__&#1107;,
+є__&jukcy;__&#x00454;__&#1108;,
+ѕ__&dscy;__&#x00455;__&#1109;,
+і__&iukcy;__&#x00456;__&#1110;,
+ї__&yicy;__&#x00457;__&#1111;,
+ј__&jsercy;__&#x00458;__&#1112;,
+љ__&ljcy;__&#x00459;__&#1113;,
+њ__&njcy;__&#x0045A;__&#1114;,
+ћ__&tshcy;__&#x0045B;__&#1115;,
+ќ__&kjcy;__&#x0045C;__&#1116;,
+ў__&ubrcy;__&#x0045E;__&#1118;,
+џ__&dzcy;__&#x0045F;__&#1119;,
+ __&ensp;__&#x02002;__&#8194;,
+ __&emsp;__&#x02003;__&#8195;,
+ __&emsp13;__&#x02004;__&#8196;,
+ __&emsp14;__&#x02005;__&#8197;,
+ __&numsp;__&#x02007;__&#8199;,
+ __&puncsp;__&#x02008;__&#8200;,
+ __&thinsp; &ThinSpace;__&#x02009;__&#8201;,
+ __&hairsp; &VeryThinSpace;__&#x0200A;__&#8202;,
+​__&ZeroWidthSpace; &NegativeVeryThinSpace; &NegativeThinSpace; &NegativeMediumSpace; &NegativeThickSpace;__&#x0200B;__&#8203;,
+‌__&zwnj;__&#x0200C;__&#8204;,
+‍__&zwj;__&#x0200D;__&#8205;,
+‎__&lrm;__&#x0200E;__&#8206;,
+‏__&rlm;__&#x0200F;__&#8207;,
+‐__&hyphen; &dash;__&#x02010;__&#8208;,
+–__&ndash;__&#x02013;__&#8211;,
+—__&mdash;__&#x02014;__&#8212;,
+―__&horbar;__&#x02015;__&#8213;,
+‖__&Verbar; &Vert;__&#x02016;__&#8214;,
+‘__&lsquo; &OpenCurlyQuote;__&#x02018;__&#8216;,
+’__&rsquo; &rsquor; &CloseCurlyQuote;__&#x02019;__&#8217;,
+‚__&lsquor; &sbquo;__&#x0201A;__&#8218;,
+“__&ldquo; &OpenCurlyDoubleQuote;__&#x0201C;__&#8220;,
+”__&rdquo; &rdquor; &CloseCurlyDoubleQuote;__&#x0201D;__&#8221;,
+„__&ldquor; &bdquo;__&#x0201E;__&#8222;,
+†__&dagger;__&#x02020;__&#8224;,
+‡__&Dagger; &ddagger;__&#x02021;__&#8225;,
+•__&bull; &bullet;__&#x02022;__&#8226;,
+‥__&nldr;__&#x02025;__&#8229;,
+…__&hellip; &mldr;__&#x02026;__&#8230;,
+‰__&permil;__&#x02030;__&#8240;,
+‱__&pertenk;__&#x02031;__&#8241;,
+′__&prime;__&#x02032;__&#8242;,
+″__&Prime;__&#x02033;__&#8243;,
+‴__&tprime;__&#x02034;__&#8244;,
+‵__&bprime; &backprime;__&#x02035;__&#8245;,
+‹__&lsaquo;__&#x02039;__&#8249;,
+›__&rsaquo;__&#x0203A;__&#8250;,
+‾__&oline;__&#x0203E;__&#8254;,
+⁁__&caret;__&#x02041;__&#8257;,
+⁃__&hybull;__&#x02043;__&#8259;,
+⁄__&frasl;__&#x02044;__&#8260;,
+⁏__&bsemi;__&#x0204F;__&#8271;,
+⁗__&qprime;__&#x02057;__&#8279;,
+ __&MediumSpace;__&#x0205F;__&#8287;,
+⁠__&NoBreak;__&#x02060;__&#8288;,
+⁡__&ApplyFunction; &af;__&#x02061;__&#8289;,
+⁢__&InvisibleTimes; &it;__&#x02062;__&#8290;,
+⁣__&InvisibleComma; &ic;__&#x02063;__&#8291;,
+€__&euro;__&#x020AC;__&#8364;,
+⃛__&tdot; &TripleDot;__&#x020DB;__&#8411;,
+⃜__&DotDot;__&#x020DC;__&#8412;,
+ℂ__&Copf; &complexes;__&#x02102;__&#8450;,
+℅__&incare;__&#x02105;__&#8453;,
+ℊ__&gscr;__&#x0210A;__&#8458;,
+ℋ__&hamilt; &HilbertSpace; &Hscr;__&#x0210B;__&#8459;,
+ℌ__&Hfr; &Poincareplane;__&#x0210C;__&#8460;,
+ℍ__&quaternions; &Hopf;__&#x0210D;__&#8461;,
+ℎ__&planckh;__&#x0210E;__&#8462;,
+ℏ__&planck; &hbar; &plankv; &hslash;__&#x0210F;__&#8463;,
+ℐ__&Iscr; &imagline;__&#x02110;__&#8464;,
+ℑ__&image; &Im; &imagpart; &Ifr;__&#x02111;__&#8465;,
+ℒ__&Lscr; &lagran; &Laplacetrf;__&#x02112;__&#8466;,
+ℓ__&ell;__&#x02113;__&#8467;,
+ℕ__&Nopf; &naturals;__&#x02115;__&#8469;,
+№__&numero;__&#x02116;__&#8470;,
+℗__&copysr;__&#x02117;__&#8471;,
+℘__&weierp; &wp;__&#x02118;__&#8472;,
+ℙ__&Popf; &primes;__&#x02119;__&#8473;,
+ℚ__&rationals; &Qopf;__&#x0211A;__&#8474;,
+ℛ__&Rscr; &realine;__&#x0211B;__&#8475;,
+ℜ__&real; &Re; &realpart; &Rfr;__&#x0211C;__&#8476;,
+ℝ__&reals; &Ropf;__&#x0211D;__&#8477;,
+℞__&rx;__&#x0211E;__&#8478;,
+™__&trade; &TRADE;__&#x02122;__&#8482;,
+ℤ__&integers; &Zopf;__&#x02124;__&#8484;,
+Ω__&ohm;__&#x02126;__&#8486;,
+℧__&mho;__&#x02127;__&#8487;,
+ℨ__&Zfr; &zeetrf;__&#x02128;__&#8488;,
+℩__&iiota;__&#x02129;__&#8489;,
+Å__&angst;__&#x0212B;__&#8491;,
+ℬ__&bernou; &Bernoullis; &Bscr;__&#x0212C;__&#8492;,
+ℭ__&Cfr; &Cayleys;__&#x0212D;__&#8493;,
+ℯ__&escr;__&#x0212F;__&#8495;,
+ℰ__&Escr; &expectation;__&#x02130;__&#8496;,
+ℱ__&Fscr; &Fouriertrf;__&#x02131;__&#8497;,
+ℳ__&phmmat; &Mellintrf; &Mscr;__&#x02133;__&#8499;,
+ℴ__&order; &orderof; &oscr;__&#x02134;__&#8500;,
+ℵ__&alefsym; &aleph;__&#x02135;__&#8501;,
+ℶ__&beth;__&#x02136;__&#8502;,
+ℷ__&gimel;__&#x02137;__&#8503;,
+ℸ__&daleth;__&#x02138;__&#8504;,
+ⅅ__&CapitalDifferentialD; &DD;__&#x02145;__&#8517;,
+ⅆ__&DifferentialD; &dd;__&#x02146;__&#8518;,
+ⅇ__&ExponentialE; &exponentiale; &ee;__&#x02147;__&#8519;,
+ⅈ__&ImaginaryI; &ii;__&#x02148;__&#8520;,
+⅓__&frac13;__&#x02153;__&#8531;,
+⅔__&frac23;__&#x02154;__&#8532;,
+⅕__&frac15;__&#x02155;__&#8533;,
+⅖__&frac25;__&#x02156;__&#8534;,
+⅗__&frac35;__&#x02157;__&#8535;,
+⅘__&frac45;__&#x02158;__&#8536;,
+⅙__&frac16;__&#x02159;__&#8537;,
+⅚__&frac56;__&#x0215A;__&#8538;,
+⅛__&frac18;__&#x0215B;__&#8539;,
+⅜__&frac38;__&#x0215C;__&#8540;,
+⅝__&frac58;__&#x0215D;__&#8541;,
+⅞__&frac78;__&#x0215E;__&#8542;,
+←__&larr; &leftarrow; &LeftArrow; &slarr; &ShortLeftArrow;__&#x02190;__&#8592;,
+↑__&uarr; &uparrow; &UpArrow; &ShortUpArrow;__&#x02191;__&#8593;,
+→__&rarr; &rightarrow; &RightArrow; &srarr; &ShortRightArrow;__&#x02192;__&#8594;,
+↓__&darr; &downarrow; &DownArrow; &ShortDownArrow;__&#x02193;__&#8595;,
+↔__&harr; &leftrightarrow; &LeftRightArrow;__&#x02194;__&#8596;,
+↕__&varr; &updownarrow; &UpDownArrow;__&#x02195;__&#8597;,
+↖__&nwarr; &UpperLeftArrow; &nwarrow;__&#x02196;__&#8598;,
+↗__&nearr; &UpperRightArrow; &nearrow;__&#x02197;__&#8599;,
+↘__&searr; &searrow; &LowerRightArrow;__&#x02198;__&#8600;,
+↙__&swarr; &swarrow; &LowerLeftArrow;__&#x02199;__&#8601;,
+↚__&nlarr; &nleftarrow;__&#x0219A;__&#8602;,
+↛__&nrarr; &nrightarrow;__&#x0219B;__&#8603;,
+↝__&rarrw; &rightsquigarrow;__&#x0219D;__&#8605;,
+↞__&Larr; &twoheadleftarrow;__&#x0219E;__&#8606;,
+↟__&Uarr;__&#x0219F;__&#8607;,
+↠__&Rarr; &twoheadrightarrow;__&#x021A0;__&#8608;,
+↡__&Darr;__&#x021A1;__&#8609;,
+↢__&larrtl; &leftarrowtail;__&#x021A2;__&#8610;,
+↣__&rarrtl; &rightarrowtail;__&#x021A3;__&#8611;,
+↤__&LeftTeeArrow; &mapstoleft;__&#x021A4;__&#8612;,
+↥__&UpTeeArrow; &mapstoup;__&#x021A5;__&#8613;,
+↦__&map; &RightTeeArrow; &mapsto;__&#x021A6;__&#8614;,
+↧__&DownTeeArrow; &mapstodown;__&#x021A7;__&#8615;,
+↩__&larrhk; &hookleftarrow;__&#x021A9;__&#8617;,
+↪__&rarrhk; &hookrightarrow;__&#x021AA;__&#8618;,
+↫__&larrlp; &looparrowleft;__&#x021AB;__&#8619;,
+↬__&rarrlp; &looparrowright;__&#x021AC;__&#8620;,
+↭__&harrw; &leftrightsquigarrow;__&#x021AD;__&#8621;,
+↮__&nharr; &nleftrightarrow;__&#x021AE;__&#8622;,
+↰__&lsh; &Lsh;__&#x021B0;__&#8624;,
+↱__&rsh; &Rsh;__&#x021B1;__&#8625;,
+↲__&ldsh;__&#x021B2;__&#8626;,
+↳__&rdsh;__&#x021B3;__&#8627;,
+↵__&crarr;__&#x021B5;__&#8629;,
+↶__&cularr; &curvearrowleft;__&#x021B6;__&#8630;,
+↷__&curarr; &curvearrowright;__&#x021B7;__&#8631;,
+↺__&olarr; &circlearrowleft;__&#x021BA;__&#8634;,
+↻__&orarr; &circlearrowright;__&#x021BB;__&#8635;,
+↼__&lharu; &LeftVector; &leftharpoonup;__&#x021BC;__&#8636;,
+↽__&lhard; &leftharpoondown; &DownLeftVector;__&#x021BD;__&#8637;,
+↾__&uharr; &upharpoonright; &RightUpVector;__&#x021BE;__&#8638;,
+↿__&uharl; &upharpoonleft; &LeftUpVector;__&#x021BF;__&#8639;,
+⇀__&rharu; &RightVector; &rightharpoonup;__&#x021C0;__&#8640;,
+⇁__&rhard; &rightharpoondown; &DownRightVector;__&#x021C1;__&#8641;,
+⇂__&dharr; &RightDownVector; &downharpoonright;__&#x021C2;__&#8642;,
+⇃__&dharl; &LeftDownVector; &downharpoonleft;__&#x021C3;__&#8643;,
+⇄__&rlarr; &rightleftarrows; &RightArrowLeftArrow;__&#x021C4;__&#8644;,
+⇅__&udarr; &UpArrowDownArrow;__&#x021C5;__&#8645;,
+⇆__&lrarr; &leftrightarrows; &LeftArrowRightArrow;__&#x021C6;__&#8646;,
+⇇__&llarr; &leftleftarrows;__&#x021C7;__&#8647;,
+⇈__&uuarr; &upuparrows;__&#x021C8;__&#8648;,
+⇉__&rrarr; &rightrightarrows;__&#x021C9;__&#8649;,
+⇊__&ddarr; &downdownarrows;__&#x021CA;__&#8650;,
+⇋__&lrhar; &ReverseEquilibrium; &leftrightharpoons;__&#x021CB;__&#8651;,
+⇌__&rlhar; &rightleftharpoons; &Equilibrium;__&#x021CC;__&#8652;,
+⇍__&nlArr; &nLeftarrow;__&#x021CD;__&#8653;,
+⇎__&nhArr; &nLeftrightarrow;__&#x021CE;__&#8654;,
+⇏__&nrArr; &nRightarrow;__&#x021CF;__&#8655;,
+⇐__&lArr; &Leftarrow; &DoubleLeftArrow;__&#x021D0;__&#8656;,
+⇑__&uArr; &Uparrow; &DoubleUpArrow;__&#x021D1;__&#8657;,
+⇒__&rArr; &Rightarrow; &Implies; &DoubleRightArrow;__&#x021D2;__&#8658;,
+⇓__&dArr; &Downarrow; &DoubleDownArrow;__&#x021D3;__&#8659;,
+⇔__&hArr; &Leftrightarrow; &DoubleLeftRightArrow; &iff;__&#x021D4;__&#8660;,
+⇕__&vArr; &Updownarrow; &DoubleUpDownArrow;__&#x021D5;__&#8661;,
+⇖__&nwArr;__&#x021D6;__&#8662;,
+⇗__&neArr;__&#x021D7;__&#8663;,
+⇘__&seArr;__&#x021D8;__&#8664;,
+⇙__&swArr;__&#x021D9;__&#8665;,
+⇚__&lAarr; &Lleftarrow;__&#x021DA;__&#8666;,
+⇛__&rAarr; &Rrightarrow;__&#x021DB;__&#8667;,
+⇝__&zigrarr;__&#x021DD;__&#8669;,
+⇤__&larrb; &LeftArrowBar;__&#x021E4;__&#8676;,
+⇥__&rarrb; &RightArrowBar;__&#x021E5;__&#8677;,
+⇵__&duarr; &DownArrowUpArrow;__&#x021F5;__&#8693;,
+⇽__&loarr;__&#x021FD;__&#8701;,
+⇾__&roarr;__&#x021FE;__&#8702;,
+⇿__&hoarr;__&#x021FF;__&#8703;,
+∀__&forall; &ForAll;__&#x02200;__&#8704;,
+∁__&comp; &complement;__&#x02201;__&#8705;,
+∂__&part; &PartialD;__&#x02202;__&#8706;,
+∃__&exist; &Exists;__&#x02203;__&#8707;,
+∄__&nexist; &NotExists; &nexists;__&#x02204;__&#8708;,
+∅__&empty; &emptyset; &emptyv; &varnothing;__&#x02205;__&#8709;,
+∇__&nabla; &Del;__&#x02207;__&#8711;,
+∈__&isin; &isinv; &Element; &in;__&#x02208;__&#8712;,
+∉__&notin; &NotElement; &notinva;__&#x02209;__&#8713;,
+∋__&niv; &ReverseElement; &ni; &SuchThat;__&#x0220B;__&#8715;,
+∌__&notni; &notniva; &NotReverseElement;__&#x0220C;__&#8716;,
+∏__&prod; &Product;__&#x0220F;__&#8719;,
+∐__&coprod; &Coproduct;__&#x02210;__&#8720;,
+∑__&sum; &Sum;__&#x02211;__&#8721;,
+−__&minus;__&#x02212;__&#8722;,
+∓__&mnplus; &mp; &MinusPlus;__&#x02213;__&#8723;,
+∔__&plusdo; &dotplus;__&#x02214;__&#8724;,
+∖__&setmn; &setminus; &Backslash; &ssetmn; &smallsetminus;__&#x02216;__&#8726;,
+∗__&lowast;__&#x02217;__&#8727;,
+∘__&compfn; &SmallCircle;__&#x02218;__&#8728;,
+√__&radic; &Sqrt;__&#x0221A;__&#8730;,
+∝__&prop; &propto; &Proportional; &vprop; &varpropto;__&#x0221D;__&#8733;,
+∞__&infin;__&#x0221E;__&#8734;,
+∟__&angrt;__&#x0221F;__&#8735;,
+∠__&ang; &angle;__&#x02220;__&#8736;,
+∡__&angmsd; &measuredangle;__&#x02221;__&#8737;,
+∢__&angsph;__&#x02222;__&#8738;,
+∣__&mid; &VerticalBar; &smid; &shortmid;__&#x02223;__&#8739;,
+∤__&nmid; &NotVerticalBar; &nsmid; &nshortmid;__&#x02224;__&#8740;,
+∥__&par; &parallel; &DoubleVerticalBar; &spar; &shortparallel;__&#x02225;__&#8741;,
+∦__&npar; &nparallel; &NotDoubleVerticalBar; &nspar; &nshortparallel;__&#x02226;__&#8742;,
+∧__&and; &wedge;__&#x02227;__&#8743;,
+∨__&or; &vee;__&#x02228;__&#8744;,
+∩__&cap;__&#x02229;__&#8745;,
+∪__&cup;__&#x0222A;__&#8746;,
+∫__&int; &Integral;__&#x0222B;__&#8747;,
+∬__&Int;__&#x0222C;__&#8748;,
+∭__&tint; &iiint;__&#x0222D;__&#8749;,
+∮__&conint; &oint; &ContourIntegral;__&#x0222E;__&#8750;,
+∯__&Conint; &DoubleContourIntegral;__&#x0222F;__&#8751;,
+∰__&Cconint;__&#x02230;__&#8752;,
+∱__&cwint;__&#x02231;__&#8753;,
+∲__&cwconint; &ClockwiseContourIntegral;__&#x02232;__&#8754;,
+∳__&awconint; &CounterClockwiseContourIntegral;__&#x02233;__&#8755;,
+∴__&there4; &therefore; &Therefore;__&#x02234;__&#8756;,
+∵__&becaus; &because; &Because;__&#x02235;__&#8757;,
+∶__&ratio;__&#x02236;__&#8758;,
+∷__&Colon; &Proportion;__&#x02237;__&#8759;,
+∸__&minusd; &dotminus;__&#x02238;__&#8760;,
+∺__&mDDot;__&#x0223A;__&#8762;,
+∻__&homtht;__&#x0223B;__&#8763;,
+∼__&sim; &Tilde; &thksim; &thicksim;__&#x0223C;__&#8764;,
+∽__&bsim; &backsim;__&#x0223D;__&#8765;,
+∾__&ac; &mstpos;__&#x0223E;__&#8766;,
+∿__&acd;__&#x0223F;__&#8767;,
+≀__&wreath; &VerticalTilde; &wr;__&#x02240;__&#8768;,
+≁__&nsim; &NotTilde;__&#x02241;__&#8769;,
+≂__&esim; &EqualTilde; &eqsim;__&#x02242;__&#8770;,
+≃__&sime; &TildeEqual; &simeq;__&#x02243;__&#8771;,
+≄__&nsime; &nsimeq; &NotTildeEqual;__&#x02244;__&#8772;,
+≅__&cong; &TildeFullEqual;__&#x02245;__&#8773;,
+≆__&simne;__&#x02246;__&#8774;,
+≇__&ncong; &NotTildeFullEqual;__&#x02247;__&#8775;,
+≈__&asymp; &ap; &TildeTilde; &approx; &thkap; &thickapprox;__&#x02248;__&#8776;,
+≉__&nap; &NotTildeTilde; &napprox;__&#x02249;__&#8777;,
+≊__&ape; &approxeq;__&#x0224A;__&#8778;,
+≋__&apid;__&#x0224B;__&#8779;,
+≌__&bcong; &backcong;__&#x0224C;__&#8780;,
+≍__&asympeq; &CupCap;__&#x0224D;__&#8781;,
+≎__&bump; &HumpDownHump; &Bumpeq;__&#x0224E;__&#8782;,
+≏__&bumpe; &HumpEqual; &bumpeq;__&#x0224F;__&#8783;,
+≐__&esdot; &DotEqual; &doteq;__&#x02250;__&#8784;,
+≑__&eDot; &doteqdot;__&#x02251;__&#8785;,
+≒__&efDot; &fallingdotseq;__&#x02252;__&#8786;,
+≓__&erDot; &risingdotseq;__&#x02253;__&#8787;,
+≔__&colone; &coloneq; &Assign;__&#x02254;__&#8788;,
+≕__&ecolon; &eqcolon;__&#x02255;__&#8789;,
+≖__&ecir; &eqcirc;__&#x02256;__&#8790;,
+≗__&cire; &circeq;__&#x02257;__&#8791;,
+≙__&wedgeq;__&#x02259;__&#8793;,
+≚__&veeeq;__&#x0225A;__&#8794;,
+≜__&trie; &triangleq;__&#x0225C;__&#8796;,
+≟__&equest; &questeq;__&#x0225F;__&#8799;,
+≠__&ne; &NotEqual;__&#x02260;__&#8800;,
+≡__&equiv; &Congruent;__&#x02261;__&#8801;,
+≢__&nequiv; &NotCongruent;__&#x02262;__&#8802;,
+≤__&le; &leq;__&#x02264;__&#8804;,
+≥__&ge; &GreaterEqual; &geq;__&#x02265;__&#8805;,
+≦__&lE; &LessFullEqual; &leqq;__&#x02266;__&#8806;,
+≧__&gE; &GreaterFullEqual; &geqq;__&#x02267;__&#8807;,
+≨__&lnE; &lneqq;__&#x02268;__&#8808;,
+≩__&gnE; &gneqq;__&#x02269;__&#8809;,
+≪__&Lt; &NestedLessLess; &ll;__&#x0226A;__&#8810;,
+≫__&Gt; &NestedGreaterGreater; &gg;__&#x0226B;__&#8811;,
+≬__&twixt; &between;__&#x0226C;__&#8812;,
+≭__&NotCupCap;__&#x0226D;__&#8813;,
+≮__&nlt; &NotLess; &nless;__&#x0226E;__&#8814;,
+≯__&ngt; &NotGreater; &ngtr;__&#x0226F;__&#8815;,
+≰__&nle; &NotLessEqual; &nleq;__&#x02270;__&#8816;,
+≱__&nge; &NotGreaterEqual; &ngeq;__&#x02271;__&#8817;,
+≲__&lsim; &LessTilde; &lesssim;__&#x02272;__&#8818;,
+≳__&gsim; &gtrsim; &GreaterTilde;__&#x02273;__&#8819;,
+≴__&nlsim; &NotLessTilde;__&#x02274;__&#8820;,
+≵__&ngsim; &NotGreaterTilde;__&#x02275;__&#8821;,
+≶__&lg; &lessgtr; &LessGreater;__&#x02276;__&#8822;,
+≷__&gl; &gtrless; &GreaterLess;__&#x02277;__&#8823;,
+≸__&ntlg; &NotLessGreater;__&#x02278;__&#8824;,
+≹__&ntgl; &NotGreaterLess;__&#x02279;__&#8825;,
+≺__&pr; &Precedes; &prec;__&#x0227A;__&#8826;,
+≻__&sc; &Succeeds; &succ;__&#x0227B;__&#8827;,
+≼__&prcue; &PrecedesSlantEqual; &preccurlyeq;__&#x0227C;__&#8828;,
+≽__&sccue; &SucceedsSlantEqual; &succcurlyeq;__&#x0227D;__&#8829;,
+≾__&prsim; &precsim; &PrecedesTilde;__&#x0227E;__&#8830;,
+≿__&scsim; &succsim; &SucceedsTilde;__&#x0227F;__&#8831;,
+⊀__&npr; &nprec; &NotPrecedes;__&#x02280;__&#8832;,
+⊁__&nsc; &nsucc; &NotSucceeds;__&#x02281;__&#8833;,
+⊂__&sub; &subset;__&#x02282;__&#8834;,
+⊃__&sup; &supset; &Superset;__&#x02283;__&#8835;,
+⊄__&nsub;__&#x02284;__&#8836;,
+⊅__&nsup;__&#x02285;__&#8837;,
+⊆__&sube; &SubsetEqual; &subseteq;__&#x02286;__&#8838;,
+⊇__&supe; &supseteq; &SupersetEqual;__&#x02287;__&#8839;,
+⊈__&nsube; &nsubseteq; &NotSubsetEqual;__&#x02288;__&#8840;,
+⊉__&nsupe; &nsupseteq; &NotSupersetEqual;__&#x02289;__&#8841;,
+⊊__&subne; &subsetneq;__&#x0228A;__&#8842;,
+⊋__&supne; &supsetneq;__&#x0228B;__&#8843;,
+⊍__&cupdot;__&#x0228D;__&#8845;,
+⊎__&uplus; &UnionPlus;__&#x0228E;__&#8846;,
+⊏__&sqsub; &SquareSubset; &sqsubset;__&#x0228F;__&#8847;,
+⊐__&sqsup; &SquareSuperset; &sqsupset;__&#x02290;__&#8848;,
+⊑__&sqsube; &SquareSubsetEqual; &sqsubseteq;__&#x02291;__&#8849;,
+⊒__&sqsupe; &SquareSupersetEqual; &sqsupseteq;__&#x02292;__&#8850;,
+⊓__&sqcap; &SquareIntersection;__&#x02293;__&#8851;,
+⊔__&sqcup; &SquareUnion;__&#x02294;__&#8852;,
+⊕__&oplus; &CirclePlus;__&#x02295;__&#8853;,
+⊖__&ominus; &CircleMinus;__&#x02296;__&#8854;,
+⊗__&otimes; &CircleTimes;__&#x02297;__&#8855;,
+⊘__&osol;__&#x02298;__&#8856;,
+⊙__&odot; &CircleDot;__&#x02299;__&#8857;,
+⊚__&ocir; &circledcirc;__&#x0229A;__&#8858;,
+⊛__&oast; &circledast;__&#x0229B;__&#8859;,
+⊝__&odash; &circleddash;__&#x0229D;__&#8861;,
+⊞__&plusb; &boxplus;__&#x0229E;__&#8862;,
+⊟__&minusb; &boxminus;__&#x0229F;__&#8863;,
+⊠__&timesb; &boxtimes;__&#x022A0;__&#8864;,
+⊡__&sdotb; &dotsquare;__&#x022A1;__&#8865;,
+⊢__&vdash; &RightTee;__&#x022A2;__&#8866;,
+⊣__&dashv; &LeftTee;__&#x022A3;__&#8867;,
+⊤__&top; &DownTee;__&#x022A4;__&#8868;,
+⊥__&bottom; &bot; &perp; &UpTee;__&#x022A5;__&#8869;,
+⊧__&models;__&#x022A7;__&#8871;,
+⊨__&vDash; &DoubleRightTee;__&#x022A8;__&#8872;,
+⊩__&Vdash;__&#x022A9;__&#8873;,
+⊪__&Vvdash;__&#x022AA;__&#8874;,
+⊫__&VDash;__&#x022AB;__&#8875;,
+⊬__&nvdash;__&#x022AC;__&#8876;,
+⊭__&nvDash;__&#x022AD;__&#8877;,
+⊮__&nVdash;__&#x022AE;__&#8878;,
+⊯__&nVDash;__&#x022AF;__&#8879;,
+⊰__&prurel;__&#x022B0;__&#8880;,
+⊲__&vltri; &vartriangleleft; &LeftTriangle;__&#x022B2;__&#8882;,
+⊳__&vrtri; &vartriangleright; &RightTriangle;__&#x022B3;__&#8883;,
+⊴__&ltrie; &trianglelefteq; &LeftTriangleEqual;__&#x022B4;__&#8884;,
+⊵__&rtrie; &trianglerighteq; &RightTriangleEqual;__&#x022B5;__&#8885;,
+⊶__&origof;__&#x022B6;__&#8886;,
+⊷__&imof;__&#x022B7;__&#8887;,
+⊸__&mumap; &multimap;__&#x022B8;__&#8888;,
+⊹__&hercon;__&#x022B9;__&#8889;,
+⊺__&intcal; &intercal;__&#x022BA;__&#8890;,
+⊻__&veebar;__&#x022BB;__&#8891;,
+⊽__&barvee;__&#x022BD;__&#8893;,
+⊾__&angrtvb;__&#x022BE;__&#8894;,
+⊿__&lrtri;__&#x022BF;__&#8895;,
+⋀__&xwedge; &Wedge; &bigwedge;__&#x022C0;__&#8896;,
+⋁__&xvee; &Vee; &bigvee;__&#x022C1;__&#8897;,
+⋂__&xcap; &Intersection; &bigcap;__&#x022C2;__&#8898;,
+⋃__&xcup; &Union; &bigcup;__&#x022C3;__&#8899;,
+⋄__&diam; &diamond; &Diamond;__&#x022C4;__&#8900;,
+⋅__&sdot;__&#x022C5;__&#8901;,
+⋆__&sstarf; &Star;__&#x022C6;__&#8902;,
+⋇__&divonx; &divideontimes;__&#x022C7;__&#8903;,
+⋈__&bowtie;__&#x022C8;__&#8904;,
+⋉__&ltimes;__&#x022C9;__&#8905;,
+⋊__&rtimes;__&#x022CA;__&#8906;,
+⋋__&lthree; &leftthreetimes;__&#x022CB;__&#8907;,
+⋌__&rthree; &rightthreetimes;__&#x022CC;__&#8908;,
+⋍__&bsime; &backsimeq;__&#x022CD;__&#8909;,
+⋎__&cuvee; &curlyvee;__&#x022CE;__&#8910;,
+⋏__&cuwed; &curlywedge;__&#x022CF;__&#8911;,
+⋐__&Sub; &Subset;__&#x022D0;__&#8912;,
+⋑__&Sup; &Supset;__&#x022D1;__&#8913;,
+⋒__&Cap;__&#x022D2;__&#8914;,
+⋓__&Cup;__&#x022D3;__&#8915;,
+⋔__&fork; &pitchfork;__&#x022D4;__&#8916;,
+⋕__&epar;__&#x022D5;__&#8917;,
+⋖__&ltdot; &lessdot;__&#x022D6;__&#8918;,
+⋗__&gtdot; &gtrdot;__&#x022D7;__&#8919;,
+⋘__&Ll;__&#x022D8;__&#8920;,
+⋙__&Gg; &ggg;__&#x022D9;__&#8921;,
+⋚__&leg; &LessEqualGreater; &lesseqgtr;__&#x022DA;__&#8922;,
+⋛__&gel; &gtreqless; &GreaterEqualLess;__&#x022DB;__&#8923;,
+⋞__&cuepr; &curlyeqprec;__&#x022DE;__&#8926;,
+⋟__&cuesc; &curlyeqsucc;__&#x022DF;__&#8927;,
+⋠__&nprcue; &NotPrecedesSlantEqual;__&#x022E0;__&#8928;,
+⋡__&nsccue; &NotSucceedsSlantEqual;__&#x022E1;__&#8929;,
+⋢__&nsqsube; &NotSquareSubsetEqual;__&#x022E2;__&#8930;,
+⋣__&nsqsupe; &NotSquareSupersetEqual;__&#x022E3;__&#8931;,
+⋦__&lnsim;__&#x022E6;__&#8934;,
+⋧__&gnsim;__&#x022E7;__&#8935;,
+⋨__&prnsim; &precnsim;__&#x022E8;__&#8936;,
+⋩__&scnsim; &succnsim;__&#x022E9;__&#8937;,
+⋪__&nltri; &ntriangleleft; &NotLeftTriangle;__&#x022EA;__&#8938;,
+⋫__&nrtri; &ntriangleright; &NotRightTriangle;__&#x022EB;__&#8939;,
+⋬__&nltrie; &ntrianglelefteq; &NotLeftTriangleEqual;__&#x022EC;__&#8940;,
+⋭__&nrtrie; &ntrianglerighteq; &NotRightTriangleEqual;__&#x022ED;__&#8941;,
+⋮__&vellip;__&#x022EE;__&#8942;,
+⋯__&ctdot;__&#x022EF;__&#8943;,
+⋰__&utdot;__&#x022F0;__&#8944;,
+⋱__&dtdot;__&#x022F1;__&#8945;,
+⋲__&disin;__&#x022F2;__&#8946;,
+⋳__&isinsv;__&#x022F3;__&#8947;,
+⋴__&isins;__&#x022F4;__&#8948;,
+⋵__&isindot;__&#x022F5;__&#8949;,
+⋶__&notinvc;__&#x022F6;__&#8950;,
+⋷__&notinvb;__&#x022F7;__&#8951;,
+⋹__&isinE;__&#x022F9;__&#8953;,
+⋺__&nisd;__&#x022FA;__&#8954;,
+⋻__&xnis;__&#x022FB;__&#8955;,
+⋼__&nis;__&#x022FC;__&#8956;,
+⋽__&notnivc;__&#x022FD;__&#8957;,
+⋾__&notnivb;__&#x022FE;__&#8958;,
+⌅__&barwed; &barwedge;__&#x02305;__&#8965;,
+⌆__&Barwed; &doublebarwedge;__&#x02306;__&#8966;,
+⌈__&lceil; &LeftCeiling;__&#x02308;__&#8968;,
+⌉__&rceil; &RightCeiling;__&#x02309;__&#8969;,
+⌊__&lfloor; &LeftFloor;__&#x0230A;__&#8970;,
+⌋__&rfloor; &RightFloor;__&#x0230B;__&#8971;,
+⌌__&drcrop;__&#x0230C;__&#8972;,
+⌍__&dlcrop;__&#x0230D;__&#8973;,
+⌎__&urcrop;__&#x0230E;__&#8974;,
+⌏__&ulcrop;__&#x0230F;__&#8975;,
+⌐__&bnot;__&#x02310;__&#8976;,
+⌒__&profline;__&#x02312;__&#8978;,
+⌓__&profsurf;__&#x02313;__&#8979;,
+⌕__&telrec;__&#x02315;__&#8981;,
+⌖__&target;__&#x02316;__&#8982;,
+⌜__&ulcorn; &ulcorner;__&#x0231C;__&#8988;,
+⌝__&urcorn; &urcorner;__&#x0231D;__&#8989;,
+⌞__&dlcorn; &llcorner;__&#x0231E;__&#8990;,
+⌟__&drcorn; &lrcorner;__&#x0231F;__&#8991;,
+⌢__&frown; &sfrown;__&#x02322;__&#8994;,
+⌣__&smile; &ssmile;__&#x02323;__&#8995;,
+⌭__&cylcty;__&#x0232D;__&#9005;,
+⌮__&profalar;__&#x0232E;__&#9006;,
+⌶__&topbot;__&#x02336;__&#9014;,
+⌽__&ovbar;__&#x0233D;__&#9021;,
+⌿__&solbar;__&#x0233F;__&#9023;,
+⍼__&angzarr;__&#x0237C;__&#9084;,
+⎰__&lmoust; &lmoustache;__&#x023B0;__&#9136;,
+⎱__&rmoust; &rmoustache;__&#x023B1;__&#9137;,
+⎴__&tbrk; &OverBracket;__&#x023B4;__&#9140;,
+⎵__&bbrk; &UnderBracket;__&#x023B5;__&#9141;,
+⎶__&bbrktbrk;__&#x023B6;__&#9142;,
+⏜__&OverParenthesis;__&#x023DC;__&#9180;,
+⏝__&UnderParenthesis;__&#x023DD;__&#9181;,
+⏞__&OverBrace;__&#x023DE;__&#9182;,
+⏟__&UnderBrace;__&#x023DF;__&#9183;,
+⏢__&trpezium;__&#x023E2;__&#9186;,
+⏧__&elinters;__&#x023E7;__&#9191;,
+␣__&blank;__&#x02423;__&#9251;,
+Ⓢ__&oS; &circledS;__&#x024C8;__&#9416;,
+─__&boxh; &HorizontalLine;__&#x02500;__&#9472;,
+│__&boxv;__&#x02502;__&#9474;,
+┌__&boxdr;__&#x0250C;__&#9484;,
+┐__&boxdl;__&#x02510;__&#9488;,
+└__&boxur;__&#x02514;__&#9492;,
+┘__&boxul;__&#x02518;__&#9496;,
+├__&boxvr;__&#x0251C;__&#9500;,
+┤__&boxvl;__&#x02524;__&#9508;,
+┬__&boxhd;__&#x0252C;__&#9516;,
+┴__&boxhu;__&#x02534;__&#9524;,
+┼__&boxvh;__&#x0253C;__&#9532;,
+═__&boxH;__&#x02550;__&#9552;,
+║__&boxV;__&#x02551;__&#9553;,
+╒__&boxdR;__&#x02552;__&#9554;,
+╓__&boxDr;__&#x02553;__&#9555;,
+╔__&boxDR;__&#x02554;__&#9556;,
+╕__&boxdL;__&#x02555;__&#9557;,
+╖__&boxDl;__&#x02556;__&#9558;,
+╗__&boxDL;__&#x02557;__&#9559;,
+╘__&boxuR;__&#x02558;__&#9560;,
+╙__&boxUr;__&#x02559;__&#9561;,
+╚__&boxUR;__&#x0255A;__&#9562;,
+╛__&boxuL;__&#x0255B;__&#9563;,
+╜__&boxUl;__&#x0255C;__&#9564;,
+╝__&boxUL;__&#x0255D;__&#9565;,
+╞__&boxvR;__&#x0255E;__&#9566;,
+╟__&boxVr;__&#x0255F;__&#9567;,
+╠__&boxVR;__&#x02560;__&#9568;,
+╡__&boxvL;__&#x02561;__&#9569;,
+╢__&boxVl;__&#x02562;__&#9570;,
+╣__&boxVL;__&#x02563;__&#9571;,
+╤__&boxHd;__&#x02564;__&#9572;,
+╥__&boxhD;__&#x02565;__&#9573;,
+╦__&boxHD;__&#x02566;__&#9574;,
+╧__&boxHu;__&#x02567;__&#9575;,
+╨__&boxhU;__&#x02568;__&#9576;,
+╩__&boxHU;__&#x02569;__&#9577;,
+╪__&boxvH;__&#x0256A;__&#9578;,
+╫__&boxVh;__&#x0256B;__&#9579;,
+╬__&boxVH;__&#x0256C;__&#9580;,
+▀__&uhblk;__&#x02580;__&#9600;,
+▄__&lhblk;__&#x02584;__&#9604;,
+█__&block;__&#x02588;__&#9608;,
+░__&blk14;__&#x02591;__&#9617;,
+▒__&blk12;__&#x02592;__&#9618;,
+▓__&blk34;__&#x02593;__&#9619;,
+□__&squ; &square; &Square;__&#x025A1;__&#9633;,
+▪__&squf; &squarf; &blacksquare; &FilledVerySmallSquare;__&#x025AA;__&#9642;,
+▫__&EmptyVerySmallSquare;__&#x025AB;__&#9643;,
+▭__&rect;__&#x025AD;__&#9645;,
+▮__&marker;__&#x025AE;__&#9646;,
+▱__&fltns;__&#x025B1;__&#9649;,
+△__&xutri; &bigtriangleup;__&#x025B3;__&#9651;,
+▴__&utrif; &blacktriangle;__&#x025B4;__&#9652;,
+▵__&utri; &triangle;__&#x025B5;__&#9653;,
+▸__&rtrif; &blacktriangleright;__&#x025B8;__&#9656;,
+▹__&rtri; &triangleright;__&#x025B9;__&#9657;,
+▽__&xdtri; &bigtriangledown;__&#x025BD;__&#9661;,
+▾__&dtrif; &blacktriangledown;__&#x025BE;__&#9662;,
+▿__&dtri; &triangledown;__&#x025BF;__&#9663;,
+◂__&ltrif; &blacktriangleleft;__&#x025C2;__&#9666;,
+◃__&ltri; &triangleleft;__&#x025C3;__&#9667;,
+◊__&loz; &lozenge;__&#x025CA;__&#9674;,
+○__&cir;__&#x025CB;__&#9675;,
+◬__&tridot;__&#x025EC;__&#9708;,
+◯__&xcirc; &bigcirc;__&#x025EF;__&#9711;,
+◸__&ultri;__&#x025F8;__&#9720;,
+◹__&urtri;__&#x025F9;__&#9721;,
+◺__&lltri;__&#x025FA;__&#9722;,
+◻__&EmptySmallSquare;__&#x025FB;__&#9723;,
+◼__&FilledSmallSquare;__&#x025FC;__&#9724;,
+★__&starf; &bigstar;__&#x02605;__&#9733;,
+☆__&star;__&#x02606;__&#9734;,
+☎__&phone;__&#x0260E;__&#9742;,
+♀__&female;__&#x02640;__&#9792;,
+♂__&male;__&#x02642;__&#9794;,
+♠__&spades; &spadesuit;__&#x02660;__&#9824;,
+♣__&clubs; &clubsuit;__&#x02663;__&#9827;,
+♥__&hearts; &heartsuit;__&#x02665;__&#9829;,
+♦__&diams; &diamondsuit;__&#x02666;__&#9830;,
+♪__&sung;__&#x0266A;__&#9834;,
+♭__&flat;__&#x0266D;__&#9837;,
+♮__&natur; &natural;__&#x0266E;__&#9838;,
+♯__&sharp;__&#x0266F;__&#9839;,
+✓__&check; &checkmark;__&#x02713;__&#10003;,
+✗__&cross;__&#x02717;__&#10007;,
+✠__&malt; &maltese;__&#x02720;__&#10016;,
+✶__&sext;__&#x02736;__&#10038;,
+❘__&VerticalSeparator;__&#x02758;__&#10072;,
+❲__&lbbrk;__&#x02772;__&#10098;,
+❳__&rbbrk;__&#x02773;__&#10099;,
+⟦__&lobrk; &LeftDoubleBracket;__&#x027E6;__&#10214;,
+⟧__&robrk; &RightDoubleBracket;__&#x027E7;__&#10215;,
+⟨__&lang; &LeftAngleBracket; &langle;__&#x027E8;__&#10216;,
+⟩__&rang; &RightAngleBracket; &rangle;__&#x027E9;__&#10217;,
+⟪__&Lang;__&#x027EA;__&#10218;,
+⟫__&Rang;__&#x027EB;__&#10219;,
+⟬__&loang;__&#x027EC;__&#10220;,
+⟭__&roang;__&#x027ED;__&#10221;,
+⟵__&xlarr; &longleftarrow; &LongLeftArrow;__&#x027F5;__&#10229;,
+⟶__&xrarr; &longrightarrow; &LongRightArrow;__&#x027F6;__&#10230;,
+⟷__&xharr; &longleftrightarrow; &LongLeftRightArrow;__&#x027F7;__&#10231;,
+⟸__&xlArr; &Longleftarrow; &DoubleLongLeftArrow;__&#x027F8;__&#10232;,
+⟹__&xrArr; &Longrightarrow; &DoubleLongRightArrow;__&#x027F9;__&#10233;,
+⟺__&xhArr; &Longleftrightarrow; &DoubleLongLeftRightArrow;__&#x027FA;__&#10234;,
+⟼__&xmap; &longmapsto;__&#x027FC;__&#10236;,
+⟿__&dzigrarr;__&#x027FF;__&#10239;,
+⤂__&nvlArr;__&#x02902;__&#10498;,
+⤃__&nvrArr;__&#x02903;__&#10499;,
+⤄__&nvHarr;__&#x02904;__&#10500;,
+⤅__&Map;__&#x02905;__&#10501;,
+⤌__&lbarr;__&#x0290C;__&#10508;,
+⤍__&rbarr; &bkarow;__&#x0290D;__&#10509;,
+⤎__&lBarr;__&#x0290E;__&#10510;,
+⤏__&rBarr; &dbkarow;__&#x0290F;__&#10511;,
+⤐__&RBarr; &drbkarow;__&#x02910;__&#10512;,
+⤑__&DDotrahd;__&#x02911;__&#10513;,
+⤒__&UpArrowBar;__&#x02912;__&#10514;,
+⤓__&DownArrowBar;__&#x02913;__&#10515;,
+⤖__&Rarrtl;__&#x02916;__&#10518;,
+⤙__&latail;__&#x02919;__&#10521;,
+⤚__&ratail;__&#x0291A;__&#10522;,
+⤛__&lAtail;__&#x0291B;__&#10523;,
+⤜__&rAtail;__&#x0291C;__&#10524;,
+⤝__&larrfs;__&#x0291D;__&#10525;,
+⤞__&rarrfs;__&#x0291E;__&#10526;,
+⤟__&larrbfs;__&#x0291F;__&#10527;,
+⤠__&rarrbfs;__&#x02920;__&#10528;,
+⤣__&nwarhk;__&#x02923;__&#10531;,
+⤤__&nearhk;__&#x02924;__&#10532;,
+⤥__&searhk; &hksearow;__&#x02925;__&#10533;,
+⤦__&swarhk; &hkswarow;__&#x02926;__&#10534;,
+⤧__&nwnear;__&#x02927;__&#10535;,
+⤨__&nesear; &toea;__&#x02928;__&#10536;,
+⤩__&seswar; &tosa;__&#x02929;__&#10537;,
+⤪__&swnwar;__&#x0292A;__&#10538;,
+⤳__&rarrc;__&#x02933;__&#10547;,
+⤵__&cudarrr;__&#x02935;__&#10549;,
+⤶__&ldca;__&#x02936;__&#10550;,
+⤷__&rdca;__&#x02937;__&#10551;,
+⤸__&cudarrl;__&#x02938;__&#10552;,
+⤹__&larrpl;__&#x02939;__&#10553;,
+⤼__&curarrm;__&#x0293C;__&#10556;,
+⤽__&cularrp;__&#x0293D;__&#10557;,
+⥅__&rarrpl;__&#x02945;__&#10565;,
+⥈__&harrcir;__&#x02948;__&#10568;,
+⥉__&Uarrocir;__&#x02949;__&#10569;,
+⥊__&lurdshar;__&#x0294A;__&#10570;,
+⥋__&ldrushar;__&#x0294B;__&#10571;,
+⥎__&LeftRightVector;__&#x0294E;__&#10574;,
+⥏__&RightUpDownVector;__&#x0294F;__&#10575;,
+⥐__&DownLeftRightVector;__&#x02950;__&#10576;,
+⥑__&LeftUpDownVector;__&#x02951;__&#10577;,
+⥒__&LeftVectorBar;__&#x02952;__&#10578;,
+⥓__&RightVectorBar;__&#x02953;__&#10579;,
+⥔__&RightUpVectorBar;__&#x02954;__&#10580;,
+⥕__&RightDownVectorBar;__&#x02955;__&#10581;,
+⥖__&DownLeftVectorBar;__&#x02956;__&#10582;,
+⥗__&DownRightVectorBar;__&#x02957;__&#10583;,
+⥘__&LeftUpVectorBar;__&#x02958;__&#10584;,
+⥙__&LeftDownVectorBar;__&#x02959;__&#10585;,
+⥚__&LeftTeeVector;__&#x0295A;__&#10586;,
+⥛__&RightTeeVector;__&#x0295B;__&#10587;,
+⥜__&RightUpTeeVector;__&#x0295C;__&#10588;,
+⥝__&RightDownTeeVector;__&#x0295D;__&#10589;,
+⥞__&DownLeftTeeVector;__&#x0295E;__&#10590;,
+⥟__&DownRightTeeVector;__&#x0295F;__&#10591;,
+⥠__&LeftUpTeeVector;__&#x02960;__&#10592;,
+⥡__&LeftDownTeeVector;__&#x02961;__&#10593;,
+⥢__&lHar;__&#x02962;__&#10594;,
+⥣__&uHar;__&#x02963;__&#10595;,
+⥤__&rHar;__&#x02964;__&#10596;,
+⥥__&dHar;__&#x02965;__&#10597;,
+⥦__&luruhar;__&#x02966;__&#10598;,
+⥧__&ldrdhar;__&#x02967;__&#10599;,
+⥨__&ruluhar;__&#x02968;__&#10600;,
+⥩__&rdldhar;__&#x02969;__&#10601;,
+⥪__&lharul;__&#x0296A;__&#10602;,
+⥫__&llhard;__&#x0296B;__&#10603;,
+⥬__&rharul;__&#x0296C;__&#10604;,
+⥭__&lrhard;__&#x0296D;__&#10605;,
+⥮__&udhar; &UpEquilibrium;__&#x0296E;__&#10606;,
+⥯__&duhar; &ReverseUpEquilibrium;__&#x0296F;__&#10607;,
+⥰__&RoundImplies;__&#x02970;__&#10608;,
+⥱__&erarr;__&#x02971;__&#10609;,
+⥲__&simrarr;__&#x02972;__&#10610;,
+⥳__&larrsim;__&#x02973;__&#10611;,
+⥴__&rarrsim;__&#x02974;__&#10612;,
+⥵__&rarrap;__&#x02975;__&#10613;,
+⥶__&ltlarr;__&#x02976;__&#10614;,
+⥸__&gtrarr;__&#x02978;__&#10616;,
+⥹__&subrarr;__&#x02979;__&#10617;,
+⥻__&suplarr;__&#x0297B;__&#10619;,
+⥼__&lfisht;__&#x0297C;__&#10620;,
+⥽__&rfisht;__&#x0297D;__&#10621;,
+⥾__&ufisht;__&#x0297E;__&#10622;,
+⥿__&dfisht;__&#x0297F;__&#10623;,
+⦅__&lopar;__&#x02985;__&#10629;,
+⦆__&ropar;__&#x02986;__&#10630;,
+⦋__&lbrke;__&#x0298B;__&#10635;,
+⦌__&rbrke;__&#x0298C;__&#10636;,
+⦍__&lbrkslu;__&#x0298D;__&#10637;,
+⦎__&rbrksld;__&#x0298E;__&#10638;,
+⦏__&lbrksld;__&#x0298F;__&#10639;,
+⦐__&rbrkslu;__&#x02990;__&#10640;,
+⦑__&langd;__&#x02991;__&#10641;,
+⦒__&rangd;__&#x02992;__&#10642;,
+⦓__&lparlt;__&#x02993;__&#10643;,
+⦔__&rpargt;__&#x02994;__&#10644;,
+⦕__&gtlPar;__&#x02995;__&#10645;,
+⦖__&ltrPar;__&#x02996;__&#10646;,
+⦚__&vzigzag;__&#x0299A;__&#10650;,
+⦜__&vangrt;__&#x0299C;__&#10652;,
+⦝__&angrtvbd;__&#x0299D;__&#10653;,
+⦤__&ange;__&#x029A4;__&#10660;,
+⦥__&range;__&#x029A5;__&#10661;,
+⦦__&dwangle;__&#x029A6;__&#10662;,
+⦧__&uwangle;__&#x029A7;__&#10663;,
+⦨__&angmsdaa;__&#x029A8;__&#10664;,
+⦩__&angmsdab;__&#x029A9;__&#10665;,
+⦪__&angmsdac;__&#x029AA;__&#10666;,
+⦫__&angmsdad;__&#x029AB;__&#10667;,
+⦬__&angmsdae;__&#x029AC;__&#10668;,
+⦭__&angmsdaf;__&#x029AD;__&#10669;,
+⦮__&angmsdag;__&#x029AE;__&#10670;,
+⦯__&angmsdah;__&#x029AF;__&#10671;,
+⦰__&bemptyv;__&#x029B0;__&#10672;,
+⦱__&demptyv;__&#x029B1;__&#10673;,
+⦲__&cemptyv;__&#x029B2;__&#10674;,
+⦳__&raemptyv;__&#x029B3;__&#10675;,
+⦴__&laemptyv;__&#x029B4;__&#10676;,
+⦵__&ohbar;__&#x029B5;__&#10677;,
+⦶__&omid;__&#x029B6;__&#10678;,
+⦷__&opar;__&#x029B7;__&#10679;,
+⦹__&operp;__&#x029B9;__&#10681;,
+⦻__&olcross;__&#x029BB;__&#10683;,
+⦼__&odsold;__&#x029BC;__&#10684;,
+⦾__&olcir;__&#x029BE;__&#10686;,
+⦿__&ofcir;__&#x029BF;__&#10687;,
+⧀__&olt;__&#x029C0;__&#10688;,
+⧁__&ogt;__&#x029C1;__&#10689;,
+⧂__&cirscir;__&#x029C2;__&#10690;,
+⧃__&cirE;__&#x029C3;__&#10691;,
+⧄__&solb;__&#x029C4;__&#10692;,
+⧅__&bsolb;__&#x029C5;__&#10693;,
+⧉__&boxbox;__&#x029C9;__&#10697;,
+⧍__&trisb;__&#x029CD;__&#10701;,
+⧎__&rtriltri;__&#x029CE;__&#10702;,
+⧏__&LeftTriangleBar;__&#x029CF;__&#10703;,
+⧐__&RightTriangleBar;__&#x029D0;__&#10704;,
+⧚__&race;__&#x029DA;__&#10714;,
+⧜__&iinfin;__&#x029DC;__&#10716;,
+⧝__&infintie;__&#x029DD;__&#10717;,
+⧞__&nvinfin;__&#x029DE;__&#10718;,
+⧣__&eparsl;__&#x029E3;__&#10723;,
+⧤__&smeparsl;__&#x029E4;__&#10724;,
+⧥__&eqvparsl;__&#x029E5;__&#10725;,
+⧫__&lozf; &blacklozenge;__&#x029EB;__&#10731;,
+⧴__&RuleDelayed;__&#x029F4;__&#10740;,
+⧶__&dsol;__&#x029F6;__&#10742;,
+⨀__&xodot; &bigodot;__&#x02A00;__&#10752;,
+⨁__&xoplus; &bigoplus;__&#x02A01;__&#10753;,
+⨂__&xotime; &bigotimes;__&#x02A02;__&#10754;,
+⨄__&xuplus; &biguplus;__&#x02A04;__&#10756;,
+⨆__&xsqcup; &bigsqcup;__&#x02A06;__&#10758;,
+⨌__&qint; &iiiint;__&#x02A0C;__&#10764;,
+⨍__&fpartint;__&#x02A0D;__&#10765;,
+⨐__&cirfnint;__&#x02A10;__&#10768;,
+⨑__&awint;__&#x02A11;__&#10769;,
+⨒__&rppolint;__&#x02A12;__&#10770;,
+⨓__&scpolint;__&#x02A13;__&#10771;,
+⨔__&npolint;__&#x02A14;__&#10772;,
+⨕__&pointint;__&#x02A15;__&#10773;,
+⨖__&quatint;__&#x02A16;__&#10774;,
+⨗__&intlarhk;__&#x02A17;__&#10775;,
+⨢__&pluscir;__&#x02A22;__&#10786;,
+⨣__&plusacir;__&#x02A23;__&#10787;,
+⨤__&simplus;__&#x02A24;__&#10788;,
+⨥__&plusdu;__&#x02A25;__&#10789;,
+⨦__&plussim;__&#x02A26;__&#10790;,
+⨧__&plustwo;__&#x02A27;__&#10791;,
+⨩__&mcomma;__&#x02A29;__&#10793;,
+⨪__&minusdu;__&#x02A2A;__&#10794;,
+⨭__&loplus;__&#x02A2D;__&#10797;,
+⨮__&roplus;__&#x02A2E;__&#10798;,
+⨯__&Cross;__&#x02A2F;__&#10799;,
+⨰__&timesd;__&#x02A30;__&#10800;,
+⨱__&timesbar;__&#x02A31;__&#10801;,
+⨳__&smashp;__&#x02A33;__&#10803;,
+⨴__&lotimes;__&#x02A34;__&#10804;,
+⨵__&rotimes;__&#x02A35;__&#10805;,
+⨶__&otimesas;__&#x02A36;__&#10806;,
+⨷__&Otimes;__&#x02A37;__&#10807;,
+⨸__&odiv;__&#x02A38;__&#10808;,
+⨹__&triplus;__&#x02A39;__&#10809;,
+⨺__&triminus;__&#x02A3A;__&#10810;,
+⨻__&tritime;__&#x02A3B;__&#10811;,
+⨼__&iprod; &intprod;__&#x02A3C;__&#10812;,
+⨿__&amalg;__&#x02A3F;__&#10815;,
+⩀__&capdot;__&#x02A40;__&#10816;,
+⩂__&ncup;__&#x02A42;__&#10818;,
+⩃__&ncap;__&#x02A43;__&#10819;,
+⩄__&capand;__&#x02A44;__&#10820;,
+⩅__&cupor;__&#x02A45;__&#10821;,
+⩆__&cupcap;__&#x02A46;__&#10822;,
+⩇__&capcup;__&#x02A47;__&#10823;,
+⩈__&cupbrcap;__&#x02A48;__&#10824;,
+⩉__&capbrcup;__&#x02A49;__&#10825;,
+⩊__&cupcup;__&#x02A4A;__&#10826;,
+⩋__&capcap;__&#x02A4B;__&#10827;,
+⩌__&ccups;__&#x02A4C;__&#10828;,
+⩍__&ccaps;__&#x02A4D;__&#10829;,
+⩐__&ccupssm;__&#x02A50;__&#10832;,
+⩓__&And;__&#x02A53;__&#10835;,
+⩔__&Or;__&#x02A54;__&#10836;,
+⩕__&andand;__&#x02A55;__&#10837;,
+⩖__&oror;__&#x02A56;__&#10838;,
+⩗__&orslope;__&#x02A57;__&#10839;,
+⩘__&andslope;__&#x02A58;__&#10840;,
+⩚__&andv;__&#x02A5A;__&#10842;,
+⩛__&orv;__&#x02A5B;__&#10843;,
+⩜__&andd;__&#x02A5C;__&#10844;,
+⩝__&ord;__&#x02A5D;__&#10845;,
+⩟__&wedbar;__&#x02A5F;__&#10847;,
+⩦__&sdote;__&#x02A66;__&#10854;,
+⩪__&simdot;__&#x02A6A;__&#10858;,
+⩭__&congdot;__&#x02A6D;__&#10861;,
+⩮__&easter;__&#x02A6E;__&#10862;,
+⩯__&apacir;__&#x02A6F;__&#10863;,
+⩰__&apE;__&#x02A70;__&#10864;,
+⩱__&eplus;__&#x02A71;__&#10865;,
+⩲__&pluse;__&#x02A72;__&#10866;,
+⩳__&Esim;__&#x02A73;__&#10867;,
+⩴__&Colone;__&#x02A74;__&#10868;,
+⩵__&Equal;__&#x02A75;__&#10869;,
+⩷__&eDDot; &ddotseq;__&#x02A77;__&#10871;,
+⩸__&equivDD;__&#x02A78;__&#10872;,
+⩹__&ltcir;__&#x02A79;__&#10873;,
+⩺__&gtcir;__&#x02A7A;__&#10874;,
+⩻__&ltquest;__&#x02A7B;__&#10875;,
+⩼__&gtquest;__&#x02A7C;__&#10876;,
+⩽__&les; &LessSlantEqual; &leqslant;__&#x02A7D;__&#10877;,
+⩾__&ges; &GreaterSlantEqual; &geqslant;__&#x02A7E;__&#10878;,
+⩿__&lesdot;__&#x02A7F;__&#10879;,
+⪀__&gesdot;__&#x02A80;__&#10880;,
+⪁__&lesdoto;__&#x02A81;__&#10881;,
+⪂__&gesdoto;__&#x02A82;__&#10882;,
+⪃__&lesdotor;__&#x02A83;__&#10883;,
+⪄__&gesdotol;__&#x02A84;__&#10884;,
+⪅__&lap; &lessapprox;__&#x02A85;__&#10885;,
+⪆__&gap; &gtrapprox;__&#x02A86;__&#10886;,
+⪇__&lne; &lneq;__&#x02A87;__&#10887;,
+⪈__&gne; &gneq;__&#x02A88;__&#10888;,
+⪉__&lnap; &lnapprox;__&#x02A89;__&#10889;,
+⪊__&gnap; &gnapprox;__&#x02A8A;__&#10890;,
+⪋__&lEg; &lesseqqgtr;__&#x02A8B;__&#10891;,
+⪌__&gEl; &gtreqqless;__&#x02A8C;__&#10892;,
+⪍__&lsime;__&#x02A8D;__&#10893;,
+⪎__&gsime;__&#x02A8E;__&#10894;,
+⪏__&lsimg;__&#x02A8F;__&#10895;,
+⪐__&gsiml;__&#x02A90;__&#10896;,
+⪑__&lgE;__&#x02A91;__&#10897;,
+⪒__&glE;__&#x02A92;__&#10898;,
+⪓__&lesges;__&#x02A93;__&#10899;,
+⪔__&gesles;__&#x02A94;__&#10900;,
+⪕__&els; &eqslantless;__&#x02A95;__&#10901;,
+⪖__&egs; &eqslantgtr;__&#x02A96;__&#10902;,
+⪗__&elsdot;__&#x02A97;__&#10903;,
+⪘__&egsdot;__&#x02A98;__&#10904;,
+⪙__&el;__&#x02A99;__&#10905;,
+⪚__&eg;__&#x02A9A;__&#10906;,
+⪝__&siml;__&#x02A9D;__&#10909;,
+⪞__&simg;__&#x02A9E;__&#10910;,
+⪟__&simlE;__&#x02A9F;__&#10911;,
+⪠__&simgE;__&#x02AA0;__&#10912;,
+⪡__&LessLess;__&#x02AA1;__&#10913;,
+⪢__&GreaterGreater;__&#x02AA2;__&#10914;,
+⪤__&glj;__&#x02AA4;__&#10916;,
+⪥__&gla;__&#x02AA5;__&#10917;,
+⪦__&ltcc;__&#x02AA6;__&#10918;,
+⪧__&gtcc;__&#x02AA7;__&#10919;,
+⪨__&lescc;__&#x02AA8;__&#10920;,
+⪩__&gescc;__&#x02AA9;__&#10921;,
+⪪__&smt;__&#x02AAA;__&#10922;,
+⪫__&lat;__&#x02AAB;__&#10923;,
+⪬__&smte;__&#x02AAC;__&#10924;,
+⪭__&late;__&#x02AAD;__&#10925;,
+⪮__&bumpE;__&#x02AAE;__&#10926;,
+⪯__&pre; &preceq; &PrecedesEqual;__&#x02AAF;__&#10927;,
+⪰__&sce; &succeq; &SucceedsEqual;__&#x02AB0;__&#10928;,
+⪳__&prE;__&#x02AB3;__&#10931;,
+⪴__&scE;__&#x02AB4;__&#10932;,
+⪵__&prnE; &precneqq;__&#x02AB5;__&#10933;,
+⪶__&scnE; &succneqq;__&#x02AB6;__&#10934;,
+⪷__&prap; &precapprox;__&#x02AB7;__&#10935;,
+⪸__&scap; &succapprox;__&#x02AB8;__&#10936;,
+⪹__&prnap; &precnapprox;__&#x02AB9;__&#10937;,
+⪺__&scnap; &succnapprox;__&#x02ABA;__&#10938;,
+⪻__&Pr;__&#x02ABB;__&#10939;,
+⪼__&Sc;__&#x02ABC;__&#10940;,
+⪽__&subdot;__&#x02ABD;__&#10941;,
+⪾__&supdot;__&#x02ABE;__&#10942;,
+⪿__&subplus;__&#x02ABF;__&#10943;,
+⫀__&supplus;__&#x02AC0;__&#10944;,
+⫁__&submult;__&#x02AC1;__&#10945;,
+⫂__&supmult;__&#x02AC2;__&#10946;,
+⫃__&subedot;__&#x02AC3;__&#10947;,
+⫄__&supedot;__&#x02AC4;__&#10948;,
+⫅__&subE; &subseteqq;__&#x02AC5;__&#10949;,
+⫆__&supE; &supseteqq;__&#x02AC6;__&#10950;,
+⫇__&subsim;__&#x02AC7;__&#10951;,
+⫈__&supsim;__&#x02AC8;__&#10952;,
+⫋__&subnE; &subsetneqq;__&#x02ACB;__&#10955;,
+⫌__&supnE; &supsetneqq;__&#x02ACC;__&#10956;,
+⫏__&csub;__&#x02ACF;__&#10959;,
+⫐__&csup;__&#x02AD0;__&#10960;,
+⫑__&csube;__&#x02AD1;__&#10961;,
+⫒__&csupe;__&#x02AD2;__&#10962;,
+⫓__&subsup;__&#x02AD3;__&#10963;,
+⫔__&supsub;__&#x02AD4;__&#10964;,
+⫕__&subsub;__&#x02AD5;__&#10965;,
+⫖__&supsup;__&#x02AD6;__&#10966;,
+⫗__&suphsub;__&#x02AD7;__&#10967;,
+⫘__&supdsub;__&#x02AD8;__&#10968;,
+⫙__&forkv;__&#x02AD9;__&#10969;,
+⫚__&topfork;__&#x02ADA;__&#10970;,
+⫛__&mlcp;__&#x02ADB;__&#10971;,
+⫤__&Dashv; &DoubleLeftTee;__&#x02AE4;__&#10980;,
+⫦__&Vdashl;__&#x02AE6;__&#10982;,
+⫧__&Barv;__&#x02AE7;__&#10983;,
+⫨__&vBar;__&#x02AE8;__&#10984;,
+⫩__&vBarv;__&#x02AE9;__&#10985;,
+⫫__&Vbar;__&#x02AEB;__&#10987;,
+⫬__&Not;__&#x02AEC;__&#10988;,
+⫭__&bNot;__&#x02AED;__&#10989;,
+⫮__&rnmid;__&#x02AEE;__&#10990;,
+⫯__&cirmid;__&#x02AEF;__&#10991;,
+⫰__&midcir;__&#x02AF0;__&#10992;,
+⫱__&topcir;__&#x02AF1;__&#10993;,
+⫲__&nhpar;__&#x02AF2;__&#10994;,
+⫳__&parsim;__&#x02AF3;__&#10995;,
+⫽__&parsl;__&#x02AFD;__&#11005;,
+ﬀ__&fflig;__&#x0FB00;__&#64256;,
+ﬁ__&filig;__&#x0FB01;__&#64257;,
+ﬂ__&fllig;__&#x0FB02;__&#64258;,
+ﬃ__&ffilig;__&#x0FB03;__&#64259;,
+ﬄ__&ffllig;__&#x0FB04;__&#64260;,
+𝒜__&Ascr;__&#x1D49C;__&#119964;,
+𝒞__&Cscr;__&#x1D49E;__&#119966;,
+𝒟__&Dscr;__&#x1D49F;__&#119967;,
+𝒢__&Gscr;__&#x1D4A2;__&#119970;,
+𝒥__&Jscr;__&#x1D4A5;__&#119973;,
+𝒦__&Kscr;__&#x1D4A6;__&#119974;,
+𝒩__&Nscr;__&#x1D4A9;__&#119977;,
+𝒪__&Oscr;__&#x1D4AA;__&#119978;,
+𝒫__&Pscr;__&#x1D4AB;__&#119979;,
+𝒬__&Qscr;__&#x1D4AC;__&#119980;,
+𝒮__&Sscr;__&#x1D4AE;__&#119982;,
+𝒯__&Tscr;__&#x1D4AF;__&#119983;,
+𝒰__&Uscr;__&#x1D4B0;__&#119984;,
+𝒱__&Vscr;__&#x1D4B1;__&#119985;,
+𝒲__&Wscr;__&#x1D4B2;__&#119986;,
+𝒳__&Xscr;__&#x1D4B3;__&#119987;,
+𝒴__&Yscr;__&#x1D4B4;__&#119988;,
+𝒵__&Zscr;__&#x1D4B5;__&#119989;,
+𝒶__&ascr;__&#x1D4B6;__&#119990;,
+𝒷__&bscr;__&#x1D4B7;__&#119991;,
+𝒸__&cscr;__&#x1D4B8;__&#119992;,
+𝒹__&dscr;__&#x1D4B9;__&#119993;,
+𝒻__&fscr;__&#x1D4BB;__&#119995;,
+𝒽__&hscr;__&#x1D4BD;__&#119997;,
+𝒾__&iscr;__&#x1D4BE;__&#119998;,
+𝒿__&jscr;__&#x1D4BF;__&#119999;,
+𝓀__&kscr;__&#x1D4C0;__&#120000;,
+𝓁__&lscr;__&#x1D4C1;__&#120001;,
+𝓂__&mscr;__&#x1D4C2;__&#120002;,
+𝓃__&nscr;__&#x1D4C3;__&#120003;,
+𝓅__&pscr;__&#x1D4C5;__&#120005;,
+𝓆__&qscr;__&#x1D4C6;__&#120006;,
+𝓇__&rscr;__&#x1D4C7;__&#120007;,
+𝓈__&sscr;__&#x1D4C8;__&#120008;,
+𝓉__&tscr;__&#x1D4C9;__&#120009;,
+𝓊__&uscr;__&#x1D4CA;__&#120010;,
+𝓋__&vscr;__&#x1D4CB;__&#120011;,
+𝓌__&wscr;__&#x1D4CC;__&#120012;,
+𝓍__&xscr;__&#x1D4CD;__&#120013;,
+𝓎__&yscr;__&#x1D4CE;__&#120014;,
+𝓏__&zscr;__&#x1D4CF;__&#120015;,
+𝔄__&Afr;__&#x1D504;__&#120068;,
+𝔅__&Bfr;__&#x1D505;__&#120069;,
+𝔇__&Dfr;__&#x1D507;__&#120071;,
+𝔈__&Efr;__&#x1D508;__&#120072;,
+𝔉__&Ffr;__&#x1D509;__&#120073;,
+𝔊__&Gfr;__&#x1D50A;__&#120074;,
+𝔍__&Jfr;__&#x1D50D;__&#120077;,
+𝔎__&Kfr;__&#x1D50E;__&#120078;,
+𝔏__&Lfr;__&#x1D50F;__&#120079;,
+𝔐__&Mfr;__&#x1D510;__&#120080;,
+𝔑__&Nfr;__&#x1D511;__&#120081;,
+𝔒__&Ofr;__&#x1D512;__&#120082;,
+𝔓__&Pfr;__&#x1D513;__&#120083;,
+𝔔__&Qfr;__&#x1D514;__&#120084;,
+𝔖__&Sfr;__&#x1D516;__&#120086;,
+𝔗__&Tfr;__&#x1D517;__&#120087;,
+𝔘__&Ufr;__&#x1D518;__&#120088;,
+𝔙__&Vfr;__&#x1D519;__&#120089;,
+𝔚__&Wfr;__&#x1D51A;__&#120090;,
+𝔛__&Xfr;__&#x1D51B;__&#120091;,
+𝔜__&Yfr;__&#x1D51C;__&#120092;,
+𝔞__&afr;__&#x1D51E;__&#120094;,
+𝔟__&bfr;__&#x1D51F;__&#120095;,
+𝔠__&cfr;__&#x1D520;__&#120096;,
+𝔡__&dfr;__&#x1D521;__&#120097;,
+𝔢__&efr;__&#x1D522;__&#120098;,
+𝔣__&ffr;__&#x1D523;__&#120099;,
+𝔤__&gfr;__&#x1D524;__&#120100;,
+𝔥__&hfr;__&#x1D525;__&#120101;,
+𝔦__&ifr;__&#x1D526;__&#120102;,
+𝔧__&jfr;__&#x1D527;__&#120103;,
+𝔨__&kfr;__&#x1D528;__&#120104;,
+𝔩__&lfr;__&#x1D529;__&#120105;,
+𝔪__&mfr;__&#x1D52A;__&#120106;,
+𝔫__&nfr;__&#x1D52B;__&#120107;,
+𝔬__&ofr;__&#x1D52C;__&#120108;,
+𝔭__&pfr;__&#x1D52D;__&#120109;,
+𝔮__&qfr;__&#x1D52E;__&#120110;,
+𝔯__&rfr;__&#x1D52F;__&#120111;,
+𝔰__&sfr;__&#x1D530;__&#120112;,
+𝔱__&tfr;__&#x1D531;__&#120113;,
+𝔲__&ufr;__&#x1D532;__&#120114;,
+𝔳__&vfr;__&#x1D533;__&#120115;,
+𝔴__&wfr;__&#x1D534;__&#120116;,
+𝔵__&xfr;__&#x1D535;__&#120117;,
+𝔶__&yfr;__&#x1D536;__&#120118;,
+𝔷__&zfr;__&#x1D537;__&#120119;,
+𝔸__&Aopf;__&#x1D538;__&#120120;,
+𝔹__&Bopf;__&#x1D539;__&#120121;,
+𝔻__&Dopf;__&#x1D53B;__&#120123;,
+𝔼__&Eopf;__&#x1D53C;__&#120124;,
+𝔽__&Fopf;__&#x1D53D;__&#120125;,
+𝔾__&Gopf;__&#x1D53E;__&#120126;,
+𝕀__&Iopf;__&#x1D540;__&#120128;,
+𝕁__&Jopf;__&#x1D541;__&#120129;,
+𝕂__&Kopf;__&#x1D542;__&#120130;,
+𝕃__&Lopf;__&#x1D543;__&#120131;,
+𝕄__&Mopf;__&#x1D544;__&#120132;,
+𝕆__&Oopf;__&#x1D546;__&#120134;,
+𝕊__&Sopf;__&#x1D54A;__&#120138;,
+𝕋__&Topf;__&#x1D54B;__&#120139;,
+𝕌__&Uopf;__&#x1D54C;__&#120140;,
+𝕍__&Vopf;__&#x1D54D;__&#120141;,
+𝕎__&Wopf;__&#x1D54E;__&#120142;,
+𝕏__&Xopf;__&#x1D54F;__&#120143;,
+𝕐__&Yopf;__&#x1D550;__&#120144;,
+𝕒__&aopf;__&#x1D552;__&#120146;,
+𝕓__&bopf;__&#x1D553;__&#120147;,
+𝕔__&copf;__&#x1D554;__&#120148;,
+𝕕__&dopf;__&#x1D555;__&#120149;,
+𝕖__&eopf;__&#x1D556;__&#120150;,
+𝕗__&fopf;__&#x1D557;__&#120151;,
+𝕘__&gopf;__&#x1D558;__&#120152;,
+𝕙__&hopf;__&#x1D559;__&#120153;,
+𝕚__&iopf;__&#x1D55A;__&#120154;,
+𝕛__&jopf;__&#x1D55B;__&#120155;,
+𝕜__&kopf;__&#x1D55C;__&#120156;,
+𝕝__&lopf;__&#x1D55D;__&#120157;,
+𝕞__&mopf;__&#x1D55E;__&#120158;,
+𝕟__&nopf;__&#x1D55F;__&#120159;,
+𝕠__&oopf;__&#x1D560;__&#120160;,
+𝕡__&popf;__&#x1D561;__&#120161;,
+𝕢__&qopf;__&#x1D562;__&#120162;,
+𝕣__&ropf;__&#x1D563;__&#120163;,
+𝕤__&sopf;__&#x1D564;__&#120164;,
+𝕥__&topf;__&#x1D565;__&#120165;,
+𝕦__&uopf;__&#x1D566;__&#120166;,
+𝕧__&vopf;__&#x1D567;__&#120167;,
+𝕨__&wopf;__&#x1D568;__&#120168;,
+𝕩__&xopf;__&#x1D569;__&#120169;,
+𝕪__&yopf;__&#x1D56A;__&#120170;,
+𝕫__&zopf;__&#x1D56B;__&#120171;

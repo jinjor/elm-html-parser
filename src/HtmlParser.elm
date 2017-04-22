@@ -13,11 +13,13 @@ module HtmlParser exposing
 -}
 
 
+import Char
+import Dict
 import Combine exposing (..)
 import Combine.Char
 import Set exposing (Set)
 import Escape
-import Dict
+import Hex
 
 
 {-| The AST of node
@@ -231,13 +233,13 @@ textNode =
 textNodeString : Parser s String
 textNodeString =
   (\list -> String.join "" list)
-  <$> many (entityString <|> (string "&") <|> textNodeNonEntityString)
+  <$> many (entityString <|> entityStringHex <|> entityStringDec <|> string "&" <|> textNodeNonEntityString)
 
 
 attributeString : String -> Parser s String
 attributeString quote =
   (\list -> String.join "" list)
-  <$> many (entityString <|> (string "&") <|> attributeValueEntityString quote)
+  <$> many (entityString <|> entityStringHex <|> entityStringDec <|> string "&" <|> attributeValueEntityString quote)
 
 
 entityString : Parser s String
@@ -247,7 +249,34 @@ entityString =
       code
       (Dict.get code Escape.dict)
   )
-  <$> (regex "&[#0-9a-zA-Z]*;")
+  <$> (regex "&[0-9a-zA-Z]+;")
+
+
+entityStringHex : Parser s String
+entityStringHex =
+  (\num ->
+    num
+      |> String.dropLeft 3
+      |> String.dropRight 1
+      |> String.toLower
+      |> Hex.fromString
+      |> Result.map ( Char.fromCode >> List.singleton >> String.fromList )
+      |> Result.withDefault num
+  )
+  <$> (regex "&#x[0-9A-F]+;")
+
+
+entityStringDec : Parser s String
+entityStringDec =
+  (\num ->
+    num
+      |> String.dropLeft 2
+      |> String.dropRight 1
+      |> String.toInt
+      |> Result.map ( Char.fromCode >> List.singleton >> String.fromList )
+      |> Result.withDefault num
+  )
+  <$> (regex "&#[1-9]*[0-9]+;")
 
 
 textNodeNonEntityString : Parser s String
