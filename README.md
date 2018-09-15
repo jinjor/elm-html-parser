@@ -1,3 +1,8 @@
+## Note
+
+For anyone who is using Elm 0.19 and blocked by this library, consider using [hecrj/html-parser](https://package.elm-lang.org/packages/hecrj/html-parser/latest/) for now. It seems still WIP but passed the same test cases. I think that means the most difficult part of the HTML spec should be already covered (e.g. `<li>` does not need a closing tag). Also, it uses the official parser `elm/parser` which I was planning to use in the newer version. So I think contributing to `hecrj/html-parser` is the fastest path for everyone getting happy :)
+
+
 # elm-html-parser
 
 [![Build Status](https://travis-ci.org/jinjor/elm-html-parser.svg)](https://travis-ci.org/jinjor/elm-html-parser)
